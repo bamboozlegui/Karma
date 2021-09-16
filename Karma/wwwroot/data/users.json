@@ -26,15 +26,16 @@
         "requests": [
             {
                 "request_id":  "washingmachine51345346346",
-                "request_description": "lorem ipsum",
+                "request_description": "lorem ipsum"
 
             },
             {
                 "request_id":  "laptop12415266",
-                "request_description": "lorem ipsum",
+                "request_description": "lorem ipsum"
 
             }
         ],
+        "item_quantity": 2,
         "items": [
             {
                 "item_id": "laptop15154356115",
