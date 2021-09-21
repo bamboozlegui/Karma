@@ -8,13 +8,18 @@
 
 <form method="post">
 
+    <button runat="server" id="modify" class="btn btn-mini" title="Modify" onserverclick="modify_Onclick">
+        <p>lorem</p>
+    </button>
+
+
     <div class="mb-3">
         <label class="form-label">Item name</label>
         <input type="text" class="form-control" asp-for="Item.RequestName">
     </div>
     <div class="mb-3">
         <label class="form-label">Description</label>
-        <input type="text" class="form-control" asp-for="Item.Description">
+        <textarea type="text" class="form-control" rows="3" asp-for="Item.Description"></textarea>
     </div>
     <div class="mb-3">
         <label class="form-label">Your name</label>
