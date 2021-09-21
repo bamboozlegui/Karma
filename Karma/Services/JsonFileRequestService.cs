@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.Json;
 using Karma.Models;
 using Microsoft.AspNetCore.Hosting;
+using System.Threading.Tasks;
 
 namespace Karma.Services
 {
@@ -31,6 +32,13 @@ namespace Karma.Services
                         PropertyNameCaseInsensitive = true
                     });
             }
+        }
+
+        public void RefreshRequests(IEnumerable<RequestModel> requests)
+        {
+            File.WriteAllTextAsync(
+                JsonFileName, 
+                JsonSerializer.Serialize<IEnumerable<RequestModel>>(requests));
         }
     }
 }
