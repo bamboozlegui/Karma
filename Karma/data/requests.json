@@ -1,10 +1,1 @@
-[
-  {
-  "name": "Karolis",
-  "city": "Marijampole",
-  "phone_number": "+370696969",
-  "item_title": "title",
-  "description": "desc",
-  "picture": "link"
-  }
-]
+[{"RequesterName":null,"City":"Marijampole","phone_number":"\u002B370696969","item_title":"title","Description":"desc"},{"RequesterName":"Dee Snutz","City":"Kaunas","phone_number":"\u002B69","item_title":"laptop","Description":"bro i need 100 laptops"}]
