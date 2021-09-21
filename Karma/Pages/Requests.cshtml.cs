@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Karma.Models;
+using Karma.Services;
 
 namespace Karma.Pages
 {
@@ -12,6 +13,14 @@ namespace Karma.Pages
     {
         [BindProperty]
         public RequestModel Item { get; set; }
+
+        public JsonFileRequestService RequestService;   
+        public IEnumerable<RequestModel> Requests { get; private set; }
+
+        public RequestsModel(JsonFileRequestService requestService)
+        {
+            RequestService = requestService;
+        }
         public void OnGet()
         {
         }
@@ -22,8 +31,13 @@ namespace Karma.Pages
             {
                 return Page();
             }
+            List<RequestModel> newRequest = new List<RequestModel>();
+            newRequest.Add(Item);
 
+            Requests = RequestService.GetRequests().
+            Concat<RequestModel>(newRequest);
 
+            RequestService.RefreshRequests(Requests);
 
             return RedirectToPage("/Index");
         }
