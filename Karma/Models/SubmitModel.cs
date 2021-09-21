@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Karma.Models
 {
-    public class Item
+    public class SubmitModel
     {
         public string BuyerName { get; set; }
 

@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Karma.Models;
 namespace Karma.Pages
 {
-    public class SubmitModel : PageModel
+    public class SubmitsModel : PageModel
     {
         [BindProperty]
-        public Item Item { get; set; }
+        public SubmitModel Item { get; set; }
         public void OnGet()
         {
         }
