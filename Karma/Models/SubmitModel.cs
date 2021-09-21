@@ -1,4 +1,5 @@
 
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Karma.Models
@@ -19,5 +20,7 @@ namespace Karma.Models
         public string Description { get; set; }
 
         public string Picture { get; set;}
+        
+        public override string ToString() => JsonSerializer.Serialize<SubmitModel>(this);
     }
 }
