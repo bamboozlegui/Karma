@@ -8,33 +8,33 @@
 
 <form method="post">
 
-    <button runat="server" id="modify" class="btn btn-mini" title="Modify" onserverclick="modify_Onclick">
-        <p>lorem</p>
-    </button>
+    <button type="button" class="btn btn-primary mt-3" data-toggle="collapse" data-target="#demo">Request an item</button>
+    <div id="demo" class="collapse">
+        <div class="mb-3">
+            <label class="form-label">Item name</label>
+            <input type="text" class="form-control" asp-for="Item.RequestName">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea type="text" class="form-control" rows="3" asp-for="Item.Description"></textarea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Your name</label>
+            <input type="text" class="form-control" asp-for="Item.BuyerName">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">City</label>
+            <input type="text" class="form-control" asp-for="Item.City">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Phone number</label>
+            <input type="text" class="form-control" asp-for="Item.PhoneNumber">
+        </div>
 
+        <button type="submit" class="btn btn-primary">Request</button>
 
-    <div class="mb-3">
-        <label class="form-label">Item name</label>
-        <input type="text" class="form-control" asp-for="Item.RequestName">
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Description</label>
-        <textarea type="text" class="form-control" rows="3" asp-for="Item.Description"></textarea>
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Your name</label>
-        <input type="text" class="form-control" asp-for="Item.BuyerName">
-    </div>
-    <div class="mb-3">
-        <label class="form-label">City</label>
-        <input type="text" class="form-control" asp-for="Item.City">
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Phone number</label>
-        <input type="text" class="form-control" asp-for="Item.PhoneNumber">
     </div>
 
-    <button type="submit" class="btn btn-primary">Request</button>
 
 
 </form>
