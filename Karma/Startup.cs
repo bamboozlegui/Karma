@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Karma.Services;
 
 namespace Karma
 {
@@ -24,6 +25,7 @@ namespace Karma
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddTransient<JsonFileRequestService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
