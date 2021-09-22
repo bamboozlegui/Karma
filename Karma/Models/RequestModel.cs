@@ -9,14 +9,12 @@ namespace Karma.Models
 {
     public class RequestModel
     {
-         public string RequesterName { get; set; }
+
+        public string RequesterName { get; set; }
 
         public string City { get; set; }
 
-        [JsonPropertyName("phone_number")]
         public string PhoneNumber { get; set; }
-
-        [JsonPropertyName("item_title")]
 
         public string Title { get; set; }
 
