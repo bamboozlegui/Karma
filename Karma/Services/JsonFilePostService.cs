@@ -8,27 +8,23 @@ using System.Threading.Tasks;
 
 namespace Karma.Services
 {
-    public class JsonFileRequestService<T> where T : PostModel, IHasJsonFile
+    public class JsonFilePostService<T> where T : IHasJsonFile, new()
     {
-        public JsonFileRequestService(IWebHostEnvironment webHostEnvironment)
+        public JsonFilePostService(IWebHostEnvironment webHostEnvironment)
         {
             WebHostEnvironment = webHostEnvironment;
         }
 
         public IWebHostEnvironment WebHostEnvironment { get; }
 
-        private string JsonFileName(System.Type type)
+        private string JsonFileName
         {
-            if(type == typeof(RequestModel))
-                return Path.Combine(WebHostEnvironment.ContentRootPath, "data", (new RequestModel()).GetJsonName()); 
-            if(type == typeof(SubmitModel))
-                return Path.Combine(WebHostEnvironment.ContentRootPath, "data", (new SubmitModel()).GetJsonName()); 
-            return "";  
+                get { return Path.Combine(WebHostEnvironment.ContentRootPath, "data", (new T()).GetJsonName()); }
         }
 
         public IEnumerable<T> GetPosts()
         {
-            using(var jsonFileReader = File.OpenText(JsonFileName(typeof(T))))
+            using(var jsonFileReader = File.OpenText(JsonFileName))
             {
                 return JsonSerializer.Deserialize<T[]>(jsonFileReader.ReadToEnd(),
                     new JsonSerializerOptions
@@ -41,7 +37,7 @@ namespace Karma.Services
         public void RefreshPosts(IEnumerable<T> requests)
         {
             File.WriteAllTextAsync(
-                JsonFileName(typeof(T)), 
+                JsonFileName, 
                 JsonSerializer.Serialize<IEnumerable<T>>(requests, 
                 new JsonSerializerOptions {WriteIndented = true}));
         }

@@ -14,10 +14,10 @@ namespace Karma.Pages
         [BindProperty]
         public RequestModel Item { get; set; }
 
-        public JsonFileRequestService<RequestModel> RequestService;   
+        public JsonFilePostService<RequestModel> RequestService;   
         public IEnumerable<RequestModel> Requests { get; private set; }
 
-        public RequestsModel(JsonFileRequestService<RequestModel> requestService)
+        public RequestsModel(JsonFilePostService<RequestModel> requestService)
         {
             RequestService = requestService;
         }
@@ -31,11 +31,9 @@ namespace Karma.Pages
             {
                 return Page();
             }
-            List<RequestModel> newRequest = new List<RequestModel>();
-            newRequest.Add(Item);
 
             Requests = RequestService.GetPosts().
-            Concat<RequestModel>(newRequest);
+            Append<RequestModel>(Item);
 
             RequestService.RefreshPosts(Requests);
 
