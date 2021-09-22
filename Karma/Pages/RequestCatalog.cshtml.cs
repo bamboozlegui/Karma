@@ -13,12 +13,12 @@ namespace Karma.Pages
     public class GetRequestsModel : PageModel
     {
         private readonly ILogger<RequestModel> _logger;
-        public JsonFileRequestService RequestService;   
+        public JsonFileRequestService<RequestModel> RequestService;   
         public IEnumerable<RequestModel> Requests { get; private set; }
 
         public GetRequestsModel(
             ILogger<RequestModel> logger,
-            JsonFileRequestService requestService)
+            JsonFileRequestService<RequestModel> requestService)
         {
             _logger = logger;
             RequestService = requestService;
@@ -26,7 +26,7 @@ namespace Karma.Pages
 
         public void OnGet()
         {
-            Requests = RequestService.GetRequests();
+            Requests = RequestService.GetPosts();
         }
     }
 }
