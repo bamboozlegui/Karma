@@ -2,22 +2,15 @@
   {
     "RequesterName": null,
     "City": "Marijampole",
-    "phone_number": "\u002B370696969",
-    "item_title": "title",
+    "PhoneNumber": "\u002B370696969",
+    "Title": "title",
     "Description": "desc"
   },
   {
     "RequesterName": "Dee Snutz",
-    "City": "Kaunas",
-    "phone_number": "\u002B69",
-    "item_title": "laptop",
-    "Description": "bro i need 100 laptops"
-  },
-  {
-    "RequesterName": "Lee Mao",
-    "City": "Miami",
-    "phone_number": "\u002B66468419",
-    "item_title": "Tea",
-    "Description": "green tea"
+    "City": "Vilnius",
+    "PhoneNumber": "\u002B66468419",
+    "Title": "green",
+    "Description": "black"
   }
 ]
