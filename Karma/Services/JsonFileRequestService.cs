@@ -38,7 +38,8 @@ namespace Karma.Services
         {
             File.WriteAllTextAsync(
                 JsonFileName, 
-                JsonSerializer.Serialize<IEnumerable<RequestModel>>(requests));
+                JsonSerializer.Serialize<IEnumerable<RequestModel>>(requests, 
+                new JsonSerializerOptions {WriteIndented = true}));
         }
     }
 }
