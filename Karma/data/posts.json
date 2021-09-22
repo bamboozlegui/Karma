@@ -1,8 +1,8 @@
 {
-  "name": "Edvin",
-  "city": "Vilnius",
-  "phone_number": "+370696969",
-  "item_title": "title",
-  "description": "desc",
-  "picture": "link"
+  "SubmitterName": "Edvin",
+  "City": "Vilnius",
+  "PhoneNumber": "+370696969",
+  "Title": "title",
+  "Description": "desc",
+  "Picture": "link"
 }
