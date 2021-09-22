@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Karma.Services
 {
-    public class JsonFileRequestService
+    public class JsonFileRequestService<T> where T : PostModel, IHasJsonFile
     {
         public JsonFileRequestService(IWebHostEnvironment webHostEnvironment)
         {
@@ -17,16 +17,20 @@ namespace Karma.Services
 
         public IWebHostEnvironment WebHostEnvironment { get; }
 
-        private string JsonFileName
+        private string JsonFileName(System.Type type)
         {
-            get { return Path.Combine(WebHostEnvironment.ContentRootPath, "data", "requests.json"); }
+            if(type == typeof(RequestModel))
+                return Path.Combine(WebHostEnvironment.ContentRootPath, "data", (new RequestModel()).GetJsonName()); 
+            if(type == typeof(SubmitModel))
+                return Path.Combine(WebHostEnvironment.ContentRootPath, "data", (new SubmitModel()).GetJsonName()); 
+            return "";  
         }
 
-        public IEnumerable<RequestModel> GetRequests()
+        public IEnumerable<T> GetPosts()
         {
-            using(var jsonFileReader = File.OpenText(JsonFileName))
+            using(var jsonFileReader = File.OpenText(JsonFileName(typeof(T))))
             {
-                return JsonSerializer.Deserialize<RequestModel[]>(jsonFileReader.ReadToEnd(),
+                return JsonSerializer.Deserialize<T[]>(jsonFileReader.ReadToEnd(),
                     new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true
@@ -34,11 +38,11 @@ namespace Karma.Services
             }
         }
 
-        public void RefreshRequests(IEnumerable<RequestModel> requests)
+        public void RefreshPosts(IEnumerable<T> requests)
         {
             File.WriteAllTextAsync(
-                JsonFileName, 
-                JsonSerializer.Serialize<IEnumerable<RequestModel>>(requests, 
+                JsonFileName(typeof(T)), 
+                JsonSerializer.Serialize<IEnumerable<T>>(requests, 
                 new JsonSerializerOptions {WriteIndented = true}));
         }
     }
