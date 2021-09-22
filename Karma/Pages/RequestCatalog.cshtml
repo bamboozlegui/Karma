@@ -1,0 +1,12 @@
+@page
+@model GetRequestsModel
+@{
+    ViewData["Title"] = "Request Catalog";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>@foreach (var request in Model.Requests)
+    {
+        @request.Title <br>
+    }
+</p>
