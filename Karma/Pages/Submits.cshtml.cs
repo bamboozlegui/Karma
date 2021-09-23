@@ -39,7 +39,7 @@ namespace Karma.Pages
 
             SubmitService.RefreshPosts(Submits);
 
-            return Page();
+            return RedirectToPage("/Submits");
         }
     }
 
