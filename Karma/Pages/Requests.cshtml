@@ -6,8 +6,8 @@
 
 <h1>@ViewData["Title"]</h1>
 
+<!--Form for a new request-->
 <form method="post">
-
     <button type="button" class="btn btn-primary mt-3" data-toggle="collapse" data-target="#demo">Request an item</button>
     <div id="demo" class="collapse">
         <div class="mb-3">
@@ -32,10 +32,24 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Request</button>
-
     </div>
-
-
-
 </form>
+
+<!--Generates requests from .json file-->
+<div class="list-group mt-4">
+    @{
+        foreach (var request in Model.Requests)
+        {
+            <a href="#" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">@request.Title</h5>
+                    <small>@request.PosterName</small>
+                </div>
+                <p class="mb-1">@request.Description</p>
+                <small>@request.City</small>
+            </a>
+        }
+    }
+</div>
+
 
