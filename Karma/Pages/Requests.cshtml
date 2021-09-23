@@ -35,18 +35,18 @@
     </div>
 </form>
 
-<!--Generates requests from .json file-->
+<!--Generates requests from .json file, not very elegant code-->
 <div class="list-group mt-4">
     @{
-        foreach (var request in Model.Requests)
+        for (int i = Model.Requests.Count() - 1; i >= 0; i--)
         {
             <a href="#" class="list-group-item list-group-item-action">
                 <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">@request.Title</h5>
-                    <small>@request.PosterName</small>
+                    <h5 class="mb-1">@Model.Requests.ElementAt(i).Title</h5>
+                    <small>@Model.Requests.ElementAt(i).PosterName</small>
                 </div>
-                <p class="mb-1">@request.Description</p>
-                <small>@request.City</small>
+                <p class="mb-1">@Model.Requests.ElementAt(i).Description</p>
+                <small>@Model.Requests.ElementAt(i).City</small>
             </a>
         }
     }

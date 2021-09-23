@@ -40,5 +40,12 @@
     "PhoneNumber": null,
     "Title": "Dalykas",
     "Description": null
+  },
+  {
+    "PosterName": "Jonas",
+    "City": "Jurmala",
+    "PhoneNumber": "8461248615",
+    "Title": "Daiktas",
+    "Description": "Noreciau labai aciuu"
   }
 ]

@@ -1,12 +1,21 @@
 @page
 @model GetRequestsModel
-@{
-    ViewData["Title"] = "Request Catalog";
-}
+@{ ViewData["Title"] = "Request Catalog"; }
 <h1>@ViewData["Title"]</h1>
 
-<p>@foreach (var request in Model.Requests)
+<p>
+    @foreach (var request in Model.Requests)
     {
-        @request.Title <br>
-    }
+@request.Title <br>}
 </p>
+
+
+<h1>@Model.Requests.Count()</h1>
+
+@{ 
+    for(int i = Model.Requests.Count()-1; i >= 0; i--)
+            {
+    <p>@Model.Requests.ElementAt(i).Title</p>
+            }
+}
+
