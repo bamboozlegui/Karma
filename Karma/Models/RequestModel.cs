@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace Karma.Models
 {
-    public class RequestModel : PostModel, IHasJsonFile
+    public class RequestModel : PostModel, IJsonStorable
     {
         public override string ToString() => JsonSerializer.Serialize<RequestModel>(this);
 

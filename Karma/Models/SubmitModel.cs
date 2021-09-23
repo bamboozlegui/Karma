@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace Karma.Models
 {
-    public class SubmitModel : PostModel, IHasJsonFile
+    public class SubmitModel : PostModel, IJsonStorable
     {
         public string Picture { get; set;}
         

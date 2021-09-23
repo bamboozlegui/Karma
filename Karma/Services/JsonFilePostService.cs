@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Karma.Services
 {
-    public class JsonFilePostService<T> where T : IHasJsonFile, new()
+    public class JsonFilePostService<T> where T : IJsonStorable, new()
     {
         public JsonFilePostService(IWebHostEnvironment webHostEnvironment)
         {
