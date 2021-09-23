@@ -1,10 +1,18 @@
 [
   {
+    "Picture": "link",
     "PosterName": "Edvin",
     "City": "Vilnius",
-    "PhoneNumber": "+370696969",
+    "PhoneNumber": "\u002B370696969",
     "Title": "title",
-    "Description": "desc",
-    "Picture": "link"
+    "Description": "desc"
+  },
+  {
+    "Picture": null,
+    "PosterName": null,
+    "City": null,
+    "PhoneNumber": null,
+    "Title": "213",
+    "Description": null
   }
 ]

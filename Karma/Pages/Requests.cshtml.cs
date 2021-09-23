@@ -38,7 +38,7 @@ namespace Karma.Pages
 
             RequestService.RefreshPosts(Requests);
 
-            return Page();
+            return RedirectToPage("/Requests");
         }
     }
 }
