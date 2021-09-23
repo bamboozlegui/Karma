@@ -34,8 +34,12 @@
         <button type="submit" class="btn btn-primary">Request</button>
 
     </div>
-
-
-
 </form>
+
+<p>
+    @foreach (var request in Model.Requests)
+    {
+@request.Title <br>}
+</p>
+
 
