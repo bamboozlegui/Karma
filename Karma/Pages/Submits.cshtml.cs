@@ -23,6 +23,7 @@ namespace Karma.Pages
         }
         public void OnGet()
         {
+            Submits = SubmitService.GetPosts();
         }
 
 
@@ -38,7 +39,7 @@ namespace Karma.Pages
 
             SubmitService.RefreshPosts(Submits);
 
-            return RedirectToPage("/Index");
+            return Page();
         }
     }
 

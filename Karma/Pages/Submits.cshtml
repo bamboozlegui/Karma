@@ -41,3 +41,22 @@
 
 </form>
 
+<!--Generates submits from .json file-->
+<div class="list-group mt-4">
+    @{
+
+        Model.Submits.
+        foreach (var submit in Model.Submits)
+        {
+            <a href="#" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">@submit.Title</h5>
+                    <small>@submit.PosterName</small>
+                </div>
+                <p class="mb-1">@submit.Description</p>
+                <small>@submit.City</small>
+            </a>
+        }
+    }
+</div>
+
