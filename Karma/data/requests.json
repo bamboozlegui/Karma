@@ -1,16 +1,23 @@
 [
   {
-    "RequesterName": null,
+    "PosterName": null,
     "City": "Marijampole",
     "PhoneNumber": "\u002B370696969",
     "Title": "title",
     "Description": "desc"
   },
   {
-    "RequesterName": "Dee Snutz",
-    "City": "Vilnius",
-    "PhoneNumber": "\u002B66468419",
-    "Title": "green",
-    "Description": "black"
+    "PosterName": "asdasd",
+    "City": "asdsa",
+    "PhoneNumber": "adsad",
+    "Title": "asda",
+    "Description": "asda"
+  },
+  {
+    "PosterName": "adasd",
+    "City": null,
+    "PhoneNumber": null,
+    "Title": "asdas",
+    "Description": "asdad"
   }
 ]

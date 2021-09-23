@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Karma.Services
 {
-    public class JsonFileRequestService
+    public class JsonFilePostService<T> where T : IJsonStorable, new()
     {
-        public JsonFileRequestService(IWebHostEnvironment webHostEnvironment)
+        public JsonFilePostService(IWebHostEnvironment webHostEnvironment)
         {
             WebHostEnvironment = webHostEnvironment;
         }
@@ -19,14 +19,14 @@ namespace Karma.Services
 
         private string JsonFileName
         {
-            get { return Path.Combine(WebHostEnvironment.ContentRootPath, "data", "requests.json"); }
+                get { return Path.Combine(WebHostEnvironment.ContentRootPath, "data", (new T()).GetJsonName()); }
         }
 
-        public IEnumerable<RequestModel> GetRequests()
+        public IEnumerable<T> GetPosts()
         {
             using(var jsonFileReader = File.OpenText(JsonFileName))
             {
-                return JsonSerializer.Deserialize<RequestModel[]>(jsonFileReader.ReadToEnd(),
+                return JsonSerializer.Deserialize<T[]>(jsonFileReader.ReadToEnd(),
                     new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true
@@ -34,11 +34,11 @@ namespace Karma.Services
             }
         }
 
-        public void RefreshRequests(IEnumerable<RequestModel> requests)
+        public void RefreshPosts(IEnumerable<T> requests)
         {
             File.WriteAllTextAsync(
                 JsonFileName, 
-                JsonSerializer.Serialize<IEnumerable<RequestModel>>(requests, 
+                JsonSerializer.Serialize<IEnumerable<T>>(requests, 
                 new JsonSerializerOptions {WriteIndented = true}));
         }
     }
