@@ -18,6 +18,7 @@ namespace Karma.Pages
         [BindProperty]
         public SubmitModel Item { get; set; }
         
+        [BindProperty]
         public IFormFile Photo { get; set; }
 
         public JsonFilePostService<SubmitModel> SubmitService;
