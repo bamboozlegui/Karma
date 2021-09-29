@@ -41,10 +41,23 @@ namespace Karma.Pages
 
         //turning ienumerable to list and deleting
         // can be done with LINQ ++
-        public void OnPostDelete(int i)
+
+       /* // remove
+        users = users.Where(u => u.userId != 123).ToList();
+
+        // new list
+        var modified = users.Where(u => u.userId == 123).ToList();*/
+
+        public IActionResult OnPostDelete(string Picture)
         {
-            Submits = Submits.ToList();
-            //Submits.Remove(Submits.First())
+            Submits = SubmitService.GetPosts().ToList();
+            
+            //Submits.Remove(Submits.First(x => x.Picture == picture));
+            Submits = Submits.Where(x => x.Picture != Picture).ToList();
+            SubmitService.RefreshPosts(Submits);
+
+            return RedirectToPage("/Submits");
+
         }
 
 
