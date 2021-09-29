@@ -1,17 +1,17 @@
 ﻿@page
 @model Karma.Pages.SubmitsModel
-@{
-    ViewData["Title"] = "Submit Items";
-}
+@{ ViewData["Title"] = "Submit Items"; }
 
 <h1>@ViewData["Title"]</h1>
 
 <!--do some research about this enctype thingie-->
 
-<form method="post" enctype="multipart/form-data">
+<form method="post" enctype="multipart/form-data" class="mt-4">
 
-    <button type="button" class="btn btn-primary mt-3" data-toggle="collapse" data-target="#demo">Submit an item</button>
-    <div id="demo" class="collapse">
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        Submit an item
+    </button>
+    <div id="collapseExample" class="collapse">
 
         <div class="mb-3">
             <label class="form-label">Item name</label>
@@ -43,22 +43,17 @@
 
 </form>
 
-<!--Generates submits from .json file-->
-<div class="list-group mt-4">
-    @{
-        for (int i = Model.Submits.Count() - 1; i >= 0; i--)
-        {
-            
-            <a asp-page="/Item" asp-route-itemJson=@Model.Submits.ElementAt(i) class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">@Model.Submits.ElementAt(i).Title</h5>
-                    <small>@Model.Submits.ElementAt(i).PosterName</small>
-                </div>
-                <p class="mb-1">@Model.Submits.ElementAt(i).Description</p>
-                <small>@Model.Submits.ElementAt(i).City,</small>
-                <small>@Model.Submits.ElementAt(i).PhoneNumber</small>
-            </a>
-        }
-    }
+<div class="row row-cols-3 mt-2 g-4">
+    @for (int i = Model.Submits.Count() - 1; i >= 0; i--)
+    {
+<div class="col">
+    <div class="card">
+        <img src="/images/@Model.Submits.ElementAt(i).Picture" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Submits.ElementAt(i).Title</h5>
+            <p class="card-text">@Model.Submits.ElementAt(i).Description</p>
+            <a class="btn btn-secondary" target="_blank" asp-page="/Item" asp-route-itemJson=@Model.Submits.ElementAt(i)>More info</a>
+        </div>
+    </div>
+</div>}
 </div>
-

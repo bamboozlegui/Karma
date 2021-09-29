@@ -1,26 +1,34 @@
 [
   {
-    "Picture": null,
-    "PosterName": "Edvin",
+    "Picture": "751e6b37-8b9d-4a08-96e2-db2f320107c4_external-content.duckduckgo.com.jpg",
+    "PosterName": "Jonas",
+    "City": "Mare",
+    "PhoneNumber": "3289423908423",
+    "Title": "Laptopas",
+    "Description": "Atiduodu, nebereik"
+  },
+  {
+    "Picture": "f7ed64fc-4cbf-4509-9783-010ed9eb800f_dish-network.png",
+    "PosterName": "Ignas",
+    "City": "Utena",
+    "PhoneNumber": "423423543242",
+    "Title": "5G antena",
+    "Description": "Dave korona, nebereik"
+  },
+  {
+    "Picture": "fecbf4f0-08eb-47ca-8cc7-388a678e5c72_mouth_smile_PNG14.png",
+    "PosterName": "Yurgis",
+    "City": "Mongolija",
+    "PhoneNumber": "452343245634",
+    "Title": "\u0160ypsen\u0105",
+    "Description": "Atiduodu savo \u0161ypsen\u0105 jums nuostabiems \u017Emon\u0117ms :)"
+  },
+  {
+    "Picture": "f2ca5a29-c1d5-4df1-88ca-7005ffa69f36_pristatyti-nauji-greitosios-pagalbos-automobiliai-78466085.jpg",
+    "PosterName": "Redacted",
     "City": "Vilnius",
-    "PhoneNumber": "\u002B370696969",
-    "Title": "title",
-    "Description": "desc"
-  },
-  {
-    "Picture": null,
-    "PosterName": "Vardenis Pavardenis",
-    "City": "Maskva",
-    "PhoneNumber": "\u002B36562894165",
-    "Title": "Laptops",
-    "Description": "I am giving away 100 laptops. Yes i know, how generous of me. But don\u0027t all people just give away 100 laptops to random people? I could sell them but I am confided no one will profit from these laptops"
-  },
-  {
-    "Picture": null,
-    "PosterName": "Huge Mungus",
-    "City": "K\u0117dainiai",
-    "PhoneNumber": "6969696420420",
-    "Title": "10000000$ dollars",
-    "Description": "I just don\u0027t need them. Please don\u0027t scammerino me"
+    "PhoneNumber": "5342452352",
+    "Title": "Greituk\u0117",
+    "Description": "Joki\u0173 klausim\u0173, atiduodu i\u0161kart"
   }
 ]
