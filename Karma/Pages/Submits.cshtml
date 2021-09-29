@@ -57,7 +57,7 @@
             <a class="btn btn-secondary" target="_blank" asp-page="/Item" asp-route-itemJson=@Model.Submits.ElementAt(i)>More info</a>
         </div>
         <div class="col-lg-1">
-                <form asp-page-handler="delete" asp-route-id="@i" method="post">
+                <form asp-page-handler="delete" asp-route-picture="@Model.Submits.ElementAt(i).Picture" method="post">
                     <button class="btn btn-default" >Delete</button>
                 </form>
         </div>
