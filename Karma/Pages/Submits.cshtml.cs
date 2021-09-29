@@ -39,20 +39,11 @@ namespace Karma.Pages
             Submits = SubmitService.GetPosts();
         }
 
-        //turning ienumerable to list and deleting
-        // can be done with LINQ ++
-
-       /* // remove
-        users = users.Where(u => u.userId != 123).ToList();
-
-        // new list
-        var modified = users.Where(u => u.userId == 123).ToList();*/
-
+        // Deletes Post on button trigger, refreshes posts afterwards 
         public IActionResult OnPostDelete(string Picture)
         {
             Submits = SubmitService.GetPosts().ToList();
             
-            //Submits.Remove(Submits.First(x => x.Picture == picture));
             Submits = Submits.Where(x => x.Picture != Picture).ToList();
             SubmitService.RefreshPosts(Submits);
 
