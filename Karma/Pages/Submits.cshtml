@@ -6,7 +6,9 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<form method="post">
+<!--do some research about this enctype thingie-->
+
+<form method="post" enctype="multipart/form-data">
 
     <button type="button" class="btn btn-primary mt-3" data-toggle="collapse" data-target="#demo">Submit an item</button>
     <div id="demo" class="collapse">
@@ -33,7 +35,7 @@
         </div>
         <div class="mb-3">
             <label class="form-label">Picture</label>
-            <input type="text" class="form-control" asp-for="Item.Picture">
+            <input class="form-control" type="file" asp-for="Photo">
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
@@ -46,7 +48,8 @@
     @{
         for (int i = Model.Submits.Count() - 1; i >= 0; i--)
         {
-            <a href="#" class="list-group-item list-group-item-action">
+            
+            <a asp-page="/Item" asp-route-itemJson=@Model.Submits.ElementAt(i) class="list-group-item list-group-item-action">
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">@Model.Submits.ElementAt(i).Title</h5>
                     <small>@Model.Submits.ElementAt(i).PosterName</small>

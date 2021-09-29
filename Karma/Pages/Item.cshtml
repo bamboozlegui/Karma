@@ -1,0 +1,10 @@
+@page
+@model ItemModel
+@{
+    ViewData["Title"] = "Item";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>@Model.Item.Title</p>
+<img src= "/images/@Model.Item.Picture" asp-append-version=true>
+
