@@ -1,10 +1,46 @@
 @page
 @model ItemModel
-@{
-    ViewData["Title"] = "Item";
-}
-<h1>@ViewData["Title"]</h1>
+@{ ViewData["Title"] = "Item"; }
 
-<p>@Model.Item.Title</p>
-<img src= "/images/@Model.Item.Picture" asp-append-version=true>
 
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-md p-0">
+            <img src="/images/@Model.Item.Picture" asp-append-version=true class="figure-img img-fluid mb-0 rounded">
+        </div>
+        <div class="col-md p-0">
+
+            <div class="card h-100">
+                <div class="card-body d-flex flex-column">
+                    <h2 class="card-title">@Model.Item.Title</h2>
+                    <h6 class="card-subtitle mb-2 text-muted">@Model.Item.City</h6>
+                    <p class="card-text">@Model.Item.Description</p>
+                    <h6 class="card-text text-muted mt-auto">@Model.Item.PosterName</h6>
+                    <h6 class="card-text text-muted">+@Model.Item.PhoneNumber</h6>
+                </div>
+            </div>
+            
+
+            <!--
+            <a class="btn btn-primary w-50" href="">@Model.Item.PhoneNumber</a>
+            <h1 class="mb-0">@Model.Item.Title</h1>
+            <small class="mb-2">@Model.Item.City</small>
+            <h5>
+                @Model.Item.Description
+
+            </h5>-->
+        </div>
+    </div>
+</div>
+
+<!--
+<div class="card" style="width: 50%;">
+    <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="card-link">Card link</a>
+        <a href="#" class="card-link">Another link</a>
+    </div>
+</div>
+<a class="btn btn-primary w-50" href="">@Model.Item.PhoneNumber</a>-->
