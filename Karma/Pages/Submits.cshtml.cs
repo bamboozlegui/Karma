@@ -39,7 +39,7 @@ namespace Karma.Pages
             Submits = SubmitService.GetPosts();
         }
 
-        // Deletes Post on button trigger, refreshes posts afterwards 
+        // Deletes Post on button trigger, refreshes posts afterwards : )
         public IActionResult OnPostDelete(string Picture)
         {
             Submits = SubmitService.GetPosts().ToList();
