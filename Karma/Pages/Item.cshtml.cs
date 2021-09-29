@@ -33,6 +33,8 @@ namespace Karma.Pages
         public void OnGet()
         {
             SubmitModel deserializedItem = JsonSerializer.Deserialize<SubmitModel>(itemJson);
+            if (deserializedItem.Picture == null)
+                deserializedItem.Picture = "noimage.jpg";
             Item = deserializedItem;
         }
     }
