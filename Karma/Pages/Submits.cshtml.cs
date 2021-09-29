@@ -14,16 +14,18 @@ namespace Karma.Pages
 {
     public class SubmitsModel : PageModel
     {
+
         [BindProperty]
         public SubmitModel Item { get; set; }
         
-        [BindProperty]
         public IFormFile Photo { get; set; }
 
         public JsonFilePostService<SubmitModel> SubmitService;
 
         private IWebHostEnvironment WebHostEnvironment { get; }
         public IEnumerable<SubmitModel> Submits { get; private set; }
+
+        
 
         public SubmitsModel(
             JsonFilePostService<SubmitModel> submitService,
@@ -35,6 +37,14 @@ namespace Karma.Pages
         public void OnGet()
         {
             Submits = SubmitService.GetPosts();
+        }
+
+        //turning ienumerable to list and deleting
+        // can be done with LINQ ++
+        public void OnPostDelete(int i)
+        {
+            Submits = Submits.ToList();
+            //Submits.Remove(Submits.First())
         }
 
 
@@ -50,7 +60,7 @@ namespace Karma.Pages
                 if (Item.Picture != null) //If our Item already has a picture path string, we should delete it first to upload a new one
                 {
                     string filePath = Path.Combine(WebHostEnvironment.WebRootPath,
-                        "images", Item.Picture);
+                       "images", Item.Picture);
                     System.IO.File.Delete(filePath);
                 }
                 Item.Picture = ProcessUploadedFile(); //Check definition

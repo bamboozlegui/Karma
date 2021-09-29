@@ -1,6 +1,7 @@
 [
   {
     "Picture": null,
+    "State": "Available",
     "PosterName": "Edvin",
     "City": "Vilnius",
     "PhoneNumber": "\u002B370696969",
@@ -9,6 +10,7 @@
   },
   {
     "Picture": null,
+    "State": "Pending",
     "PosterName": "Vardenis Pavardenis",
     "City": "Maskva",
     "PhoneNumber": "\u002B36562894165",
@@ -17,6 +19,7 @@
   },
   {
     "Picture": null,
+    "State": "Unavailable",
     "PosterName": "Huge Mungus",
     "City": "K\u0117dainiai",
     "PhoneNumber": "6969696420420",
