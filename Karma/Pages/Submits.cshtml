@@ -43,11 +43,6 @@
 
 </form>
 
-
-
-<!--Generates submits from .json file-->
-
-
 <div class="row row-cols-3 mt-2 g-4">
     @for (int i = Model.Submits.Count() - 1; i >= 0; i--)
     {
@@ -57,7 +52,7 @@
         <div class="card-body">
             <h5 class="card-title">@Model.Submits.ElementAt(i).Title</h5>
             <p class="card-text">@Model.Submits.ElementAt(i).Description</p>
-            <a class="btn btn-secondary" target="_blank" href="https://www.youtube.com/watch?v=o-YBDTqX_ZU">More info</a>
+            <a class="btn btn-secondary" target="_blank" asp-page="/Item" asp-route-itemJson=@Model.Submits.ElementAt(i)>More info</a>
         </div>
     </div>
 </div>}

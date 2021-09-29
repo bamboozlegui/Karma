@@ -25,8 +25,9 @@ namespace Karma.Pages
         private IWebHostEnvironment WebHostEnvironment { get; }
         public IEnumerable<SubmitModel> Submits { get; private set; }
 
-        public SubmitsModel(JsonFilePostService<SubmitModel> submitService,
-                            IWebHostEnvironment webHostEnvironment)
+        public SubmitsModel(
+            JsonFilePostService<SubmitModel> submitService,
+            IWebHostEnvironment webHostEnvironment)
         {
             SubmitService = submitService;
             WebHostEnvironment = webHostEnvironment;    
