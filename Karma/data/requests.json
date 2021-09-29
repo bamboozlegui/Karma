@@ -1,5 +1,6 @@
 [
   {
+    "State": null,
     "PosterName": "Petras Petraitis",
     "City": "Kupi\u0161kis",
     "PhoneNumber": "\u002B393513651860",
@@ -7,6 +8,7 @@
     "Description": "Reikia stalo studijoms"
   },
   {
+    "State": null,
     "PosterName": "Petras Petraitis",
     "City": "Kupi\u0161kis",
     "PhoneNumber": "\u002B393513651860",
@@ -14,6 +16,7 @@
     "Description": "Reikia stalo studijoms"
   },
   {
+    "State": null,
     "PosterName": "dasdas",
     "City": "fsadas",
     "PhoneNumber": "gfgdf",
@@ -21,10 +24,27 @@
     "Description": "Diena"
   },
   {
+    "State": null,
     "PosterName": "Jonas",
     "City": "Jurmala",
     "PhoneNumber": "8461248615",
     "Title": "Daiktas",
     "Description": "Noreciau labai aciuu"
+  },
+  {
+    "State": null,
+    "PosterName": null,
+    "City": null,
+    "PhoneNumber": null,
+    "Title": null,
+    "Description": null
+  },
+  {
+    "State": null,
+    "PosterName": null,
+    "City": null,
+    "PhoneNumber": null,
+    "Title": null,
+    "Description": null
   }
 ]
