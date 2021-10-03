@@ -42,9 +42,9 @@ namespace Karma.Pages
         // Deletes Post on button trigger, refreshes posts afterwards : )
         public IActionResult OnPostDelete(string Picture)
         {
-            Submits = SubmitService.GetPosts().ToList();
+            Submits = SubmitService.GetPosts();
             
-            Submits = Submits.Where(x => x.Picture != Picture).ToList();
+            Submits = Submits.Where(x => x.Picture != Picture);
             SubmitService.RefreshPosts(Submits);
 
             return RedirectToPage("/Submits");
@@ -66,11 +66,14 @@ namespace Karma.Pages
                        "images", Item.Picture);
                     System.IO.File.Delete(filePath);
                 }
+
                 Item.Picture = ProcessUploadedFile(); //Check definition
             }
 
             Submits = SubmitService.GetPosts().
             Append<SubmitModel>(Item);
+
+	    Submits = Submits.OrderByDescending(item => item.Title);
 
             SubmitService.RefreshPosts(Submits);
 
