@@ -24,9 +24,8 @@ namespace Karma.Pages
         public JsonFilePostService<SubmitModel> SubmitService;
 
         private IWebHostEnvironment WebHostEnvironment { get; }
-        public IEnumerable<SubmitModel> Submits { get; private set; }
 
-        
+        public IEnumerable<SubmitModel> Submits { get; private set; }
 
         public SubmitsModel(
             JsonFilePostService<SubmitModel> submitService,
@@ -49,7 +48,6 @@ namespace Karma.Pages
             SubmitService.RefreshPosts(Submits);
 
             return RedirectToPage("/Submits");
-
         }
 
 
@@ -100,6 +98,4 @@ namespace Karma.Pages
             return uniqueFileName;
         }
     }
-
-
 }
