@@ -69,6 +69,10 @@ namespace Karma.Pages
 
                 Item.Picture = ProcessUploadedFile(); //Check definition
             }
+	    else
+	    {
+		Item.Picture = "noimage.jpg";
+	    }
 
             Submits = SubmitService.GetPosts().
             Append<SubmitModel>(Item);
