@@ -16,7 +16,7 @@ namespace Karma.Pages
     {
 
         [BindProperty]
-        public SubmitModel Item { get; set; }
+        public SubmitModel Item { get; set; }   
         
         [BindProperty]
         public IFormFile Photo { get; set; }
@@ -46,7 +46,6 @@ namespace Karma.Pages
             
             Submits = Submits.Where(x => x.Picture != Picture);
             SubmitService.RefreshPosts(Submits);
-
             return RedirectToPage("/Submits");
         }
 
@@ -69,20 +68,20 @@ namespace Karma.Pages
 
                 Item.Picture = ProcessUploadedFile(); //Check definition
             }
-	    else
-	    {
-		Item.Picture = "noimage.jpg";
-	    }
+	        else
+	        {
+		    Item.Picture = "noimage.jpg";
+	        }
 
-            Submits = SubmitService.GetPosts().
-            Append<SubmitModel>(Item);
+                Submits = SubmitService.GetPosts().
+                Append<SubmitModel>(Item);
 
-	    Submits = Submits.OrderByDescending(item => item.Title);
+	            Submits = Submits.OrderByDescending(item => item.State).ThenByDescending(item => item.Title);
 
-            SubmitService.RefreshPosts(Submits);
+                SubmitService.RefreshPosts(Submits);
 
-            return RedirectToPage("/Submits");
-        }
+                return RedirectToPage("/Submits");
+            }
 
         //Uploads the parsed pic into ./wwwroot/images/ 
         //Returns uniqueFileName string - a random ID + file name

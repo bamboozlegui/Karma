@@ -51,8 +51,8 @@
             <p class="mb-1">@Model.Requests.ElementAt(i).Description</p>
             <small>@Model.Requests.ElementAt(i).City,</small>
             <small>@Model.Requests.ElementAt(i).PhoneNumber,</small>
-            <small>@Model.Requests.ElementAt(i).StateEnum</small>
-            <form asp-page-handler="delete" asp-route-Title="@Model.Requests.ElementAt(i).Title" method="post">
+            <small>@Model.Requests.ElementAt(i).State</small>
+            <form asp-page-handler="delete" asp-route-Description="@Model.Requests.ElementAt(i).Description" method="post">
                 <button class="btn btn-default">Delete</button>
             </form>
         </a>

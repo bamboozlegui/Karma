@@ -39,7 +39,6 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
-
         
     </div>
 
@@ -52,7 +51,7 @@
             <div class="card">
                 <img src="/images/@Model.Submits.ElementAt(i).Picture" class="card-img-top" alt="...">
                 <div class="card-body">
-                <h5 class="card-title">@Model.Submits.ElementAt(i).Title</h5>
+                    <h5 class="card-title">@Model.Submits.ElementAt(i).Title, @Model.Submits.ElementAt(i).State</h5>
                 <p class="card-text">@Model.Submits.ElementAt(i).Description</p>
                 <a class="btn btn-secondary" target="_blank" asp-page="/Item" asp-route-itemJson=@Model.Submits.ElementAt(i)>More info</a>
             </div>
