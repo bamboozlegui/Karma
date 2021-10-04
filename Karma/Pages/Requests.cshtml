@@ -11,6 +11,7 @@
     <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
         Request an item
     </button>
+
     <div id="collapseExample" class="collapse">
         <div class="mb-3">
             <label class="form-label">Item name</label>
@@ -42,17 +43,24 @@
     @{
         for (int i = Model.Requests.Count() - 1; i >= 0; i--)
         {
-            <a href="#" class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">@Model.Requests.ElementAt(i).Title</h5>
-                    <small>@Model.Requests.ElementAt(i).PosterName</small>
-                </div>
-                <p class="mb-1">@Model.Requests.ElementAt(i).Description</p>
-                <small>@Model.Requests.ElementAt(i).City,</small>
-                <small>@Model.Requests.ElementAt(i).PhoneNumber</small>
-            </a>
+        <a href="#" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">@Model.Requests.ElementAt(i).Title</h5>
+                <small>@Model.Requests.ElementAt(i).PosterName</small>
+            </div>
+            <p class="mb-1">@Model.Requests.ElementAt(i).Description</p>
+            <small>@Model.Requests.ElementAt(i).City,</small>
+            <small>@Model.Requests.ElementAt(i).PhoneNumber,</small>
+            <small>@Model.Requests.ElementAt(i).State</small>
+            <form asp-page-handler="delete" asp-route-Description="@Model.Requests.ElementAt(i).Description" method="post">
+                <button class="btn btn-default">Delete</button>
+            </form>
+        </a>
+                
         }
     }
 </div>
+
+
 
 

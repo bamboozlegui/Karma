@@ -10,18 +10,17 @@ namespace Karma.Models
 {
     public abstract class PostModel
     {
-        public string State { get; set; }
 
-        public enum _StateEnum
+        public enum StateEnum
         {
+            Recent,
             Available,
-            Unavailable,
+            Taken,
             Pending,
             None
         }
 
-        _StateEnum StateEnum;
-
+        public StateEnum State { get; set; }
 
         public string PosterName { get; set; }
 
