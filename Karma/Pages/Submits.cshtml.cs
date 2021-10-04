@@ -24,9 +24,8 @@ namespace Karma.Pages
         public JsonFilePostService<SubmitModel> SubmitService;
 
         private IWebHostEnvironment WebHostEnvironment { get; }
-        public IEnumerable<SubmitModel> Submits { get; private set; }
 
-        
+        public IEnumerable<SubmitModel> Submits { get; private set; }
 
         public SubmitsModel(
             JsonFilePostService<SubmitModel> submitService,
@@ -43,7 +42,7 @@ namespace Karma.Pages
         // Deletes Post on button trigger, refreshes posts afterwards : )
         public IActionResult OnPostDelete(string Picture)
         {
-            Submits = SubmitService.GetPosts().ToList();
+            Submits = SubmitService.GetPosts();
             
             Submits = Submits.Where(x => x.Picture != Picture);
             SubmitService.RefreshPosts(Submits);
@@ -67,11 +66,18 @@ namespace Karma.Pages
                        "images", Item.Picture);
                     System.IO.File.Delete(filePath);
                 }
+
                 Item.Picture = ProcessUploadedFile(); //Check definition
             }
+	    else
+	    {
+		Item.Picture = "noimage.jpg";
+	    }
 
             Submits = SubmitService.GetPosts().
             Append<SubmitModel>(Item);
+
+	    Submits = Submits.OrderByDescending(item => item.Title);
 
             SubmitService.RefreshPosts(Submits);
 
@@ -99,6 +105,4 @@ namespace Karma.Pages
             return uniqueFileName;
         }
     }
-
-
 }
