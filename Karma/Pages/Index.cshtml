@@ -8,3 +8,46 @@
     <h1 class="display-4">Welcome To Karma</h1>
     <p>Where old and unused things find a new home</p>
 </div>
+
+
+<!--Submitai-->
+<h1 class="display-4 text-center mt-5">Posts</h1>
+<div class="row row-cols-3 mt-2 g-4">
+    @for (int i = Model.Submits.Count() - 1; i >= Model.Submits.Count() - 3; i--)
+    {
+<div class="col">
+    <div class="card">
+        <img src="/images/@Model.Submits.ElementAt(i).Picture" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Submits.ElementAt(i).Title</h5>
+            <p class="card-text">@Model.Submits.ElementAt(i).Description</p>
+            <a class="btn btn-secondary" target="_blank" asp-page="/Item" asp-route-itemJson=@Model.Submits.ElementAt(i)>More info</a>
+        </div>
+        <div class="col-lg-1">
+            <form asp-page-handler="delete" asp-route-picture="@Model.Submits.ElementAt(i).Picture" method="post">
+                <button class="btn btn-default">Delete</button>
+            </form>
+        </div>
+    </div>
+</div>}
+</div>
+
+
+
+<!--Requestai-->
+<div class="list-group mt-4">
+    @{
+        for (int i = Model.Requests.Count() - 1; i >= Model.Requests.Count() - 3; i--)
+        {
+            <a href="#" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">@Model.Requests.ElementAt(i).Title</h5>
+                    <small>@Model.Requests.ElementAt(i).PosterName</small>
+                </div>
+                <p class="mb-1">@Model.Requests.ElementAt(i).Description</p>
+                <small>@Model.Requests.ElementAt(i).City,</small>
+                <small>@Model.Requests.ElementAt(i).PhoneNumber</small>
+            </a>
+        }
+    }
+</div>
