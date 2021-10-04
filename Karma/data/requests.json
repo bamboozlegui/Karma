@@ -1,18 +1,10 @@
 [
   {
-    "State": "Available",
+    "State": 0,
     "PosterName": "Petras Petraitis",
     "City": "Kupi\u0161kis",
     "PhoneNumber": "\u002B393513651860",
     "Title": "Stalas",
-    "Description": "Reikia stalo studijoms"
-  },
-  {
-    "State": "Unavailable",
-    "PosterName": "Petras Petraitis",
-    "City": "Kupi\u0161kis",
-    "PhoneNumber": "\u002B393513651860",
-    "Title": "Stalas",
-    "Description": "Reikia stalo studijoms"
+    "Description": "Reikia stalo studijomsss"
   }
 ]
