@@ -43,6 +43,9 @@ namespace Karma.Pages
         public IActionResult OnPostDelete(string Picture)
         {
             Submits = SubmitService.GetPosts();
+
+            string filePath = Path.Combine(WebHostEnvironment.WebRootPath, "images", Picture);
+            System.IO.File.Delete(filePath);
             
             Submits = Submits.Where(x => x.Picture != Picture);
             SubmitService.RefreshPosts(Submits);
