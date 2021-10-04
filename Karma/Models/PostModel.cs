@@ -20,7 +20,7 @@ namespace Karma.Models
             None
         }
 
-        _StateEnum StateEnum;
+        public _StateEnum StateEnum;
 
 
         public string PosterName { get; set; }

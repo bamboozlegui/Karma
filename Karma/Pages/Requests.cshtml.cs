@@ -26,6 +26,16 @@ namespace Karma.Pages
             Requests = RequestService.GetPosts();
         }
 
+        public IActionResult OnPostDelete(string Title)
+        {
+            Requests = RequestService.GetPosts().ToList();
+
+            Requests = Requests.Where(x => x.Title != Title);
+            RequestService.RefreshPosts(Requests);
+
+            return RedirectToPage("/Requests");
+        }
+
         public IActionResult OnPost()
         {
             if(ModelState.IsValid == false)

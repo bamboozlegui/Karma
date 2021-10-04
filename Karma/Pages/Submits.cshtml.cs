@@ -45,11 +45,10 @@ namespace Karma.Pages
         {
             Submits = SubmitService.GetPosts().ToList();
             
-            Submits = Submits.Where(x => x.Picture != Picture).ToList();
+            Submits = Submits.Where(x => x.Picture != Picture);
             SubmitService.RefreshPosts(Submits);
 
             return RedirectToPage("/Submits");
-
         }
 
 
