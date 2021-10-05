@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace Karma.Models
 {
-    public class SubmitModel : PostModel, IJsonStorable
+    public class ItemPost : Post, IJsonStorable
     {
         public string Picture { get; set; }
         
-        public override string ToString() => JsonSerializer.Serialize<SubmitModel>(this);
+        public override string ToString() => JsonSerializer.Serialize<ItemPost>(this);
         public string GetJsonName() => "items.json";
 
     }

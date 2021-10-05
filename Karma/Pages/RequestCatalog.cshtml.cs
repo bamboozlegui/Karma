@@ -12,13 +12,13 @@ namespace Karma.Pages
 {
     public class GetRequestsModel : PageModel
     {
-        private readonly ILogger<RequestModel> _logger;
-        public JsonFilePostService<RequestModel> RequestService;   
-        public IEnumerable<RequestModel> Requests { get; private set; }
+        private readonly ILogger<RequestPost> _logger;
+        public JsonFilePostService<RequestPost> RequestService;   
+        public IEnumerable<RequestPost> Requests { get; private set; }
 
         public GetRequestsModel(
-            ILogger<RequestModel> logger,
-            JsonFilePostService<RequestModel> requestService)
+            ILogger<RequestPost> logger,
+            JsonFilePostService<RequestPost> requestService)
         {
             _logger = logger;
             RequestService = requestService;

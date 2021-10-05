@@ -8,7 +8,7 @@ using System.Text.Json;
 
 namespace Karma.Models
 {
-    public abstract class PostModel
+    public abstract class Post
     {
 
         public enum StateEnum

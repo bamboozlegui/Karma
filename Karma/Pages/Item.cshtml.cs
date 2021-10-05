@@ -18,7 +18,7 @@ namespace Karma.Pages
 
         private IWebHostEnvironment WebHostEnvironment { get; }
 
-        public SubmitModel Item { get; set; }
+        public ItemPost Item { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string itemJson { get; set; }
@@ -33,7 +33,7 @@ namespace Karma.Pages
 
         public void OnGet()
         {
-            SubmitModel deserializedItem = JsonSerializer.Deserialize<SubmitModel>(itemJson);
+            ItemPost deserializedItem = JsonSerializer.Deserialize<ItemPost>(itemJson);
             if (deserializedItem.Picture == null)
                 deserializedItem.Picture = "noimage.jpg";
             Item = deserializedItem;

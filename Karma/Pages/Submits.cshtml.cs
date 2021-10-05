@@ -16,19 +16,19 @@ namespace Karma.Pages
     {
 
         [BindProperty]
-        public SubmitModel Item { get; set; }   
+        public ItemPost Item { get; set; }   
         
         [BindProperty]
         public IFormFile Photo { get; set; }
 
-        public JsonFilePostService<SubmitModel> SubmitService;
+        public JsonFilePostService<ItemPost> SubmitService;
 
         private IWebHostEnvironment WebHostEnvironment { get; }
 
-        public IEnumerable<SubmitModel> Submits { get; private set; }
+        public IEnumerable<ItemPost> Submits { get; private set; }
 
         public SubmitsModel(
-            JsonFilePostService<SubmitModel> submitService,
+            JsonFilePostService<ItemPost> submitService,
             IWebHostEnvironment webHostEnvironment)
         {
             SubmitService = submitService;
@@ -76,7 +76,7 @@ namespace Karma.Pages
 	        }
 
                 Submits = SubmitService.GetPosts().
-                Append<SubmitModel>(Item);
+                Append<ItemPost>(Item);
 
 	            Submits = Submits.OrderByDescending(item => item.State).ThenByDescending(item => item.Title);
 
