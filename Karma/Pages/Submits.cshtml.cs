@@ -64,8 +64,7 @@ namespace Karma.Pages
             {
                 if (Item.Picture != null) //If our Item already has a picture path string, we should delete it first to upload a new one
                 {
-                    string filePath = Path.Combine(WebHostEnvironment.WebRootPath,
-                       "images", Item.Picture);
+                    string filePath = Path.Combine(WebHostEnvironment.WebRootPath, "images", Item.Picture);
                     System.IO.File.Delete(filePath);
                 }
 
