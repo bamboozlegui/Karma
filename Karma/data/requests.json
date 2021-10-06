@@ -5,6 +5,16 @@
     "City": "Kupi\u0161kis",
     "PhoneNumber": "\u002B393513651860",
     "Title": "Stalas",
-    "Description": "Reikia stalo studijomsss"
+    "Description": "Reikia stalo studijomsss",
+    "Date": "0001-01-01T00:00:00"
+  },
+  {
+    "State": 0,
+    "PosterName": null,
+    "City": null,
+    "PhoneNumber": "asd",
+    "Title": null,
+    "Description": null,
+    "Date": "0001-01-01T00:00:00"
   }
 ]

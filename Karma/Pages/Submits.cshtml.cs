@@ -72,8 +72,9 @@ namespace Karma.Pages
             }
 	        else
 	        {
-		    Item.Picture = "noimage.jpg";
+		        Item.Picture = "noimage.jpg";
 	        }
+                Item.Date = DateTime.Now;
 
                 Submits = SubmitService.GetPosts().
                 Append<ItemPost>(Item);
