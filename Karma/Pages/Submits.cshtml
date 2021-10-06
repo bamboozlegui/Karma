@@ -1,6 +1,7 @@
 ﻿@page
 @model Karma.Pages.SubmitsModel
-@{ ViewData["Title"] = "Submit Items"; }
+@{ ViewData["Title"] = "Submit Items";}
+@using Karma.Extensions;
 
 <h1>@ViewData["Title"]</h1>
 
@@ -53,6 +54,7 @@
                 <div class="card-body">
                     <h5 class="card-title">@Model.Submits.ElementAt(i).Title, @Model.Submits.ElementAt(i).State</h5>
                 <p class="card-text">@Model.Submits.ElementAt(i).Description</p>
+                <p class="card-text">@Model.Submits.ElementAt(i).Date.ShowTimeSpan()</p>
                 <a class="btn btn-secondary" target="_blank" asp-page="/Item" asp-route-itemJson=@Model.Submits.ElementAt(i)>More info</a>
             </div>
             <div class="col-lg-1">
