@@ -33,10 +33,20 @@ namespace Karma.Pages
 
         public void OnGet()
         {
-            ItemPost deserializedItem = JsonSerializer.Deserialize<ItemPost>(itemJson);
-            if (deserializedItem.Picture == null)
-                deserializedItem.Picture = "noimage.jpg";
-            Item = deserializedItem;
+            try
+            {
+                ItemPost deserializedItem = JsonSerializer.Deserialize<ItemPost>(itemJson);
+                if (deserializedItem.Picture == null)
+                    deserializedItem.Picture = "noimage.jpg";
+                Item = deserializedItem;
+            }
+            catch (JsonException)
+            {
+                Item = new ItemPost() { 
+                    State   = Post.StateEnum.None,
+                    Title   = "No such item",
+                    Picture = "noimage.jpg",};
+            }
         }
     }
 }
