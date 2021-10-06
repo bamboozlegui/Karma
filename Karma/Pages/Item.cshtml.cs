@@ -31,7 +31,7 @@ namespace Karma.Pages
             WebHostEnvironment = webHostEnvironment;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
             try
             {
@@ -42,11 +42,10 @@ namespace Karma.Pages
             }
             catch (JsonException)
             {
-                Item = new ItemPost() { 
-                    State   = Post.StateEnum.None,
-                    Title   = "No such item",
-                    Picture = "noimage.jpg",};
+                return RedirectToPage("/NotFound");
             }
+            
+            return Page();
         }
     }
 }
