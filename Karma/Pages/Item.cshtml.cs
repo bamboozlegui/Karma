@@ -9,40 +9,36 @@ using Karma.Models;
 using System.Text.Json;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using Karma.Services;
 
 namespace Karma.Pages
 {
     public class ItemModel : PageModel
     {
-        private readonly ILogger<ItemModel> _logger;
-
         private IWebHostEnvironment WebHostEnvironment { get; }
+
+        private JsonFilePostService<ItemPost> ItemService { get; }
 
         public ItemPost Item { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public string itemJson { get; set; }
+        public string ID { get; set; }
 
         public ItemModel(
-            ILogger<ItemModel> logger,
+            JsonFilePostService<ItemPost> itemService,
             IWebHostEnvironment webHostEnvironment)
         {
-            _logger = logger;
+            ItemService = itemService;
             WebHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult OnGet()
         {
-            try
+            Item = ItemService.GetPost(ItemService, ID);
+
+            if (Item.Picture == null)
             {
-                ItemPost deserializedItem = JsonSerializer.Deserialize<ItemPost>(itemJson);
-                if (deserializedItem.Picture == null)
-                    deserializedItem.Picture = "noimage.jpg";
-                Item = deserializedItem;
-            }
-            catch (JsonException)
-            {
-                return RedirectToPage("/NotFound");
+                Item.Picture = "noimage.jpg";
             }
             
             return Page();

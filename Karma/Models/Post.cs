@@ -23,6 +23,7 @@ namespace Karma.Models
 
         public StateEnum State { get; set; }
 
+        public string ID { get; set; }
         public string PosterName { get; set; }
 
         public string City { get; set; }

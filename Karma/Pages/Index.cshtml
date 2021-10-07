@@ -1,7 +1,9 @@
 ﻿@page
+@using Karma.Models
 @model IndexModel
-@{ ViewData["Title"] = "Home page"; }
-
+@{ 
+    ViewData["Title"] = "Home page";
+}
 <div class="text-center">
     <h1 class="display-4">Welcome To Karma</h1>
     <p>Where old and unused things find a new home</p>
@@ -10,7 +12,7 @@
 
 <!--Submitai-->
 <h1 class="display-4 text-center mt-5">Posts</h1>
-<div class="row row-cols-3 mt-2 g-4">
+<div class="container-fluid row row-cols-1 row-cols-md-3 mt-2 g-4">
     @for (int i = Model.Submits.Count() - 1; i >= Model.Submits.Count() - 3; i--)
     {
 <div class="col">
@@ -18,7 +20,7 @@
         <img src="/images/@Model.Submits.ElementAt(i).Picture" class="card-img-top" alt="...">
         <div class="card-body">
             <h5 class="card-title">@Model.Submits.ElementAt(i).Title</h5>
-            <a class="btn btn-secondary" target="_blank" asp-page="/Item" asp-route-itemJson=@Model.Submits.ElementAt(i)>More info</a>
+            <a class="btn btn-secondary" target="_blank" asp-page="/Item" asp-route-ID=@Model.Submits.ElementAt(i).ID>More info</a>
         </div>
 
     </div>
@@ -30,11 +32,26 @@
 </div>
 
 <!--Requestai-->
-<div class="list-group mt-5">
-    @if (Model.Requests.Count() > 3)
+@{ 
+    void PrintListas(IEnumerable<RequestPost> requestas, int counter)
     {
-        @for (int i = Model.Requests.Count() - 1; i >= Model.Requests.Count() - 3; i--)
+        <div class="list-group mt-5">
+        @if (counter == 1)
         {
+            <a href="#" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">@Model.Requests.ElementAt(counter - 1).Title</h5>
+                <small>@Model.Requests.ElementAt(counter - 1).PosterName</small>
+            </div>
+            <p class="mb-1">@Model.Requests.ElementAt(counter - 1).Description</p>
+            <small>@Model.Requests.ElementAt(counter - 1).City,</small>
+            <small>@Model.Requests.ElementAt(counter - 1).PhoneNumber</small>
+            </a>
+        }
+        else
+        {
+            for(int i = requestas.Count() - 1; i >= requestas.Count() - counter; i--)
+            {
             <a href="#" class="list-group-item list-group-item-action">
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">@Model.Requests.ElementAt(i).Title</h5>
@@ -44,6 +61,24 @@
                 <small>@Model.Requests.ElementAt(i).City,</small>
                 <small>@Model.Requests.ElementAt(i).PhoneNumber</small>
             </a>
+            }
         }
+        </div>
+    
     }
+
+    if(Model.Requests.Count() >= 3)
+    {
+        PrintListas(Model.Requests, 3);
+    }else if(Model.Requests.Count() > 0){
+        PrintListas(Model.Requests, Model.Requests.Count());
+    }else{
+        PrintListas(Model.Requests, 0);
+    }
+
+}
+<div class="d-grid gap-2 col-6 mx-auto mt-3">
+    <a class="btn btn-outline-secondary" target="_blank" asp-page="/Requests">More requests</a>
 </div>
+
+

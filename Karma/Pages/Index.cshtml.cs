@@ -35,9 +35,6 @@ namespace Karma.Pages
             SubmitService = submitService;
         }
         
-
-        private readonly ILogger<IndexModel> _logger;
-
         public void OnGet()
         {
             Requests = RequestService.GetPosts();
