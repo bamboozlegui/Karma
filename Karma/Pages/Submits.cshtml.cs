@@ -71,17 +71,18 @@ namespace Karma.Pages
 	        {
 		        Item.Picture = "noimage.jpg";
 	        }
-                Item.Date = DateTime.Now;
 
-                Submits = SubmitService.GetPosts().
-                Append<ItemPost>(Item);
+            Item.Date = DateTime.Now;
 
-	            Submits = Submits.OrderByDescending(item => item.State).ThenByDescending(item => item.Title);
+            Submits = SubmitService.GetPosts().Append(Item);
 
-                SubmitService.RefreshPosts(Submits);
+	        Submits = Submits.OrderByDescending(item => item.State).ThenByDescending(item => item.Title);
+            Submits = Submits.Where(item => item.State != Post.StateEnum.Hidden);
+                
+            SubmitService.RefreshPosts(Submits);
 
-                return RedirectToPage("/Submits");
-            }
+            return RedirectToPage("/Submits");
+        }
 
         //Uploads the parsed pic into ./wwwroot/images/ 
         //Returns uniqueFileName string - a random ID + file name

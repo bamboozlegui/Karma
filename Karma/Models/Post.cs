@@ -13,13 +13,13 @@ namespace Karma.Models
 
         public enum StateEnum
         {
-            Recent,
-            Available,
-            Taken,
-            Pending,
-            Hidden,
-            None
+            Available = 1,
+            Recent = 2,
+            Taken = 4,
+            Hidden = 8,
+            None = 0
         }
+
 
         public StateEnum State { get; set; }
 

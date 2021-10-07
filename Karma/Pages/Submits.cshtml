@@ -72,8 +72,10 @@
 </div>
 
 
-    <div class="row row-cols-3 mt-3">
-        @for (int i = Model.Submits.Count() - 1; i >= 0; i--)
+<div class="row row-cols-3 mt-3">
+    @for (int i = Model.Submits.Count() - 1; i >= 0; i--)
+    {
+        if (Model.Submits.ElementAt(i).State != Models.Post.StateEnum.Hidden)
         {
             <div class="col">
                 <div class="card">
@@ -91,4 +93,5 @@
                     </div>
                 </div>
             </div>}
-    </div>
+    }
+</div>
