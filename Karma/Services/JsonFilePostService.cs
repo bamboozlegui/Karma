@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Karma.Services
 {
-    public class JsonFilePostService<T> where T : IJsonStorable, new()
+    public class JsonFilePostService<T> where T : Post, IJsonStorable, new()
     {
         public JsonFilePostService(IWebHostEnvironment webHostEnvironment)
         {
@@ -40,6 +40,14 @@ namespace Karma.Services
                 JsonFileName, 
                 JsonSerializer.Serialize<IEnumerable<T>>(posts, 
                 new JsonSerializerOptions {WriteIndented = true}));
+        }
+
+        public T GetPost(JsonFilePostService<T> postService, string id)
+        {
+            IEnumerable<T> posts = postService.GetPosts();
+            T post = posts.FirstOrDefault<T>(post => post.ID == id);
+
+            return post;
         }
 
         public void DeletePost(JsonFilePostService<ItemPost> submitService, List<ItemPost> posts, string id)
