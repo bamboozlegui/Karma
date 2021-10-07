@@ -34,12 +34,25 @@ namespace Karma.Services
             }
         }
 
-        public void RefreshPosts(IEnumerable<T> requests)
+        public void RefreshPosts(IEnumerable<T> posts)
         {
             File.WriteAllTextAsync(
                 JsonFileName, 
-                JsonSerializer.Serialize<IEnumerable<T>>(requests, 
+                JsonSerializer.Serialize<IEnumerable<T>>(posts, 
                 new JsonSerializerOptions {WriteIndented = true}));
+        }
+
+        public void DeletePost(JsonFilePostService<ItemPost> submitService, List<ItemPost> posts, string id)
+        {
+            ItemPost post = posts.FirstOrDefault<ItemPost>(post => post.ID == id);
+
+            if(post.Picture != "noimage.jpg")
+            {
+                string filePath = Path.Combine(WebHostEnvironment.WebRootPath, "images", post.Picture);
+                System.IO.File.Delete(filePath);
+            }
+
+            submitService.RefreshPosts(posts.Where(post => post.ID != id));
         }
     }
 }
