@@ -18,7 +18,7 @@
         <img src="/images/@Model.Submits.ElementAt(i).Picture" class="card-img-top" alt="...">
         <div class="card-body">
             <h5 class="card-title">@Model.Submits.ElementAt(i).Title</h5>
-            <a class="btn btn-secondary" target="_blank" asp-page="/Item" asp-route-itemJson=@Model.Submits.ElementAt(i)>More info</a>
+            <a class="btn btn-secondary" target="_blank" asp-page="/Item" asp-route-ID=@Model.Submits.ElementAt(i).ID>More info</a>
         </div>
 
     </div>
