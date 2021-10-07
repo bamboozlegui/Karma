@@ -13,12 +13,13 @@ namespace Karma.Models
 
         public enum StateEnum
         {
-            Recent,
-            Available,
-            Taken,
-            Pending,
-            None
+            Recent = 1,
+            Available = 2,
+            Taken = 4,
+            Hidden = 8,
+            None = 0
         }
+
 
         public StateEnum State { get; set; }
 
@@ -32,9 +33,12 @@ namespace Karma.Models
         public string Title { get; set; }
 
         public string Description { get; set; }
-        
+
         public DateTime Date { get; set; }
 
+        public string Category {get; set;}
+
+        public static string[] Categories = { "Cat1", "Cat2", "Cat3", "Cat4", "Cat5" };
         public abstract override string ToString();
 
     }

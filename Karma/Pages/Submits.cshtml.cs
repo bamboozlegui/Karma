@@ -27,9 +27,7 @@ namespace Karma.Pages
 
         public IEnumerable<ItemPost> Submits { get; private set; }
 
-        public SubmitsModel(
-            JsonFilePostService<ItemPost> submitService,
-            IWebHostEnvironment webHostEnvironment)
+        public SubmitsModel(JsonFilePostService<ItemPost> submitService, IWebHostEnvironment webHostEnvironment)
         {
             SubmitService = submitService;
             WebHostEnvironment = webHostEnvironment;    
@@ -46,7 +44,12 @@ namespace Karma.Pages
 
             return RedirectToPage("/Submits");
         }
-
+        // TO-DO implement filter by Category, get info from checkbox
+        // public List<string> Categories = new List<string>(Post.SCategories);
+        public IActionResult OnPostFilter()
+        {
+            return RedirectToPage("/Submits");
+        }
 
         public IActionResult OnPost()
         {
@@ -69,18 +72,20 @@ namespace Karma.Pages
 	        {
 		        Item.Picture = "noimage.jpg";
 	        }
+
                 Item.Date = DateTime.Now;
                 Item.ID   = Guid.NewGuid().ToString();
 
-                Submits = SubmitService.GetPosts().
-                Append<ItemPost>(Item);
+            Item.Date = DateTime.Now;
 
-	            Submits = Submits.OrderByDescending(item => item.State).ThenByDescending(item => item.Title);
+            Submits = SubmitService.GetPosts().Append(Item);
 
-                SubmitService.RefreshPosts(Submits);
+	        Submits = Submits.OrderByDescending(item => item.State).ThenByDescending(item => item.Title);
+                
+            SubmitService.RefreshPosts(Submits);
 
-                return RedirectToPage("/Submits");
-            }
+            return RedirectToPage("/Submits");
+        }
 
         //Uploads the parsed pic into ./wwwroot/images/ 
         //Returns uniqueFileName string - a random ID + file name
@@ -102,6 +107,5 @@ namespace Karma.Pages
 
             return uniqueFileName;
         }
-
     }
 }
