@@ -31,9 +31,11 @@ namespace Karma.Models
         public string Title { get; set; }
 
         public string Description { get; set; }
-        
+
         public DateTime Date { get; set; }
 
+        public string Category {get; set;}
+        public static string[] Categories = { "Cat1", "Cat2", "Cat3", "Cat4", "Cat5" };
         public abstract override string ToString();
 
     }
