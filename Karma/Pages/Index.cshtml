@@ -29,6 +29,21 @@
     <a class="btn btn-outline-secondary" target="_blank" asp-page="/Submits">More items</a>
 </div>
 
-
 <!--Requestai-->
-
+<div class="list-group mt-5">
+    @if (Model.Requests.Count() > 3)
+    {
+        @for (int i = Model.Requests.Count() - 1; i >= Model.Requests.Count() - 3; i--)
+        {
+            <a href="#" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">@Model.Requests.ElementAt(i).Title</h5>
+                    <small>@Model.Requests.ElementAt(i).PosterName</small>
+                </div>
+                <p class="mb-1">@Model.Requests.ElementAt(i).Description</p>
+                <small>@Model.Requests.ElementAt(i).City,</small>
+                <small>@Model.Requests.ElementAt(i).PhoneNumber</small>
+            </a>
+        }
+    }
+</div>
