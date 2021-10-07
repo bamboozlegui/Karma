@@ -8,20 +8,19 @@ using System.Text.Json;
 
 namespace Karma.Models
 {
-    public abstract class PostModel
+    public abstract class Post
     {
-        public string State { get; set; }
 
-        public enum _StateEnum
+        public enum StateEnum
         {
+            Recent,
             Available,
-            Unavailable,
+            Taken,
             Pending,
             None
         }
 
-        _StateEnum StateEnum;
-
+        public StateEnum State { get; set; }
 
         public string PosterName { get; set; }
 
@@ -32,6 +31,8 @@ namespace Karma.Models
         public string Title { get; set; }
 
         public string Description { get; set; }
+        
+        public DateTime Date { get; set; }
 
         public abstract override string ToString();
 

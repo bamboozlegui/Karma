@@ -16,19 +16,19 @@ namespace Karma.Pages
     {
 
         [BindProperty]
-        public SubmitModel Item { get; set; }
+        public ItemPost Item { get; set; }   
         
         [BindProperty]
         public IFormFile Photo { get; set; }
 
-        public JsonFilePostService<SubmitModel> SubmitService;
+        public JsonFilePostService<ItemPost> SubmitService;
 
         private IWebHostEnvironment WebHostEnvironment { get; }
 
-        public IEnumerable<SubmitModel> Submits { get; private set; }
+        public IEnumerable<ItemPost> Submits { get; private set; }
 
         public SubmitsModel(
-            JsonFilePostService<SubmitModel> submitService,
+            JsonFilePostService<ItemPost> submitService,
             IWebHostEnvironment webHostEnvironment)
         {
             SubmitService = submitService;
@@ -43,10 +43,12 @@ namespace Karma.Pages
         public IActionResult OnPostDelete(string Picture)
         {
             Submits = SubmitService.GetPosts();
+
+            string filePath = Path.Combine(WebHostEnvironment.WebRootPath, "images", Picture);
+            System.IO.File.Delete(filePath);
             
             Submits = Submits.Where(x => x.Picture != Picture);
             SubmitService.RefreshPosts(Submits);
-
             return RedirectToPage("/Submits");
         }
 
@@ -62,27 +64,27 @@ namespace Karma.Pages
             {
                 if (Item.Picture != null) //If our Item already has a picture path string, we should delete it first to upload a new one
                 {
-                    string filePath = Path.Combine(WebHostEnvironment.WebRootPath,
-                       "images", Item.Picture);
+                    string filePath = Path.Combine(WebHostEnvironment.WebRootPath, "images", Item.Picture);
                     System.IO.File.Delete(filePath);
                 }
 
                 Item.Picture = ProcessUploadedFile(); //Check definition
             }
-	    else
-	    {
-		Item.Picture = "noimage.jpg";
-	    }
+	        else
+	        {
+		        Item.Picture = "noimage.jpg";
+	        }
+                Item.Date = DateTime.Now;
 
-            Submits = SubmitService.GetPosts().
-            Append<SubmitModel>(Item);
+                Submits = SubmitService.GetPosts().
+                Append<ItemPost>(Item);
 
-	    Submits = Submits.OrderByDescending(item => item.Title);
+	            Submits = Submits.OrderByDescending(item => item.State).ThenByDescending(item => item.Title);
 
-            SubmitService.RefreshPosts(Submits);
+                SubmitService.RefreshPosts(Submits);
 
-            return RedirectToPage("/Submits");
-        }
+                return RedirectToPage("/Submits");
+            }
 
         //Uploads the parsed pic into ./wwwroot/images/ 
         //Returns uniqueFileName string - a random ID + file name

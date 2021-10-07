@@ -12,18 +12,30 @@ namespace Karma.Pages
     public class RequestsModel : PageModel
     {
         [BindProperty]
-        public RequestModel Item { get; set; }
+        public RequestPost Item { get; set; }
 
-        public JsonFilePostService<RequestModel> RequestService;   
-        public IEnumerable<RequestModel> Requests { get; private set; }
+        public JsonFilePostService<RequestPost> RequestService;   
+        public IEnumerable<RequestPost> Requests { get; private set; }
 
-        public RequestsModel(JsonFilePostService<RequestModel> requestService)
+        public RequestsModel(JsonFilePostService<RequestPost> requestService)
         {
             RequestService = requestService;
         }
         public void OnGet()
         {
             Requests = RequestService.GetPosts();
+        }
+
+        public IActionResult OnPostDelete(string Description)
+        {
+            Requests = RequestService.GetPosts();
+
+            Requests = Requests.Where(x => x.Description != Description);
+            RequestService.RefreshPosts(Requests);
+
+            return RedirectToPage("/Requests");
+
+
         }
 
         public IActionResult OnPost()
@@ -34,7 +46,7 @@ namespace Karma.Pages
             }
 
             Requests = RequestService.GetPosts().
-            Append<RequestModel>(Item);
+            Append<RequestPost>(Item);
 
             RequestService.RefreshPosts(Requests);
 
