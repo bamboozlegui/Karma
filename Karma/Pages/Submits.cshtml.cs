@@ -49,6 +49,12 @@ namespace Karma.Pages
             SubmitService.RefreshPosts(Submits);
             return RedirectToPage("/Submits");
         }
+        // TO-DO implement filter by Category, get info from checkbox
+        // public List<string> Categories = new List<string>(Post.SCategories);
+        public IActionResult OnPostFilter()
+        {
+            return RedirectToPage("/Submits");
+        }
 
         public IActionResult OnPost()
         {
@@ -77,7 +83,6 @@ namespace Karma.Pages
             Submits = SubmitService.GetPosts().Append(Item);
 
 	        Submits = Submits.OrderByDescending(item => item.State).ThenByDescending(item => item.Title);
-            Submits = Submits.Where(item => item.State != Post.StateEnum.Hidden);
                 
             SubmitService.RefreshPosts(Submits);
 

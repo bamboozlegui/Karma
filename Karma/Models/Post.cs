@@ -13,8 +13,8 @@ namespace Karma.Models
 
         public enum StateEnum
         {
-            Available = 1,
-            Recent = 2,
+            Recent = 1,
+            Available = 2,
             Taken = 4,
             Hidden = 8,
             None = 0

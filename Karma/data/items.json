@@ -64,5 +64,16 @@
     "Description": null,
     "Date": "2021-10-07T18:00:27.9589748+03:00",
     "Category": "Category"
+  },
+  {
+    "Picture": "noimage.jpg",
+    "State": 0,
+    "PosterName": null,
+    "City": null,
+    "PhoneNumber": null,
+    "Title": null,
+    "Description": null,
+    "Date": "2021-10-07T20:04:25.5093286+03:00",
+    "Category": null
   }
 ]
