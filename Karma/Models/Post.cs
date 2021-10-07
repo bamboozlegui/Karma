@@ -17,6 +17,7 @@ namespace Karma.Models
             Available,
             Taken,
             Pending,
+            Hidden,
             None
         }
 
@@ -35,6 +36,7 @@ namespace Karma.Models
         public DateTime Date { get; set; }
 
         public string Category {get; set;}
+
         public static string[] Categories = { "Cat1", "Cat2", "Cat3", "Cat4", "Cat5" };
         public abstract override string ToString();
 
