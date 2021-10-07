@@ -1,42 +1,30 @@
 [
   {
-    "Picture": "noimage.jpg",
-    "State": 3,
-    "PosterName": null,
-    "City": null,
-    "PhoneNumber": null,
-    "Title": "Item",
-    "Description": null,
-    "Date": "0001-01-01T00:00:00"
-  },
-  {
     "Picture": "751e6b37-8b9d-4a08-96e2-db2f320107c4_external-content.duckduckgo.com.jpg",
-    "State": 2,
+    "State": "Pending",
     "PosterName": "Jonas",
     "City": "Mare",
     "PhoneNumber": "3289423908423",
     "Title": "Laptopas",
-    "Description": "Atiduodu, nebereik",
-    "Date": "0001-01-01T00:00:00"
-  },
-  {
-    "Picture": "f7ed64fc-4cbf-4509-9783-010ed9eb800f_dish-network.png",
-    "State": 1,
-    "PosterName": "Ignas",
-    "City": "Utena",
-    "PhoneNumber": "423423543242",
-    "Title": "5G antena",
-    "Description": "Dave korona, nebereik",
-    "Date": "0001-01-01T00:00:00"
+    "Description": "Atiduodu, nebereik"
   },
   {
     "Picture": "f2ca5a29-c1d5-4df1-88ca-7005ffa69f36_pristatyti-nauji-greitosios-pagalbos-automobiliai-78466085.jpg",
-    "State": 0,
+    "State": "Pending",
     "PosterName": "Redacted",
     "City": "Vilnius",
     "PhoneNumber": "5342452352",
     "Title": "Greituk\u0117",
-    "Description": "Joki\u0173 klausim\u0173, atiduodu i\u0161kart",
-    "Date": "0001-01-01T00:00:00"
+    "Description": "Joki\u0173 klausim\u0173, atiduodu i\u0161kart"
+  },
+  {
+    "Picture": "f7ed64fc-4cbf-4509-9783-010ed9eb800f_dish-network.png",
+    "State": "Pending",
+    "PosterName": "Ignas",
+    "City": "Utena",
+    "PhoneNumber": "423423543242",
+    "Title": "5G antena",
+    "Description": "Dave korona, nebereik"
   }
-]
+
+[
