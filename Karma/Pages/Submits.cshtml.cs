@@ -53,38 +53,41 @@ namespace Karma.Pages
 
         public IActionResult OnPost()
         {
-            if (ModelState.IsValid == false)
+            if (ModelState.IsValid)
+            {
+                if (Photo != null)
+                {
+                    if (Item.Picture != null) //If our Item already has a picture path string, we should delete it first to upload a new one
+                    {
+                        string filePath = Path.Combine(WebHostEnvironment.WebRootPath, "images", Item.Picture);
+                        System.IO.File.Delete(filePath);
+                    }
+
+                    Item.Picture = ProcessUploadedFile(); //Check definition
+                }
+                else
+                {
+                    Item.Picture = "noimage.jpg";
+                }
+
+                Item.Date = DateTime.Now;
+                Item.ID = Guid.NewGuid().ToString();
+
+                Item.Date = DateTime.Now;
+
+                Submits = SubmitService.GetPosts().Append(Item);
+
+                Submits = Submits.OrderByDescending(item => item.State).ThenByDescending(item => item.Title);
+
+                SubmitService.RefreshPosts(Submits);
+
+                return RedirectToPage("/Submits");
+            }
+            else
             {
                 return Page();
             }
-
-            if (Photo != null)
-            {
-                if (Item.Picture != null) //If our Item already has a picture path string, we should delete it first to upload a new one
-                {
-                    string filePath = Path.Combine(WebHostEnvironment.WebRootPath, "images", Item.Picture);
-                    System.IO.File.Delete(filePath);
-                }
-
-                Item.Picture = ProcessUploadedFile(); //Check definition
-            }
-	        else
-	        {
-		        Item.Picture = "noimage.jpg";
-	        }
-
-                Item.Date = DateTime.Now;
-                Item.ID   = Guid.NewGuid().ToString();
-
-            Item.Date = DateTime.Now;
-
-            Submits = SubmitService.GetPosts().Append(Item);
-
-	        Submits = Submits.OrderByDescending(item => item.State).ThenByDescending(item => item.Title);
-                
-            SubmitService.RefreshPosts(Submits);
-
-            return RedirectToPage("/Submits");
+            
         }
 
         //Uploads the parsed pic into ./wwwroot/images/ 
