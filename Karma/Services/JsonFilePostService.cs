@@ -26,8 +26,7 @@ namespace Karma.Services
         {
             using(var jsonFileReader = File.OpenText(JsonFileName))
             {
-                return JsonSerializer.Deserialize<T[]>(jsonFileReader.ReadToEnd(),
-                    new JsonSerializerOptions
+                return JsonSerializer.Deserialize<T[]>(jsonFileReader.ReadToEnd(),new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true
                     });
