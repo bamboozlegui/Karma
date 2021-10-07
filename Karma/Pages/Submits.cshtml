@@ -55,10 +55,10 @@
                     <h5 class="card-title">@Model.Submits.ElementAt(i).Title, @Model.Submits.ElementAt(i).State</h5>
                 <p class="card-text">@Model.Submits.ElementAt(i).Description</p>
                 <p class="card-text">@Model.Submits.ElementAt(i).Date.ShowTimeSpan()</p>
-                <a class="btn btn-secondary" target="_blank" asp-page="/Item" asp-route-itemJson=@Model.Submits.ElementAt(i)>More info</a>
+                <a class="btn btn-secondary" target="_blank" asp-page="/Item" asp-route-ID=@Model.Submits.ElementAt(i).ID>More info</a>
             </div>
             <div class="col-lg-1">
-                <form asp-page-handler="delete" asp-route-picture="@Model.Submits.ElementAt(i).Picture" method="post">
+                <form asp-page-handler="delete" asp-route-id="@Model.Submits.ElementAt(i).ID" method="post">
                     <button class="btn btn-default" >Delete</button>
                 </form>
             </div>

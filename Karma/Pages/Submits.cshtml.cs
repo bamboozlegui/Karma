@@ -40,15 +40,12 @@ namespace Karma.Pages
         }
 
         // Deletes Post on button trigger, refreshes posts afterwards : )
-        public IActionResult OnPostDelete(string Picture)
+        public IActionResult OnPostDelete(string id)
         {
             Submits = SubmitService.GetPosts();
 
-            string filePath = Path.Combine(WebHostEnvironment.WebRootPath, "images", Picture);
-            System.IO.File.Delete(filePath);
-            
-            Submits = Submits.Where(x => x.Picture != Picture);
-            SubmitService.RefreshPosts(Submits);
+            SubmitService.DeletePost(SubmitService, Submits.ToList<ItemPost>(), id);
+
             return RedirectToPage("/Submits");
         }
 
@@ -75,6 +72,7 @@ namespace Karma.Pages
 		        Item.Picture = "noimage.jpg";
 	        }
                 Item.Date = DateTime.Now;
+                Item.ID   = Guid.NewGuid().ToString();
 
                 Submits = SubmitService.GetPosts().
                 Append<ItemPost>(Item);
@@ -105,6 +103,11 @@ namespace Karma.Pages
             }
 
             return uniqueFileName;
+        }
+
+        private void DeletePicture(string id)
+        {
+
         }
     }
 }

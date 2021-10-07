@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Karma.Services
 {
-    public class JsonFilePostService<T> where T : IJsonStorable, new()
+    public class JsonFilePostService<T> where T : Post, IJsonStorable, new()
     {
         public JsonFilePostService(IWebHostEnvironment webHostEnvironment)
         {
@@ -33,12 +33,33 @@ namespace Karma.Services
             }
         }
 
-        public void RefreshPosts(IEnumerable<T> requests)
+        public void RefreshPosts(IEnumerable<T> posts)
         {
             File.WriteAllTextAsync(
                 JsonFileName, 
-                JsonSerializer.Serialize<IEnumerable<T>>(requests, 
+                JsonSerializer.Serialize<IEnumerable<T>>(posts, 
                 new JsonSerializerOptions {WriteIndented = true}));
+        }
+
+        public T GetPost(JsonFilePostService<T> postService, string id)
+        {
+            IEnumerable<T> posts = postService.GetPosts();
+            T post = posts.FirstOrDefault<T>(post => post.ID == id);
+
+            return post;
+        }
+
+        public void DeletePost(JsonFilePostService<ItemPost> submitService, List<ItemPost> posts, string id)
+        {
+            ItemPost post = posts.FirstOrDefault<ItemPost>(post => post.ID == id);
+
+            if(post.Picture != "noimage.jpg")
+            {
+                string filePath = Path.Combine(WebHostEnvironment.WebRootPath, "images", post.Picture);
+                System.IO.File.Delete(filePath);
+            }
+
+            submitService.RefreshPosts(posts.Where(post => post.ID != id));
         }
     }
 }
