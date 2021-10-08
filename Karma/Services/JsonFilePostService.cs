@@ -52,7 +52,7 @@ namespace Karma.Services
         public void DeletePost(JsonFilePostService<ItemPost> submitService, string id)
         {
             IEnumerable<ItemPost> posts = submitService.GetPosts();
-            ItemPost post = posts.FirstOrDefault<ItemPost>(postt => postt.ID == id);
+            ItemPost post = posts.FirstOrDefault<ItemPost>(post => post.ID == id);
             
             if(post.Picture != "noimage.jpg")
             {
