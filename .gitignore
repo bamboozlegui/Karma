@@ -399,3 +399,4 @@ FodyWeavers.xsd
 .vscode/launch.json
 Karma/.vscode/tasks.json
 Karma/.vscode/launch.json
+*.el
