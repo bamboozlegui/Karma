@@ -15,55 +15,66 @@ namespace Karma.Services
     {
         internal abstract string JsonFileName { get; }
 
+        protected IEnumerable<T> _posts;
+
+        public IWebHostEnvironment WebHostEnvironment { get; }
+
+        public JsonFilePostService(IWebHostEnvironment webHostEnvironment)
+        {
+            WebHostEnvironment = webHostEnvironment;
+
+            using (var jsonFileReader = File.OpenText(JsonFileName))
+            {
+                _posts = JsonSerializer.Deserialize<T[]>(jsonFileReader.ReadToEnd(), new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
+
+                _posts = UpdatePostsStatus(_posts);
+            }
+
+        }
+
         public IEnumerable<T> GetPosts()
-	{
-	    using (var jsonFileReader = File.OpenText(JsonFileName))
-	    {
-		return JsonSerializer.Deserialize<T[]>(jsonFileReader.ReadToEnd(), new JsonSerializerOptions
-		{
-		    PropertyNameCaseInsensitive = true
-		});
-	    }
+        {
+            return _posts;
+        }
 
-	}
+        public IEnumerable<T> UpdatePostsStatus(IEnumerable<T> posts)
+        {
+            foreach (var post in posts)
+            {
 
-	public IEnumerable<T> UpdatePostsStatus(IEnumerable<T> posts)
-	{
-	    foreach (var post in posts)
-	    {
-
-		if (post.Date.GetTimeSpan().Days > 2)
-		{
-		    if (post.State == 0)
-		    {
+                if (post.Date.GetTimeSpan().Days > 2)
+                {
+                    if (post.State == 0)
+                    {
                         post.State++;
                     }
-		}
+                }
                 yield return post;
             }
-	}
+        }
 
-        public void RefreshPosts(IEnumerable<T> posts)
+        public void RefreshJsonFile()
         {
-            posts = UpdatePostsStatus(posts);
 
             File.WriteAllTextAsync(
-                JsonFileName, 
-                JsonSerializer.Serialize<IEnumerable<T>>(posts, 
-                new JsonSerializerOptions {WriteIndented = true}));
+                JsonFileName,
+                JsonSerializer.Serialize<IEnumerable<T>>(_posts,
+                new JsonSerializerOptions { WriteIndented = true }));
         }
 
         public T GetPost(string id)
         {
-            IEnumerable<T> posts = GetPosts();
-            T post = posts.FirstOrDefault<T>(post => post.ID == id);
+            T post = _posts.FirstOrDefault<T>(post => post.ID == id);
 
             return post;
         }
 
         public abstract void DeletePost(string id);
 
-        public abstract void UpdatePost(T newPost, string id);
+        public abstract T UpdatePost(T newPost);
 
         public abstract void AddPost(T post, IFormFile photo = null);
 
