@@ -23,12 +23,7 @@ namespace Karma.Pages
         [BindProperty]
         public IFormFile NewPhoto { get; set; }
 
-        [BindProperty]
-        public ItemPost NewItem { get; set; }
         public ItemPost Item { get; set; }
-
-        [BindProperty(SupportsGet = true)]
-        public string ID { get; set; }
 
         public ItemModel(
             JsonFileItemService itemService,
@@ -38,21 +33,16 @@ namespace Karma.Pages
             WebHostEnvironment = webHostEnvironment;
         }
 
-        public IActionResult OnGet()
+        public IActionResult OnGet(string ID)
         {
             Item = ItemService.GetPost(ID);
 
-            if (Item.Picture == null)
-            {
-                Item.Picture = "noimage.jpg";
-            }
-            
             return Page();
         }
 
-        public IActionResult OnPostEdit()
+        public IActionResult OnPost(ItemPost newItem)
         {
-            ItemService.UpdatePost(NewItem, ID);
+            ItemService.UpdatePost(newItem);
             return RedirectToPage("/Submits");
         }
     }
