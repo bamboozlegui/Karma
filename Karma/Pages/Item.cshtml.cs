@@ -21,7 +21,7 @@ namespace Karma.Pages
         private JsonFileItemService ItemService { get; }
 
         [BindProperty]
-        public IFormFile NewPhoto { get; set; }
+        public IFormFile Photo { get; set; }
 
         public ItemPost Item { get; set; }
 
@@ -42,7 +42,7 @@ namespace Karma.Pages
 
         public IActionResult OnPost(ItemPost item)
         {
-            Item = ItemService.UpdatePost(item);
+            Item = ItemService.UpdatePost(item, Photo);
 
             return RedirectToPage("/Submits");
         }
