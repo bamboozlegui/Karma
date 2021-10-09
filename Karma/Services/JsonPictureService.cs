@@ -22,8 +22,7 @@ namespace Karma.Services
 
 	    if (photo != null)
 	    {
-		string uploadsFolder =
-		Path.Combine(webEnv.WebRootPath, "images");
+		string uploadsFolder = Path.Combine(webEnv.WebRootPath, "images");
 		uniqueFileName = Guid.NewGuid().ToString() + "_" + photo.FileName;
 		string filePath = Path.Combine(uploadsFolder, uniqueFileName);
 		using (var fileStream = new FileStream(filePath, FileMode.Create))

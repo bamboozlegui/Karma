@@ -30,24 +30,20 @@ namespace Karma.Services
 	{
 	    if (photo != null)
 	    {
-		if (post.Picture != null) //If our Post already has a picture path string, we should delete it first to upload a new one
-		{
-		    string filePath = Path.Combine(WebHostEnvironment.WebRootPath, "images", post.Picture);
-		    System.IO.File.Delete(filePath);
-		}
+                PictureService.DeletePicture(WebHostEnvironment, post.Picture);
 
-		post.Picture = PictureService.ProcessUploadedFile(WebHostEnvironment, photo); //Check definition
+                post.Picture = PictureService.ProcessUploadedFile(WebHostEnvironment, photo); //Check definition
 	    }
 
 	    post.Date = DateTime.Now;
 	    post.ID = Guid.NewGuid().ToString();
 
-	    IEnumerable<ItemPost> Submits = GetPosts().
+	    IEnumerable<ItemPost> posts = GetPosts().
 	    Append<ItemPost>(post);
 
-	    Submits = Submits.OrderByDescending(post => post.State).ThenByDescending(post => post.Title);
+	    posts = posts.OrderByDescending(post => post.State).ThenByDescending(post => post.Title);
 
-	    RefreshPosts(Submits);
+	    RefreshPosts(posts);
 	}
 
 	public override void DeletePost(string id)
