@@ -47,9 +47,9 @@ namespace Karma.Services
 
                 if (post.Date.GetTimeSpan().Days > 2)
                 {
-                    if (post.State == 0)
+                    if (post.State == Post.StateEnum.Recent)
                     {
-                        post.State++;
+                        post.State = Post.StateEnum.Available;
                     }
                 }
                 yield return post;
