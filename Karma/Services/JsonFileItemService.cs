@@ -28,14 +28,15 @@ namespace Karma.Services
 
 	public override void AddPost(ItemPost post, IFormFile photo)
 	{
-	    if (photo != null)
+	    if (post.Picture != null)
 	    {
                 PictureService.DeletePicture(WebHostEnvironment, post.Picture);
-
-                post.Picture = PictureService.ProcessUploadedFile(WebHostEnvironment, photo); //Check definition
 	    }
 
-	    post.Date = DateTime.Now;
+	    post.Picture = PictureService.ProcessUploadedFile(WebHostEnvironment, photo); //Check definition
+
+            post.Date = DateTime.Now;
+
 	    post.ID = Guid.NewGuid().ToString();
 
 	    IEnumerable<ItemPost> posts = GetPosts().
