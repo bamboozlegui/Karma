@@ -1,7 +1,7 @@
 ﻿@page
 @model Karma.Pages.RequestsModel
 @{
-    ViewData["Title"] = "Request Items";
+    ViewData["Title"] = "Request items";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -52,7 +52,7 @@
             <small>@Model.Requests.ElementAt(i).City,</small>
             <small>@Model.Requests.ElementAt(i).PhoneNumber,</small>
             <small>@Model.Requests.ElementAt(i).State</small>
-            <form asp-page-handler="delete" asp-route-Description="@Model.Requests.ElementAt(i).Description" method="post">
+            <form asp-page-handler="delete" asp-route-id="@Model.Requests.ElementAt(i).ID" method="post">
                 <button class="btn btn-default">Delete</button>
             </form>
         </a>
