@@ -40,9 +40,9 @@ namespace Karma.Pages
             return Page();
         }
 
-        public IActionResult OnPost(ItemPost newItem)
+        public IActionResult OnPost(ItemPost item)
         {
-            ItemService.UpdatePost(newItem);
+            Item = ItemService.UpdatePost(item);
             return RedirectToPage("/Submits");
         }
     }
