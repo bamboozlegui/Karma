@@ -45,16 +45,17 @@ namespace Karma.Services
 
         public override void DeletePost(string id)
         {
-            IEnumerable<ItemPost> posts = GetPosts();
-            ItemPost post = posts.FirstOrDefault<ItemPost>(post => post.ID == id);
+            ItemPost post = _posts.FirstOrDefault<ItemPost>(post => post.ID == id);
 
-            PictureService.DeletePicture(WebHostEnvironment, post.Picture);
-            RefreshJsonFile();
-        }
+	    PictureService.DeletePicture(WebHostEnvironment, post.Picture);
+	    _posts = _posts.Where(post => post.ID != id);
+
+	    RefreshJsonFile();
+	}
 
         public override ItemPost UpdatePost(ItemPost newPost)
         {
-            ItemPost post = GetPosts().FirstOrDefault(post => post.ID == newPost.ID);
+            ItemPost post = _posts.FirstOrDefault(post => post.ID == newPost.ID);
 
             if (post != null)
             {
@@ -64,6 +65,8 @@ namespace Karma.Services
                 post.Description = newPost.Description;
                 post.City = newPost.City;
             }
+
+            RefreshJsonFile();
 
             return post;
         }
