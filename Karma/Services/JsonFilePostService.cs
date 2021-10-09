@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using System;
+using Karma.Extensions;
 
 namespace Karma.Services
 {
@@ -26,8 +27,26 @@ namespace Karma.Services
 
 	}
 
+	public IEnumerable<T> UpdatePostsStatus(IEnumerable<T> posts)
+	{
+	    foreach (var post in posts)
+	    {
+
+		if (post.Date.GetTimeSpan().Days > 2)
+		{
+		    if (post.State == 0)
+		    {
+                        post.State++;
+                    }
+		}
+                yield return post;
+            }
+	}
+
         public void RefreshPosts(IEnumerable<T> posts)
         {
+            posts = UpdatePostsStatus(posts);
+
             File.WriteAllTextAsync(
                 JsonFileName, 
                 JsonSerializer.Serialize<IEnumerable<T>>(posts, 
