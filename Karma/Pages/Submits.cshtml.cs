@@ -21,28 +21,28 @@ namespace Karma.Pages
         [BindProperty]
         public IFormFile Photo { get; set; }
 
-        public JsonFilePostService<ItemPost> SubmitService;
+        public JsonFileItemService ItemService;
 
         private IWebHostEnvironment WebHostEnvironment { get; }
 
         public IEnumerable<ItemPost> Submits { get; private set; }
 
         public SubmitsModel(
-            JsonFilePostService<ItemPost> submitService,
+	    JsonFileItemService itemService,
             IWebHostEnvironment webHostEnvironment)
         {
-            SubmitService = submitService;
+            ItemService = itemService;
             WebHostEnvironment = webHostEnvironment;    
         }
         public void OnGet()
         {
-            Submits = SubmitService.GetPosts();
+            Submits = ItemService.GetPosts();
         }
 
         // Deletes Post on button trigger, refreshes posts afterwards : )
         public IActionResult OnPostDelete(string id)
         {
-            SubmitService.DeletePost(SubmitService, id);
+            ItemService.DeletePost(id);
 
             return RedirectToPage("/Submits");
         }
@@ -55,7 +55,7 @@ namespace Karma.Pages
                 return Page();
             }
 
-            SubmitService.AddPost(SubmitService, Item, Photo);
+            ItemService.AddPost(Item, Photo);
                 
                 
             return RedirectToPage("/Submits");
