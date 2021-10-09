@@ -10,16 +10,26 @@ using System;
 
 namespace Karma.Services
 {
-    public abstract class JsonFilePostService<T> where T : Post, IJsonStorable
+    public abstract class JsonFilePostService<T> where T : Post
     {
-        internal abstract string GetJsonFileName();
+        internal abstract string JsonFileName { get; }
 
-        public abstract IEnumerable<T> GetPosts();
+        public IEnumerable<T> GetPosts()
+	{
+	    using (var jsonFileReader = File.OpenText(JsonFileName))
+	    {
+		return JsonSerializer.Deserialize<T[]>(jsonFileReader.ReadToEnd(), new JsonSerializerOptions
+		{
+		    PropertyNameCaseInsensitive = true
+		});
+	    }
+
+	}
 
         public void RefreshPosts(IEnumerable<T> posts)
         {
             File.WriteAllTextAsync(
-                GetJsonFileName(), 
+                JsonFileName, 
                 JsonSerializer.Serialize<IEnumerable<T>>(posts, 
                 new JsonSerializerOptions {WriteIndented = true}));
         }
@@ -34,9 +44,9 @@ namespace Karma.Services
 
         public abstract void DeletePost(string id);
 
-        public abstract void UpdatePost(T newItem, string id);
+        public abstract void UpdatePost(T newPost, string id);
 
-        public abstract void AddPost(T item);
+        public abstract void AddPost(T post, IFormFile photo = null);
 
         //internal abstract string ProcessUploadedFile(IFormFile photo);
     }
