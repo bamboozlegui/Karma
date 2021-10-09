@@ -37,7 +37,11 @@ namespace Karma.Services
 
 	public override void DeletePost(string id)
 	{
-	    throw new System.NotImplementedException();
+            IEnumerable<RequestPost> posts = GetPosts();
+
+            RequestPost post = posts.FirstOrDefault<RequestPost>(post => post.ID == id);
+
+            RefreshPosts(posts.Where(post => post.ID != id));
         }
 
         public override void UpdatePost(RequestPost newPost, string id)
