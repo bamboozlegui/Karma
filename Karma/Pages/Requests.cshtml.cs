@@ -31,7 +31,7 @@ namespace Karma.Pages
             Requests = RequestService.GetPosts();
 
             Requests = Requests.Where(x => x.Description != Description);
-            RequestService.RefreshPosts(Requests);
+            RequestService.RefreshJsonFile();
 
             return RedirectToPage("/Requests");
 
@@ -47,7 +47,7 @@ namespace Karma.Pages
             Requests = RequestService.GetPosts().
             Append<RequestPost>(Item);
 
-            RequestService.RefreshPosts(Requests);
+            RequestService.RefreshJsonFile();
 
             return RedirectToPage("/Requests");
         }
