@@ -19,26 +19,25 @@ namespace Karma.Services
             get { return Path.Combine(WebHostEnvironment.ContentRootPath, "data", (new RequestPost()).GetJsonName()); }
         }
 
-        public override void AddPost(RequestPost post, IFormFile photo)
+        public override void AddPost(RequestPost post, IFormFile photo = null)
         {
             post.Date = DateTime.Now;
             post.ID = Guid.NewGuid().ToString();
 
-            IEnumerable<RequestPost> Submits = GetPosts().
-            Append<RequestPost>(post);
+            _posts = _posts.Append<RequestPost>(post);
 
-            Submits = Submits.OrderByDescending(post => post.State).ThenByDescending(post => post.Title);
+            _posts = _posts.OrderByDescending(post => post.State).ThenByDescending(post => post.Title);
 
             RefreshJsonFile();
         }
 
         public override void DeletePost(string id)
         {
-            IEnumerable<RequestPost> posts = GetPosts();
+            RequestPost post = _posts.FirstOrDefault<RequestPost>(post => post.ID == id);
 
-            RequestPost post = posts.FirstOrDefault<RequestPost>(post => post.ID == id);
+	    _posts = _posts.Where(post => post.ID != id);
 
-            RefreshJsonFile();
+	    RefreshJsonFile();
         }
 
         public override RequestPost UpdatePost(RequestPost newPost)
