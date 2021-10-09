@@ -28,6 +28,7 @@ namespace Karma
             services.AddRazorPages();
             services.AddTransient<JsonFileRequestService>();
             services.AddTransient<JsonFileItemService>();
+            services.AddTransient<JsonPictureService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
