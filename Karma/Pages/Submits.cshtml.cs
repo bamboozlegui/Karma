@@ -34,6 +34,7 @@ namespace Karma.Pages
             ItemService = itemService;
             WebHostEnvironment = webHostEnvironment;    
         }
+
         public void OnGet()
         {
             Submits = ItemService.GetPosts();
@@ -47,7 +48,6 @@ namespace Karma.Pages
             return RedirectToPage("/Submits");
         }
 
-
         public IActionResult OnPost()
         {
             if (ModelState.IsValid == false)
@@ -57,12 +57,7 @@ namespace Karma.Pages
 
             ItemService.AddPost(Item, Photo);
                 
-                
             return RedirectToPage("/Submits");
         }
-
-        //Uploads the parsed pic into ./wwwroot/images/ 
-        //Returns uniqueFileName string - a random ID + file name
-
     }
 }

@@ -43,6 +43,7 @@ namespace Karma.Pages
         public IActionResult OnPost(ItemPost item)
         {
             Item = ItemService.UpdatePost(item);
+
             return RedirectToPage("/Submits");
         }
     }

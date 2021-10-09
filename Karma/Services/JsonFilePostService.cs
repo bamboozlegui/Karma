@@ -58,7 +58,6 @@ namespace Karma.Services
 
         public void RefreshJsonFile()
         {
-
             File.WriteAllTextAsync(
                 JsonFileName,
                 JsonSerializer.Serialize<IEnumerable<T>>(_posts,
@@ -77,7 +76,5 @@ namespace Karma.Services
         public abstract T UpdatePost(T newPost);
 
         public abstract void AddPost(T post, IFormFile photo = null);
-
-        //internal abstract string ProcessUploadedFile(IFormFile photo);
     }
 }

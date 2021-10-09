@@ -10,9 +10,7 @@ namespace Karma.Services
 {
     public class JsonFileRequestService : JsonFilePostService<RequestPost>
     {
-        public JsonFileRequestService(IWebHostEnvironment webHostEnvironment) : base(webHostEnvironment)
-        {
-        }
+        public JsonFileRequestService(IWebHostEnvironment webHostEnvironment) : base(webHostEnvironment) {}
 
         internal override string JsonFileName
         {
@@ -25,7 +23,6 @@ namespace Karma.Services
             post.ID = Guid.NewGuid().ToString();
 
             _posts = _posts.Append<RequestPost>(post);
-
             _posts = _posts.OrderByDescending(post => post.State).ThenByDescending(post => post.Title);
 
             RefreshJsonFile();
