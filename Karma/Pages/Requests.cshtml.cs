@@ -35,7 +35,6 @@ namespace Karma.Pages
 
             return RedirectToPage("/Requests");
 
-
         }
 
         public IActionResult OnPost()

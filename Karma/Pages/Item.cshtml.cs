@@ -10,6 +10,7 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using Karma.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace Karma.Pages
 {
@@ -19,6 +20,11 @@ namespace Karma.Pages
 
         private JsonFilePostService<ItemPost> ItemService { get; }
 
+        [BindProperty]
+        public IFormFile NewPhoto { get; set; }
+
+        [BindProperty]
+        public ItemPost NewItem { get; set; }
         public ItemPost Item { get; set; }
 
         [BindProperty(SupportsGet = true)]
@@ -34,7 +40,7 @@ namespace Karma.Pages
 
         public IActionResult OnGet()
         {
-            Item = ItemService.GetPost(ItemService, ID);
+            Item = ItemService.GetPost(ID);
 
             if (Item.Picture == null)
             {
@@ -42,6 +48,12 @@ namespace Karma.Pages
             }
             
             return Page();
+        }
+
+        public IActionResult OnPostEdit()
+        {
+            ItemService.UpdatePost(ItemService, NewItem, ID, NewPhoto);
+            return RedirectToPage("/Submits");
         }
     }
 }

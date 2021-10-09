@@ -55,53 +55,14 @@ namespace Karma.Pages
                 return Page();
             }
 
-            if (Photo != null)
-            {
-                if (Item.Picture != null) //If our Item already has a picture path string, we should delete it first to upload a new one
-                {
-                    string filePath = Path.Combine(WebHostEnvironment.WebRootPath, "images", Item.Picture);
-                    System.IO.File.Delete(filePath);
-                }
-
-                Item.Picture = ProcessUploadedFile(); //Check definition
-            }
-	        else
-	        {
-		        Item.Picture = "noimage.jpg";
-	        }
-                Item.Date = DateTime.Now;
-                Item.ID   = Guid.NewGuid().ToString();
-
-                Submits = SubmitService.GetPosts().
-                Append<ItemPost>(Item);
-
-	            Submits = Submits.OrderByDescending(item => item.State).ThenByDescending(item => item.Title);
-
-                SubmitService.RefreshPosts(Submits);
-
-                return RedirectToPage("/Submits");
-            }
+            SubmitService.AddPost(SubmitService, Item, Photo);
+                
+                
+            return RedirectToPage("/Submits");
+        }
 
         //Uploads the parsed pic into ./wwwroot/images/ 
         //Returns uniqueFileName string - a random ID + file name
-        private string ProcessUploadedFile()
-        {
-            string uniqueFileName = null;
-
-            if (Photo != null)
-            {
-                string uploadsFolder =
-                    Path.Combine(WebHostEnvironment.WebRootPath, "images");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + Photo.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    Photo.CopyTo(fileStream);
-                }
-            }
-
-            return uniqueFileName;
-        }
 
     }
 }
