@@ -10,41 +10,38 @@ namespace Karma.Services
 {
     public class JsonFileRequestService : JsonFilePostService<RequestPost>
     {
-	public JsonFileRequestService(IWebHostEnvironment webHostEnvironment)
-	{
-	    WebHostEnvironment = webHostEnvironment;
+        public JsonFileRequestService(IWebHostEnvironment webHostEnvironment) : base(webHostEnvironment)
+        {
         }
 
-	public IWebHostEnvironment WebHostEnvironment { get; }
-
-	internal override string JsonFileName
-	{
-	    get { return Path.Combine(WebHostEnvironment.ContentRootPath, "data", (new RequestPost()).GetJsonName()); }
+        internal override string JsonFileName
+        {
+            get { return Path.Combine(WebHostEnvironment.ContentRootPath, "data", (new RequestPost()).GetJsonName()); }
         }
 
-	public override void AddPost(RequestPost post, IFormFile photo)
-	{
-	    post.Date = DateTime.Now;
-	    post.ID = Guid.NewGuid().ToString();
+        public override void AddPost(RequestPost post, IFormFile photo)
+        {
+            post.Date = DateTime.Now;
+            post.ID = Guid.NewGuid().ToString();
 
-	    IEnumerable<RequestPost> Submits = GetPosts().
-	    Append<RequestPost>(post);
+            IEnumerable<RequestPost> Submits = GetPosts().
+            Append<RequestPost>(post);
 
-	    Submits = Submits.OrderByDescending(post => post.State).ThenByDescending(post => post.Title);
+            Submits = Submits.OrderByDescending(post => post.State).ThenByDescending(post => post.Title);
 
-	    RefreshPosts(Submits);
-	}
+            RefreshJsonFile();
+        }
 
-	public override void DeletePost(string id)
-	{
+        public override void DeletePost(string id)
+        {
             IEnumerable<RequestPost> posts = GetPosts();
 
             RequestPost post = posts.FirstOrDefault<RequestPost>(post => post.ID == id);
 
-            RefreshPosts(posts.Where(post => post.ID != id));
+            RefreshJsonFile();
         }
 
-        public override void UpdatePost(RequestPost newPost, string id)
+        public override RequestPost UpdatePost(RequestPost newPost)
         {
             throw new System.NotImplementedException();
         }
