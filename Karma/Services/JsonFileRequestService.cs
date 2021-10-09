@@ -37,7 +37,7 @@ namespace Karma.Services
 	    RefreshJsonFile();
         }
 
-        public override RequestPost UpdatePost(RequestPost newPost)
+        public override RequestPost UpdatePost(RequestPost newPost, IFormFile newPhoto = null)
         {
             throw new System.NotImplementedException();
         }

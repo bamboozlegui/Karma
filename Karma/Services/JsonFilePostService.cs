@@ -73,7 +73,7 @@ namespace Karma.Services
 
         public abstract void DeletePost(string id);
 
-        public abstract T UpdatePost(T newPost);
+        public abstract T UpdatePost(T newPost, IFormFile newPhoto = null);
 
         public abstract void AddPost(T post, IFormFile photo = null);
     }
