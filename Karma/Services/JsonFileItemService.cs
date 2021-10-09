@@ -54,7 +54,7 @@ namespace Karma.Services
 	    RefreshJsonFile();
 	}
 
-        public override ItemPost UpdatePost(ItemPost newPost)
+        public override ItemPost UpdatePost(ItemPost newPost, IFormFile newPhoto = null)
         {
             ItemPost post = _posts.FirstOrDefault(post => post.ID == newPost.ID);
 
@@ -65,6 +65,17 @@ namespace Karma.Services
                 post.PhoneNumber = newPost.PhoneNumber;
                 post.Description = newPost.Description;
                 post.City = newPost.City;
+            }
+
+	    if (newPhoto != null)
+	    {
+		if(post.Picture != null && post.Picture != "noimage.jpg")
+		{
+                    string filePath = Path.Combine(WebHostEnvironment.WebRootPath, "images", post.Picture);
+                    System.IO.File.Delete(filePath);
+                }
+
+                post.Picture = PictureService.ProcessUploadedFile(WebHostEnvironment, newPhoto);
             }
 
             RefreshJsonFile();
