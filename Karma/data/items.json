@@ -1,14 +1,15 @@
 [
   {
     "Picture": "f7ed64fc-4cbf-4509-9783-010ed9eb800f_dish-network.png",
-    "State": 1,
+    "State": 2,
     "ID": "sadfaegaergg",
     "PosterName": "Ignas",
     "City": "Utena",
     "PhoneNumber": "423423543242",
     "Title": "5G antena",
     "Description": "Dave korona, nebereik",
-    "Date": "2021-10-06T14:36:52.3516808+03:00"
+    "Date": "2021-10-06T14:36:52.3516808+03:00",
+    "Category": null
   },
   {
     "Picture": "60f8358a-b71a-4f32-a0ef-82c3bca629c3_Selection_002.png",
@@ -19,7 +20,8 @@
     "PhoneNumber": "3706468464\u002B",
     "Title": "Phone",
     "Description": "I need a phone",
-    "Date": "2021-10-09T22:05:34.1874509+03:00"
+    "Date": "2021-10-09T22:05:34.1874509+03:00",
+    "Category": null
   },
   {
     "Picture": "d63d2004-4b1f-42ee-86c3-3ff1c40c785c_Selection_001.png",
@@ -30,6 +32,19 @@
     "PhoneNumber": "12479",
     "Title": "Help I need an image",
     "Description": "Image please",
-    "Date": "2021-10-07T14:36:52.3516808+03:00"
+    "Date": "2021-10-07T14:36:52.3516808+03:00",
+    "Category": null
+  },
+  {
+    "Picture": "noimage.jpg",
+    "State": 0,
+    "ID": "925f5fa2-f92b-4c63-804d-c74102062e4e",
+    "PosterName": "Ignas",
+    "City": "Kaunas",
+    "PhoneNumber": "01924190841",
+    "Title": "Linux",
+    "Description": "Giving away linux. That\u0027s right. For free!",
+    "Date": "2021-10-10T00:32:54.0540436+03:00",
+    "Category": "Cat3"
   }
 ]
