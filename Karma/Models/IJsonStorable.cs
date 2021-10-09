@@ -2,6 +2,6 @@ namespace Karma.Models
 {
     public interface IJsonStorable
     {
-        string GetJsonName();
+        internal string GetJsonName();
     }
 }
