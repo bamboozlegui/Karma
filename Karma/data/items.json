@@ -19,7 +19,7 @@
     "City": "Vilnius",
     "PhoneNumber": "3706468464\u002B",
     "Title": "Phone",
-    "Description": "I need a phone",
+    "Description": "Buying a new one",
     "Date": "2021-10-09T22:05:34.1874509+03:00",
     "Category": null
   },
@@ -30,13 +30,13 @@
     "PosterName": "Edvin",
     "City": "Vilnius",
     "PhoneNumber": "12479",
-    "Title": "Help I need an image",
-    "Description": "Image please",
+    "Title": "neofetch",
+    "Description": "neofetch for free",
     "Date": "2021-10-07T14:36:52.3516808+03:00",
     "Category": null
   },
   {
-    "Picture": "noimage.jpg",
+    "Picture": "541eb895-12e2-4a0e-a514-b1cebf28ed8a_Selection_007.png",
     "State": 0,
     "ID": "925f5fa2-f92b-4c63-804d-c74102062e4e",
     "PosterName": "Ignas",
