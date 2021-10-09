@@ -7,16 +7,7 @@
     "PhoneNumber": "14801924",
     "Title": "Edit feature",
     "Description": "I really need an edit feature",
-    "Date": "2021-10-09T23:48:49.9753626+03:00"
-  },
-  {
-    "State": 0,
-    "ID": "dde974e8-b2be-4f4b-9237-bb76070d3806",
-    "PosterName": null,
-    "City": null,
-    "PhoneNumber": "Lmao",
-    "Title": null,
-    "Description": null,
-    "Date": "2021-10-09T22:03:16.090032+03:00"
+    "Date": "2021-10-09T23:48:49.9753626+03:00",
+    "Category": null
   }
 ]
