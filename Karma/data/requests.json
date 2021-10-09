@@ -1,13 +1,13 @@
 [
   {
-    "State": 1,
-    "ID": "123124214",
-    "PosterName": null,
-    "City": null,
-    "PhoneNumber": "asd",
-    "Title": null,
-    "Description": null,
-    "Date": "0001-01-01T00:00:00"
+    "State": 0,
+    "ID": "ef49ed96-39a6-4e86-b240-5d707811dabf",
+    "PosterName": "Request page",
+    "City": "Karma",
+    "PhoneNumber": "14801924",
+    "Title": "Edit feature",
+    "Description": "I really need an edit feature",
+    "Date": "2021-10-09T23:48:49.9753626+03:00"
   },
   {
     "State": 0,
