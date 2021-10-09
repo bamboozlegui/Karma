@@ -18,7 +18,7 @@ namespace Karma.Pages
     {
         private IWebHostEnvironment WebHostEnvironment { get; }
 
-        private JsonFilePostService<ItemPost> ItemService { get; }
+        private JsonFileItemService ItemService { get; }
 
         [BindProperty]
         public IFormFile NewPhoto { get; set; }
@@ -31,7 +31,7 @@ namespace Karma.Pages
         public string ID { get; set; }
 
         public ItemModel(
-            JsonFilePostService<ItemPost> itemService,
+            JsonFileItemService itemService,
             IWebHostEnvironment webHostEnvironment)
         {
             ItemService = itemService;
@@ -52,7 +52,7 @@ namespace Karma.Pages
 
         public IActionResult OnPostEdit()
         {
-            ItemService.UpdatePost(ItemService, NewItem, ID, NewPhoto);
+            ItemService.UpdatePost(NewItem, ID);
             return RedirectToPage("/Submits");
         }
     }
