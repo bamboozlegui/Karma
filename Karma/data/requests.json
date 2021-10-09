@@ -1,15 +1,7 @@
 [
   {
-    "State": 0,
-    "PosterName": "Petras Petraitis",
-    "City": "Kupi\u0161kis",
-    "PhoneNumber": "\u002B393513651860",
-    "Title": "Stalas",
-    "Description": "Reikia stalo studijomsss",
-    "Date": "0001-01-01T00:00:00"
-  },
-  {
-    "State": 0,
+    "State": 1,
+    "ID": "123124214",
     "PosterName": null,
     "City": null,
     "PhoneNumber": "asd",
