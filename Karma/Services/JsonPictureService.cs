@@ -9,7 +9,7 @@ namespace Karma.Services
     {
 	public void DeletePicture(IWebHostEnvironment webEnv, string photoName)
 	{
-            if(photoName != "noimage.jpg")
+            if(photoName != null && photoName != "noimage.jpg")
             {
 		string filePath = Path.Combine(webEnv.WebRootPath, "images", photoName);
 		System.IO.File.Delete(filePath);
@@ -18,7 +18,7 @@ namespace Karma.Services
 
         internal string ProcessUploadedFile(IWebHostEnvironment webEnv, IFormFile photo)
 	{
-	    string uniqueFileName = null;
+	    string uniqueFileName = "noimage.jpg";
 
 	    if (photo != null)
 	    {
