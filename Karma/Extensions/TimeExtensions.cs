@@ -4,6 +4,11 @@ namespace Karma.Extensions
 {
     public static class TimeExtensions
     {
+	public static TimeSpan GetTimeSpan(this DateTime postDate)
+	{
+	    return DateTime.Now - postDate;
+	}
+	
         public static string ShowTimeSpan(this DateTime postDate)
         {
             TimeSpan interval = DateTime.Now - postDate;
