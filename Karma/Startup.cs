@@ -26,8 +26,8 @@ namespace Karma
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-            services.AddTransient<JsonFileRequestService>();
-            services.AddTransient<JsonFileItemService>();
+            services.AddSingleton<JsonFileRequestService>();
+            services.AddSingleton<JsonFileItemService>();
             services.AddTransient<JsonPictureService>();
         }
 
