@@ -37,6 +37,8 @@ namespace Karma.Services
 
             post.ID = Guid.NewGuid().ToString();
 
+            post.State = Post.StateEnum.Recent;
+
             _posts = _posts.Append<ItemPost>(post);
 
             _posts = _posts.OrderByDescending(post => post.State).ThenByDescending(post => post.Title);
