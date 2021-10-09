@@ -38,6 +38,7 @@ namespace Karma.Services
 
 		post.Picture = PictureService.ProcessUploadedFile(WebHostEnvironment, photo); //Check definition
 	    }
+
 	    post.Date = DateTime.Now;
 	    post.ID = Guid.NewGuid().ToString();
 
@@ -51,7 +52,11 @@ namespace Karma.Services
 
 	public override void DeletePost(string id)
 	{
-	    throw new System.NotImplementedException();
+            IEnumerable<ItemPost> posts = GetPosts();
+            ItemPost post = posts.FirstOrDefault<ItemPost>(post => post.ID == id);
+
+            PictureService.DeletePicture(WebHostEnvironment, post.Picture);
+            RefreshPosts(posts.Where(post => post.ID != id));
         }
 
         public override void UpdatePost(ItemPost newPost, string id)
