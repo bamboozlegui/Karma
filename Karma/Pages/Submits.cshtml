@@ -1,6 +1,8 @@
 ﻿@page
 @model Karma.Pages.SubmitsModel
-@{ ViewData["Title"] = "Submit Items";}
+@{
+    ViewData["Title"] = "Submit Items";
+}
 @using Karma.Extensions;
 
 <h1>@ViewData["Title"]</h1>
@@ -9,7 +11,8 @@
 
 <form method="post" enctype="multipart/form-data" class="mt-4">
 
-    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+        aria-expanded="false" aria-controls="collapseExample">
         Submit an item
     </button>
     <div id="collapseExample" class="collapse">
@@ -47,7 +50,7 @@
                 }
             </select>
         </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </div>
 
 </form>
@@ -62,9 +65,9 @@
                 @for (int i = 0; i < Karma.Models.Post.Categories.Count(); ++i)
                 {
                     @*<label class="form-check">
-                <input name="CheckedCategories" type="checkbox" value="@Karma.Models.Post.Categories[i] ">
-                <span class="form-check-label"> @Karma.Models.Post.Categories[i] </span>
-            </label>*@
+                        <input name="CheckedCategories" type="checkbox" value="@Karma.Models.Post.Categories[i] ">
+                        <span class="form-check-label"> @Karma.Models.Post.Categories[i] </span>
+                        </label>*@
 
                     <div class="form-check">
                         <input type="checkbox" value="@Karma.Models.Post.Categories[i]" name="CheckedCategories" />
@@ -82,25 +85,33 @@
 </div>
 
 <div class="row row-cols-3 mt-3">
-    @for (int i = Model.Submits.Count() - 1; i >= 0; i--)
-    {
-        if (Model.Submits.ElementAt(i).State != Models.Post.StateEnum.Hidden)
+    @{
+        if (ModelState.IsValid)
         {
-            <div class="col">
-                <div class="card">
-                    <img src="/images/@Model.Submits.ElementAt(i).Picture" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">@Model.Submits.ElementAt(i).Title, @Model.Submits.ElementAt(i).State</h5>
-                        <p class="card-text">@Model.Submits.ElementAt(i).Description</p>
-                        <p class="card-text">@Model.Submits.ElementAt(i).Date.ShowTimeSpan()</p>
-                        <a class="btn btn-secondary" target="_blank" asp-page="/Item" asp-route-id=@Model.Submits.ElementAt(i).ID>More info</a>
+
+            @for (int i = Model.Submits.Count() - 1; i >= 0; i--)
+            {
+                if (Model.Submits.ElementAt(i).State != Models.Post.StateEnum.Hidden)
+                {
+                    <div class="col">
+                        <div class="card">
+                            <img src="/images/@Model.Submits.ElementAt(i).Picture" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">@Model.Submits.ElementAt(i).Title, @Model.Submits.ElementAt(i).State</h5>
+                                <p class="card-text">@Model.Submits.ElementAt(i).Description</p>
+                                <p class="card-text">@Model.Submits.ElementAt(i).Date.ShowTimeSpan()</p>
+                                <a class="btn btn-secondary" target="_blank" asp-page="/Item"
+                    asp-route-id=@Model.Submits.ElementAt(i).ID>More info</a>
+                            </div>
+                            <div class="col-lg-1">
+                                <form asp-page-handler="delete" asp-route-id="@Model.Submits.ElementAt(i).ID" method="post">
+                                    <button class="btn btn-default">Delete</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-lg-1">
-                        <form asp-page-handler="delete" asp-route-id="@Model.Submits.ElementAt(i).ID" method="post">
-                            <button class="btn btn-default">Delete</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+                }
+            }
         }
     }
+</div>

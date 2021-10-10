@@ -33,7 +33,6 @@ namespace Karma.Pages
             RequestService.DeletePost(id);
 
             return RedirectToPage("/Requests");
-
         }
 
         public IActionResult OnPost()
