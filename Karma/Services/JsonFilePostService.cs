@@ -31,6 +31,8 @@ namespace Karma.Services
                 });
 
                 _posts = UpdatePostsStatus(_posts);
+		_posts = _posts.OrderByDescending(post => post.State).ThenByDescending(post => post.Title);
+                RefreshJsonFile();
             }
 
         }

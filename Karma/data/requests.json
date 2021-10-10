@@ -1,6 +1,17 @@
 [
   {
     "State": 0,
+    "ID": "2f5b53cc-26ae-487e-b157-3a6b8bce4ba5",
+    "PosterName": "Edvin",
+    "City": "Vilnius",
+    "PhoneNumber": "1827948",
+    "Title": "OnGet trigger",
+    "Description": "return Page() does not trigger OnGet() method...",
+    "Date": "2021-10-10T15:25:18.6437559+03:00",
+    "Category": null
+  },
+  {
+    "State": 0,
     "ID": "ef49ed96-39a6-4e86-b240-5d707811dabf",
     "PosterName": "Request page",
     "City": "Karma",
