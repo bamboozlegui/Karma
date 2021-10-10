@@ -5,62 +5,76 @@ using System.Text.Json;
 using Karma.Models;
 using Microsoft.AspNetCore.Hosting;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using System;
+using Karma.Extensions;
 
 namespace Karma.Services
 {
-    public class JsonFilePostService<T> where T : Post, IJsonStorable, new()
+    public abstract class JsonFilePostService<T> where T : Post
     {
-        public JsonFilePostService(IWebHostEnvironment webHostEnvironment)
-        {
-            WebHostEnvironment = webHostEnvironment;
-        }
+        internal abstract string JsonFileName { get; }
+
+        protected IEnumerable<T> _posts;
 
         public IWebHostEnvironment WebHostEnvironment { get; }
 
-        private string JsonFileName
+        public JsonFilePostService(IWebHostEnvironment webHostEnvironment)
         {
-                get { return Path.Combine(WebHostEnvironment.ContentRootPath, "data", (new T()).GetJsonName()); }
+            WebHostEnvironment = webHostEnvironment;
+
+            using (var jsonFileReader = File.OpenText(JsonFileName))
+            {
+                _posts = JsonSerializer.Deserialize<T[]>(jsonFileReader.ReadToEnd(), new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
+
+                _posts = UpdatePostsStatus(_posts);
+            }
+
         }
 
         public IEnumerable<T> GetPosts()
         {
-            using(var jsonFileReader = File.OpenText(JsonFileName))
+            return _posts;
+        }
+
+        public IEnumerable<T> UpdatePostsStatus(IEnumerable<T> posts)
+        {
+            foreach (var post in posts)
             {
-                return JsonSerializer.Deserialize<T[]>(jsonFileReader.ReadToEnd(),new JsonSerializerOptions
+
+                if (post.Date.GetTimeSpan().Days > 2)
+                {
+                    if (post.State == Post.StateEnum.Recent)
                     {
-                        PropertyNameCaseInsensitive = true
-                    });
+                        post.State = Post.StateEnum.Available;
+                    }
+                }
+                yield return post;
             }
         }
 
-        public void RefreshPosts(IEnumerable<T> posts)
+        public void RefreshJsonFile()
         {
             File.WriteAllTextAsync(
-                JsonFileName, 
-                JsonSerializer.Serialize<IEnumerable<T>>(posts, 
-                new JsonSerializerOptions {WriteIndented = true}));
+                JsonFileName,
+                JsonSerializer.Serialize<IEnumerable<T>>(_posts,
+                new JsonSerializerOptions { WriteIndented = true }));
         }
 
-        public T GetPost(JsonFilePostService<T> postService, string id)
+        public T GetPost(string id)
         {
-            IEnumerable<T> posts = postService.GetPosts();
-            T post = posts.FirstOrDefault<T>(post => post.ID == id);
+            T post = _posts.FirstOrDefault<T>(post => post.ID == id);
 
             return post;
         }
 
-        public void DeletePost(JsonFilePostService<ItemPost> submitService, string id)
-        {
-            IEnumerable<ItemPost> posts = submitService.GetPosts();
-            ItemPost post = posts.FirstOrDefault<ItemPost>(postt => postt.ID == id);
-            
-            if(post.Picture != "noimage.jpg")
-            {
-                string filePath = Path.Combine(WebHostEnvironment.WebRootPath, "images", post.Picture);
-                System.IO.File.Delete(filePath);
-            }
+        public abstract void DeletePost(string id);
 
-            submitService.RefreshPosts(posts.Where(post => post.ID != id));
-        }
+        public abstract T UpdatePost(T newPost, IFormFile newPhoto = null);
+
+        public abstract void AddPost(T post, IFormFile photo = null);
     }
 }

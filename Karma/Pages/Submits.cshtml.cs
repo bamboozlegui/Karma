@@ -21,26 +21,29 @@ namespace Karma.Pages
         [BindProperty]
         public IFormFile Photo { get; set; }
 
-        public JsonFilePostService<ItemPost> SubmitService;
+        public JsonFileItemService ItemService;
 
         private IWebHostEnvironment WebHostEnvironment { get; }
 
         public IEnumerable<ItemPost> Submits { get; private set; }
 
-        public SubmitsModel(JsonFilePostService<ItemPost> submitService, IWebHostEnvironment webHostEnvironment)
+        public SubmitsModel(
+	    JsonFileItemService itemService,
+            IWebHostEnvironment webHostEnvironment)
         {
-            SubmitService = submitService;
+            ItemService = itemService;
             WebHostEnvironment = webHostEnvironment;    
         }
+
         public void OnGet()
         {
-            Submits = SubmitService.GetPosts();
+            Submits = ItemService.GetPosts();
         }
 
         // Deletes Post on button trigger, refreshes posts afterwards : )
         public IActionResult OnPostDelete(string id)
         {
-            SubmitService.DeletePost(SubmitService, id);
+            ItemService.DeletePost(id);
 
             return RedirectToPage("/Submits");
         }
@@ -53,62 +56,14 @@ namespace Karma.Pages
 
         public IActionResult OnPost()
         {
-            if (ModelState.IsValid)
-            {
-                if (Photo != null)
-                {
-                    if (Item.Picture != null) //If our Item already has a picture path string, we should delete it first to upload a new one
-                    {
-                        string filePath = Path.Combine(WebHostEnvironment.WebRootPath, "images", Item.Picture);
-                        System.IO.File.Delete(filePath);
-                    }
-
-                    Item.Picture = ProcessUploadedFile(); //Check definition
-                }
-                else
-                {
-                    Item.Picture = "noimage.jpg";
-                }
-
-                Item.Date = DateTime.Now;
-                Item.ID = Guid.NewGuid().ToString();
-
-                Item.Date = DateTime.Now;
-
-                Submits = SubmitService.GetPosts().Append(Item);
-
-                Submits = Submits.OrderByDescending(item => item.State).ThenByDescending(item => item.Title);
-
-                SubmitService.RefreshPosts(Submits);
-
-                return RedirectToPage("/Submits");
-            }
-            else
+            if (ModelState.IsValid == false)
             {
                 return Page();
             }
-            
-        }
 
-        //Uploads the parsed pic into ./wwwroot/images/ 
-        //Returns uniqueFileName string - a random ID + file name
-        private string ProcessUploadedFile()
-        {
-            string uniqueFileName = null;
-
-            if (Photo != null)
-            {
-                string uploadsFolder =
-                    Path.Combine(WebHostEnvironment.WebRootPath, "images");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + Photo.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    Photo.CopyTo(fileStream);
-                }
-            }
-
-            return uniqueFileName;
+            ItemService.AddPost(Item, Photo);
+                
+            return RedirectToPage("/Submits");
         }
     }
 }

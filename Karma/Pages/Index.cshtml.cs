@@ -17,7 +17,7 @@ namespace Karma.Pages
         //Request dalykai
         [BindProperty]
         public RequestPost RequestItem { get; set; }
-        public JsonFilePostService<RequestPost> RequestService;
+        public JsonFileRequestService RequestService;
         public IEnumerable<RequestPost> Requests { get; private set; }
         
         //Submit dalykai
@@ -25,20 +25,20 @@ namespace Karma.Pages
         public ItemPost SubmitItem { get; set; }
         [BindProperty]
         public IFormFile Photo { get; set; }
-        public JsonFilePostService<ItemPost> SubmitService;
+        public JsonFileItemService ItemService;
 
         public IEnumerable<ItemPost> Submits { get; private set; }
 
-        public IndexModel(JsonFilePostService<RequestPost> requestService, JsonFilePostService<ItemPost> submitService)
+        public IndexModel(JsonFileRequestService requestService, JsonFileItemService itemService)
         {
             RequestService = requestService;
-            SubmitService = submitService;
+            ItemService = itemService;
         }
         
         public void OnGet()
         {
             Requests = RequestService.GetPosts();
-            Submits = SubmitService.GetPosts();
+            Submits = ItemService.GetPosts();
         }
     }
 }

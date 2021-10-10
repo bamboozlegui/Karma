@@ -26,8 +26,9 @@ namespace Karma
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-            services.AddTransient<JsonFilePostService<RequestPost>>();
-            services.AddTransient<JsonFilePostService<ItemPost>>();
+            services.AddSingleton<JsonFileRequestService>();
+            services.AddSingleton<JsonFileItemService>();
+            services.AddTransient<JsonPictureService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
