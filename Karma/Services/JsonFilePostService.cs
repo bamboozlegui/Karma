@@ -52,8 +52,8 @@ namespace Karma.Services
         public void DeletePost(JsonFilePostService<ItemPost> submitService, string id)
         {
             IEnumerable<ItemPost> posts = submitService.GetPosts();
-            ItemPost post = posts.FirstOrDefault<ItemPost>(post => post.ID == id);
-
+            ItemPost post = posts.FirstOrDefault<ItemPost>(postt => postt.ID == id);
+            
             if(post.Picture != "noimage.jpg")
             {
                 string filePath = Path.Combine(WebHostEnvironment.WebRootPath, "images", post.Picture);

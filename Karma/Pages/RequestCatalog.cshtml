@@ -1,63 +1,40 @@
 @page
+@using Karma.Models; 
 @model GetRequestsModel
-@{ ViewData["Title"] = "Request Catalog"; }
+@{ ViewData["Title"] = "Request Catalog/Debugging page"; }
+
+
 <h1>@ViewData["Title"]</h1>
 
-<p>
-    @foreach (var request in Model.Requests)
+@{
+    void PrintList(IEnumerable<RequestPost> requestas, int counter)
     {
-@request.Title <br>}
-</p>
-
-
-<h1>@Model.Requests.Count()</h1>
-
-@{ 
-    for(int i = Model.Requests.Count()-1; i >= 0; i--)
+    
+    <div class="list-group mt-4">
+        @{
+            <p>@requestas.Count() - @counter</p>
+            for (int i = requestas.Count() - 1; i >= requestas.Count()-counter; i--)
             {
-    <p>@Model.Requests.ElementAt(i).Title</p>
+                <a href="#" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">@requestas.ElementAt(i).Title</h5>
+                        <small>@requestas.ElementAt(i).PosterName</small>
+                    </div>
+                    <p class="mb-1">@requestas.ElementAt(i).Description</p>
+                    <small>@requestas.ElementAt(i).City,</small>
+                    <small>@requestas.ElementAt(i).PhoneNumber,</small>
+                    <small>@requestas.ElementAt(i).State</small>
+                </a>
+
             }
+        }
+    </div>
+        }
+
+    PrintList(Model.Requests, Model.Requests.Count());
+    PrintList(Model.Requests, 3);
+    PrintList(Model.Requests, 2);
+    PrintList(Model.Requests, 1);
+    PrintList(Model.Requests, 0);
+
 }
-<form class="row g-3">
-    <div class="col-md-4">
-        <label for="validationDefault01" class="form-label">First name</label>
-        <input type="text" class="form-control" id="validationDefault01" value="Mark" required>
-    </div>
-    <div class="col-md-4">
-        <label for="validationDefault02" class="form-label">Last name</label>
-        <input type="text" class="form-control" id="validationDefault02" value="Otto" required>
-    </div>
-    <div class="col-md-4">
-        <label for="validationDefaultUsername" class="form-label">Username</label>
-        <div class="input-group">
-            <span class="input-group-text" id="inputGroupPrepend2">{}</span>
-            <input type="text" class="form-control" id="validationDefaultUsername" aria-describedby="inputGroupPrepend2" required>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <label for="validationDefault03" class="form-label">City</label>
-        <input type="text" class="form-control" id="validationDefault03" required>
-    </div>
-    <div class="col-md-3">
-        <label for="validationDefault04" class="form-label">State</label>
-        <select class="form-select" id="validationDefault04" required>
-            <option selected disabled value="">Choose...</option>
-            <option>...</option>
-        </select>
-    </div>
-    <div class="col-md-3">
-        <label for="validationDefault05" class="form-label">Zip</label>
-        <input type="text" class="form-control" id="validationDefault05" required>
-    </div>
-    <div class="col-12">
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
-            <label class="form-check-label" for="invalidCheck2">
-                Agree to terms and conditions
-            </label>
-        </div>
-    </div>
-    <div class="col-12">
-        <button class="btn btn-primary" type="submit">Submit form</button>
-    </div>
-</form>
