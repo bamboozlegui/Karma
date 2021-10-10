@@ -11,27 +11,32 @@
     <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
         Request an item
     </button>
-
+    <div asp-validation-summary="All" class="text-danger"></div>
     <div id="collapseExample" class="collapse">
         <div class="mb-3">
             <label class="form-label">Item name</label>
             <input type="text" class="form-control" asp-for="Item.Title">
+            <span asp-validation-for="Item.Title" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label class="form-label">Description</label>
             <textarea type="text" class="form-control" rows="3" asp-for="Item.Description"></textarea>
+            <span asp-validation-for="Item.Description" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label class="form-label">Your name</label>
             <input type="text" class="form-control" asp-for="Item.PosterName">
+            <span asp-validation-for="Item.PosterName" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label class="form-label">City</label>
             <input type="text" class="form-control" asp-for="Item.City">
+            <span asp-validation-for="Item.City" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label class="form-label">Phone number</label>
             <input type="text" class="form-control" asp-for="Item.PhoneNumber">
+            <span asp-validation-for="Item.PhoneNumber" class="text-danger"></span>
         </div>
 
         <button type="submit" class="btn btn-primary">Request</button>
@@ -41,24 +46,28 @@
 <!--Generates requests from .json file, not very elegant code-->
 <div class="list-group mt-4">
     @{
-        for (int i = Model.Requests.Count() - 1; i >= 0; i--)
+        if (ModelState.IsValid)
         {
-        <a href="#" class="list-group-item list-group-item-action">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">@Model.Requests.ElementAt(i).Title</h5>
-                <small>@Model.Requests.ElementAt(i).PosterName</small>
-            </div>
-            <p class="mb-1">@Model.Requests.ElementAt(i).Description</p>
-            <small>@Model.Requests.ElementAt(i).City,</small>
-            <small>@Model.Requests.ElementAt(i).PhoneNumber,</small>
-            <small>@Model.Requests.ElementAt(i).State</small>
-            <form asp-page-handler="delete" asp-route-id="@Model.Requests.ElementAt(i).ID" method="post">
-                <button class="btn btn-default">Delete</button>
-            </form>
-        </a>
-                
+            for (int i = Model.Requests.Count() - 1; i >= 0; i--)
+            {
+                <a href="#" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">@Model.Requests.ElementAt(i).Title</h5>
+                        <small>@Model.Requests.ElementAt(i).PosterName</small>
+                    </div>
+                    <p class="mb-1">@Model.Requests.ElementAt(i).Description</p>
+                    <small>@Model.Requests.ElementAt(i).City,</small>
+                    <small>@Model.Requests.ElementAt(i).PhoneNumber,</small>
+                    <small>@Model.Requests.ElementAt(i).State</small>
+                    <form asp-page-handler="delete" asp-route-ID="@Model.Requests.ElementAt(i).ID" method="post">
+                        <button class="btn btn-default">Delete</button>
+                    </form>
+                </a>
+
+            }
         }
     }
+    
 </div>
 
 
