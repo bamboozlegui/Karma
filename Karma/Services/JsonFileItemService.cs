@@ -51,9 +51,9 @@ namespace Karma.Services
             ItemPost post = _posts.FirstOrDefault<ItemPost>(post => post.ID == id);
 
 	    PictureService.DeletePicture(WebHostEnvironment, post.Picture);
-            _posts = from _post in _posts where _post.ID != id select _post;
+	    _posts = _posts.Where(post => post.ID != id);
 
-            RefreshJsonFile();
+	    RefreshJsonFile();
 	}
 
         public override ItemPost UpdatePost(ItemPost newPost, IFormFile newPhoto = null)
