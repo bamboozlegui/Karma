@@ -12,14 +12,14 @@ namespace Karma.Extensions
         public static string ShowTimeSpan(this DateTime postDate)
         {
             TimeSpan interval = DateTime.Now - postDate;
-            string intervalString = "";
+	    
             if(interval.Days == 0)
-                intervalString = "Today";
-            else
-            {
-                intervalString = interval.Days.ToString() + " days ago";
-            }
-            return intervalString;
+                return "Today";
+
+	    if(interval.Days == 1)
+                return "Yesterday";
+
+            return interval.Days.ToString() + " days ago";
         }
     }
 
