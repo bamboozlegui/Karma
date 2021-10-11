@@ -23,7 +23,7 @@ namespace Karma.Services
             post.ID = Guid.NewGuid().ToString();
 
             _posts = _posts.Append<RequestPost>(post);
-            _posts = _posts.OrderByDescending(post => post.State).ThenByDescending(post => post.Title);
+            _posts = _posts.OrderBy(post => post);
 
             RefreshJsonFile();
         }
