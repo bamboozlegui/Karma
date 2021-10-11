@@ -11,7 +11,7 @@ using Karma.Extensions;
 
 namespace Karma.Services
 {
-    public abstract class JsonFilePostService<T> where T : Post
+    public abstract class JsonFilePostService<T> where T : Post, IJsonStorable, new()
     {
         protected IEnumerable<T> _posts;
 	
@@ -32,7 +32,10 @@ namespace Karma.Services
             }
         }
 
-        internal abstract string JsonFileName { get; }
+        internal string JsonFileName
+        {
+            get { return Path.Combine(WebHostEnvironment.ContentRootPath, "data", (new T()).GetJsonName()); }
+        }
 
         public IWebHostEnvironment WebHostEnvironment { get; }
 

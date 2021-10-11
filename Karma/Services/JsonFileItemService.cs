@@ -19,10 +19,6 @@ namespace Karma.Services
 	
 	public JsonPictureService PictureService { get; }
 
-        internal override string JsonFileName
-        {
-            get { return Path.Combine(WebHostEnvironment.ContentRootPath, "data", (new ItemPost()).GetJsonName()); }
-        }
 
         public override void AddPost(ItemPost post, IFormFile photo)
         {

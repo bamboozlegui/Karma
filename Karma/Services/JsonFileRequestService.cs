@@ -12,11 +12,6 @@ namespace Karma.Services
     {
         public JsonFileRequestService(IWebHostEnvironment webHostEnvironment) : base(webHostEnvironment) {}
 
-        internal override string JsonFileName
-        {
-            get { return Path.Combine(WebHostEnvironment.ContentRootPath, "data", (new RequestPost()).GetJsonName()); }
-        }
-
         public override void AddPost(RequestPost post, IFormFile photo = null)
         {
             post.Date = DateTime.Now;
