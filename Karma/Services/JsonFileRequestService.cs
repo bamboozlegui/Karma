@@ -21,6 +21,7 @@ namespace Karma.Services
         {
             post.Date = DateTime.Now;
             post.ID = Guid.NewGuid().ToString();
+            post.State = Post.StateEnum.Recent;
 
             _posts = _posts.Append<RequestPost>(post);
             _posts = _posts.OrderBy(post => post);
