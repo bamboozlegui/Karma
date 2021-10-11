@@ -34,13 +34,9 @@ namespace Karma.Services
                 _posts = _posts.OrderBy(post => post);
                 RefreshJsonFile();
             }
-
         }
 
-        public IEnumerable<T> GetPosts()
-        {
-            return _posts;
-        }
+        public IEnumerable<T> GetPosts() => _posts;
 
         public IEnumerable<T> UpdatePostsStatus(IEnumerable<T> posts)
         {
@@ -66,12 +62,7 @@ namespace Karma.Services
                 new JsonSerializerOptions { WriteIndented = true }));
         }
 
-        public T GetPost(string id)
-        {
-            T post = _posts.FirstOrDefault<T>(post => post.ID == id);
-
-            return post;
-        }
+        public T GetPost(string id) => _posts.FirstOrDefault<T>(post => post.ID == id);
 
         public abstract void DeletePost(string id);
 

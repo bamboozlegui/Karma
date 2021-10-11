@@ -4,12 +4,9 @@ namespace Karma.Extensions
 {
     public static class TimeExtensions
     {
-	public static TimeSpan GetTimeSpan(this DateTime postDate)
-	{
-	    return DateTime.Now - postDate;
-	}
+        public static TimeSpan GetTimeSpan(this DateTime postDate) => DateTime.Now - postDate;
 
-	public static string ShowTimeSpan(this DateTime postDate) =>
+        public static string ShowTimeSpan(this DateTime postDate) =>
             (DateTime.Now - postDate).Days switch
 	    {
 		0 => "Today",
