@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Karma.Models
 {
-    public abstract class Post
+    public abstract class Post : IComparable<Post>
     {
 
         public enum StateEnum
@@ -42,5 +42,12 @@ namespace Karma.Models
         public static string[] Categories = { "Cat1", "Cat2", "Cat3", "Cat4", "Cat5" };
         public abstract override string ToString();
 
+        public int CompareTo(Post otherPost)
+        {
+	    if (otherPost != null)
+                return this.Date.CompareTo(otherPost.Date);
+	    else
+                throw new NullReferenceException("Object is null");
+        }
     }
 }
