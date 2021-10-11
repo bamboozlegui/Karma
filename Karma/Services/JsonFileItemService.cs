@@ -10,14 +10,14 @@ namespace Karma.Services
 {
     public class JsonFileItemService : JsonFilePostService<ItemPost>
     {
-	public JsonPictureService PictureService { get; }
-	
 	public JsonFileItemService(
 	    JsonPictureService pictureService,
 	    IWebHostEnvironment webHostEnvironment) : base(webHostEnvironment)
 	{
 	    PictureService = pictureService;
 	}
+	
+	public JsonPictureService PictureService { get; }
 
         internal override string JsonFileName
         {

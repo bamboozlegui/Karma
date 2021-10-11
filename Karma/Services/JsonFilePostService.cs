@@ -13,12 +13,8 @@ namespace Karma.Services
 {
     public abstract class JsonFilePostService<T> where T : Post
     {
-        internal abstract string JsonFileName { get; }
-
         protected IEnumerable<T> _posts;
-
-        public IWebHostEnvironment WebHostEnvironment { get; }
-
+	
         public JsonFilePostService(IWebHostEnvironment webHostEnvironment)
         {
             WebHostEnvironment = webHostEnvironment;
@@ -35,6 +31,10 @@ namespace Karma.Services
                 RefreshJsonFile();
             }
         }
+
+        internal abstract string JsonFileName { get; }
+
+        public IWebHostEnvironment WebHostEnvironment { get; }
 
         public IEnumerable<T> GetPosts() => _posts;
 
