@@ -8,19 +8,14 @@ namespace Karma.Extensions
 	{
 	    return DateTime.Now - postDate;
 	}
-	
-        public static string ShowTimeSpan(this DateTime postDate)
-        {
-            TimeSpan interval = DateTime.Now - postDate;
-	    
-            if(interval.Days == 0)
-                return "Today";
 
-	    if(interval.Days == 1)
-                return "Yesterday";
-
-            return interval.Days.ToString() + " days ago";
-        }
+	public static string ShowTimeSpan(this DateTime postDate) =>
+            (DateTime.Now - postDate).Days switch
+	    {
+		0 => "Today",
+		1 => "Yesterday",
+		_ => (DateTime.Now - postDate).Days.ToString() + " days ago"
+	    };
     }
 
 }
