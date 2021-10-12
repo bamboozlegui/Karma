@@ -13,8 +13,11 @@ namespace Karma.Services
 {
     public abstract class JsonFilePostService<T> where T : Post, IJsonStorable, new()
     {
+	//All of the read posts reside in this IEnumerable collection
+	//Basically this field allows us to save posts in the server and not re-read the json file each time we need to get the posts
         protected IEnumerable<T> _posts;
 	
+	//Reads the json file, updates all statuses and overwrites our json file in case the order of posts change//
         public JsonFilePostService(IWebHostEnvironment webHostEnvironment)
         {
             WebHostEnvironment = webHostEnvironment;
@@ -28,8 +31,8 @@ namespace Karma.Services
 
                 _posts = UpdatePostsStatus(_posts);
                 _posts = _posts.OrderBy(post => post);
-                RefreshJsonFile();
             }
+            RefreshJsonFile();
         }
 
         internal string JsonFileName
@@ -39,8 +42,10 @@ namespace Karma.Services
 
         public IWebHostEnvironment WebHostEnvironment { get; }
 
+	//A way to extract posts from the service
         public IEnumerable<T> GetPosts() => _posts;
 
+	//Updates all posts statuses according to theirs' timespan
         public IEnumerable<T> UpdatePostsStatus(IEnumerable<T> posts)
         {
             foreach (var post in posts)
@@ -57,6 +62,7 @@ namespace Karma.Services
             }
         }
 
+	//Overwrites associated json file with current posts in the server
         public void RefreshJsonFile()
         {
             File.WriteAllTextAsync(
@@ -65,8 +71,10 @@ namespace Karma.Services
                 new JsonSerializerOptions { WriteIndented = true }));
         }
 
+	//A way to return a single post by specifying ID
         public T GetPost(string id) => _posts.FirstOrDefault<T>(post => post.ID == id);
 
+	//To be implemented by subclasses
         public abstract void DeletePost(string id);
 
         public abstract T UpdatePost(T newPost, IFormFile newPhoto = null);
