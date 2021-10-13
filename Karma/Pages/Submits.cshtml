@@ -55,7 +55,7 @@
 
 </form>
 
-<div class="card mt-auto">
+@*<div class="card mt-auto">
     <header class="card-header">
         <h6 class="title">Categories </h6>
     </header>
@@ -64,10 +64,10 @@
             <form method="post">
                 @for (int i = 0; i < Karma.Models.Post.Categories.Count(); ++i)
                 {
-                    @*<label class="form-check">
+                    <label class="form-check">
                         <input name="CheckedCategories" type="checkbox" value="@Karma.Models.Post.Categories[i] ">
                         <span class="form-check-label"> @Karma.Models.Post.Categories[i] </span>
-                        </label>*@
+                        </label>
 
                     <div class="form-check">
                         <input type="checkbox" value="@Karma.Models.Post.Categories[i]" name="CheckedCategories" />
@@ -82,9 +82,9 @@
             </div>
         </form>
     </div>
-</div>
+</div>*@
 
-<div class="row row-cols-3 mt-3">
+<div class="container-fluid row row-cols-1 row-cols-md-3 mt-3">
     @{
         if (ModelState.IsValid)
         {
@@ -92,22 +92,19 @@
             {
                 if (Model.Submits.ElementAt(i).State != Models.Post.StateEnum.Hidden)
                 {
-                    <div class="col mt-3">
-                        <div class="card">
-                            <img src="/images/@Model.Submits.ElementAt(i).Picture" class="card-img-top" alt="...">
+                    <div class="col mt-4">
+                        <div class="card h-100 shadow-sm">
+                            <img href="#" src="/images/@Model.Submits.ElementAt(i).Picture" class="card-img-top " alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">@Model.Submits.ElementAt(i).Title, @Model.Submits.ElementAt(i).State</h5>
-                                
-                                @if(Model.Submits.ElementAt(i).Description.Length <= 50)
-                                {
-                                    <p class="card-text">@Model.Submits.ElementAt(i).Description</p>
-                                }
-                                else
-                                {
-                                    <p class="card-text">@Model.Submits.ElementAt(i).Description.Substring(0,50)...</p>
-                                }
-
-
+                                    @if(Model.Submits.ElementAt(i).Description.Length <= 50)
+                                    {
+                                        <p class="card-text">@Model.Submits.ElementAt(i).Description</p>
+                                    }
+                                    else
+                                    {
+                                        <p class="card-text">@Model.Submits.ElementAt(i).Description.Substring(0,50)...</p>
+                                    }
                                 <p class="card-text">@Model.Submits.ElementAt(i).Date.ShowTimeSpan()</p>
                                 <a class="btn btn-secondary" target="_self" asp-page="/Item" asp-route-id=@Model.Submits.ElementAt(i).ID>More info</a>
                             </div>

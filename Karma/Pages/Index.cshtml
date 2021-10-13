@@ -17,7 +17,7 @@
             @if(submitCount == 1)
             {
                 <div class="col">
-                    <div class="card">
+                    <div class="card shadow-sm">
                         <img src="/images/@submits.ElementAt(submitCount - 1).Picture" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">@submits.ElementAt(submitCount - 1).Title</h5>
@@ -30,7 +30,7 @@
                 for(int i = submits.Count() - 1; i >= submits.Count() - submitCount; i--)
                 {
                     <div class="col">
-                        <div class="card">
+                        <div class="card shadow-sm">
                             <img src="/images/@submits.ElementAt(i).Picture" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">@submits.ElementAt(i).Title</h5>
@@ -80,6 +80,7 @@
 
     // Prints posts and requests. I wouldn't consider this very clean.
     // Will need to rework this in the future.
+    // Using named arguments:
     if(Model.Submits.Count() >= 3)  PrintSubmits(submitCount: 3, submits: Model.Submits); 
     else if(Model.Submits.Count() > 0)  PrintSubmits(submits: Model.Submits, submitCount: Model.Submits.Count()); 
     else PrintSubmits(submits: Model.Submits, submitCount: 0); 
