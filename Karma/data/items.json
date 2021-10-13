@@ -9,7 +9,7 @@
     "Title": "5G antena",
     "Description": "Dave korona, nebereik",
     "Date": "2021-10-06T14:36:52.3516808+03:00",
-    "Category": null
+    "Category": "Cat1"
   },
   {
     "Picture": "d63d2004-4b1f-42ee-86c3-3ff1c40c785c_Selection_001.png",
@@ -21,11 +21,11 @@
     "Title": "neofetch",
     "Description": "neofetch for free",
     "Date": "2021-10-07T14:36:52.3516808+03:00",
-    "Category": null
+    "Category": "Cat2"
   },
   {
     "Picture": "60f8358a-b71a-4f32-a0ef-82c3bca629c3_Selection_002.png",
-    "State": 1,
+    "State": 2,
     "ID": "20e26899-2b8d-49d1-bec7-ff29a557e396",
     "PosterName": "Ignas Bamboozlegui",
     "City": "Vilnius",
@@ -33,11 +33,11 @@
     "Title": "Phone",
     "Description": "Buying a new one",
     "Date": "2021-10-09T22:05:34.1874509+03:00",
-    "Category": null
+    "Category": "Cat3"
   },
   {
     "Picture": "541eb895-12e2-4a0e-a514-b1cebf28ed8a_Selection_007.png",
-    "State": 1,
+    "State": 2,
     "ID": "925f5fa2-f92b-4c63-804d-c74102062e4e",
     "PosterName": "Ignas",
     "City": "Kaunas",

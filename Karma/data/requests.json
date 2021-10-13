@@ -1,6 +1,6 @@
 [
   {
-    "State": 1,
+    "State": 2,
     "ID": "ef49ed96-39a6-4e86-b240-5d707811dabf",
     "PosterName": "Request page",
     "City": "Karma",
@@ -11,7 +11,7 @@
     "Category": null
   },
   {
-    "State": 1,
+    "State": 2,
     "ID": "2f5b53cc-26ae-487e-b157-3a6b8bce4ba5",
     "PosterName": "Edvin",
     "City": "Vilnius",
