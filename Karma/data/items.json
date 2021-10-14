@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [
   {
     "Picture": "f7ed64fc-4cbf-4509-9783-010ed9eb800f_dish-network.png",
@@ -71,4 +72,79 @@
     "Date": "2021-10-14T20:27:25.8879388+03:00",
     "Category": "Cat2"
   }
+=======
+[
+  {
+    "Picture": "f7ed64fc-4cbf-4509-9783-010ed9eb800f_dish-network.png",
+    "State": 2,
+    "ID": "sadfaegaergg",
+    "PosterName": "Ignas",
+    "City": "Utena",
+    "PhoneNumber": "423423543242",
+    "Title": "5G antena",
+    "Description": "Dave korona, nebereik",
+    "Date": "2021-10-06T14:36:52.3516808+03:00",
+    "Category": null
+  },
+  {
+    "Picture": "d63d2004-4b1f-42ee-86c3-3ff1c40c785c_Selection_001.png",
+    "State": 2,
+    "ID": "33decc27-c53a-4ca8-9b02-55cf8053b26e",
+    "PosterName": "Edvin",
+    "City": "Vilnius",
+    "PhoneNumber": "12479",
+    "Title": "neofetch",
+    "Description": "neofetch for free",
+    "Date": "2021-10-07T14:36:52.3516808+03:00",
+    "Category": null
+  },
+  {
+    "Picture": "60f8358a-b71a-4f32-a0ef-82c3bca629c3_Selection_002.png",
+    "State": 4,
+    "ID": "20e26899-2b8d-49d1-bec7-ff29a557e396",
+    "PosterName": "Ignas Bamboozlegui",
+    "City": "Vilnius",
+    "PhoneNumber": "3706468464\u002B",
+    "Title": "Phone",
+    "Description": "Buying a new one",
+    "Date": "2021-10-09T22:05:34.1874509+03:00",
+    "Category": null
+  },
+  {
+    "Picture": "541eb895-12e2-4a0e-a514-b1cebf28ed8a_Selection_007.png",
+    "State": 2,
+    "ID": "925f5fa2-f92b-4c63-804d-c74102062e4e",
+    "PosterName": "Ignas",
+    "City": "Kaunas",
+    "PhoneNumber": "01924190841",
+    "Title": "Linux",
+    "Description": "Giving away linux. That\u0027s right. For free!",
+    "Date": "2021-10-10T00:32:54.0540436+03:00",
+    "Category": "Cat3"
+  },
+  {
+    "Picture": "ff2793d6-3d3b-4cdd-b959-533add0fad59_Selection_011.png",
+    "State": 2,
+    "ID": "c73f4602-d18d-4ced-9ff2-58483b992b88",
+    "PosterName": "Karolis",
+    "City": "Vilnius",
+    "PhoneNumber": "17918571",
+    "Title": "Windows",
+    "Description": "Giving away windows for free (not really, if you mind getting spied)",
+    "Date": "2021-10-11T11:18:07.7319016+03:00",
+    "Category": "Cat2"
+  },
+  {
+    "Picture": "f14e88c0-c53a-4722-ae16-300aac0c99ac_a761a3d3cc59b05732722b832ef1743a.jpg",
+    "State": 1,
+    "ID": "903190a7-26b8-4899-b989-3e7508a3c3f2",
+    "PosterName": "K\u0119stutis",
+    "City": "Joni\u0161kis",
+    "PhoneNumber": "55413154841d",
+    "Title": "Ungurys",
+    "Description": "Tipo einu einu pa\u017Evejot ane ir tipo u\u017Eme\u010Diau me\u0161ker\u0119 bet tipo buvo be tipo masalo tai karo\u010De nu\u0117jau \u012F t\u0105 tok\u012F tipo aparatas kur duoda tipo masalo bet tipo be \u0161aibonzo buvau tipo tai \u0117jau ye\u0161kot slie\u0173 ir tipo va radau ir \u0117jau toliau \u017Evejot ir pagaliau pagavau ungur\u012F tipo bet \u017Emona sak\u0117 kad reik i\u0161mest tai galvoju gal tipo kazkas nores suvalgyt. Labai gra\u017Eus ",
+    "Date": "2021-10-14T20:27:25.8879388+03:00",
+    "Category": "Cat2"
+  }
+>>>>>>> 39f564f1e6dde77bbd5210b726df611d76244aa2
 ]

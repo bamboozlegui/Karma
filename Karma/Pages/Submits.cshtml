@@ -42,13 +42,7 @@
             <input class="form-control" type="file" asp-for="Photo">
         </div>
         <div class="mb-3">
-            <select class="form-select" aria-label="category selection" asp-for="Item.Category">
-                <option selected>Category</option>
-                @for (int i = 0; i < Karma.Models.Post.Categories.Count(); ++i)
-                {
-                    <option>@Karma.Models.Post.Categories[i]</option>
-                }
-            </select>
+            <select class="form-select" aria-label="category selection" asp-for="Item.Category" asp-items="@new SelectList(Karma.Models.Post.Categories)"></select>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </div>
@@ -62,6 +56,7 @@
     <div class="filter-content">
         <div class="card-body">
             <form method="post">
+                <select class="form-control"  name="selectedcategory"  asp-items="@new SelectList(Karma.Models.Post.Categories)"></select>
                 @for (int i = 0; i < Karma.Models.Post.Categories.Count(); ++i)
                 {
                     <label class="form-check">
