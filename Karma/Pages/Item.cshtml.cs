@@ -42,7 +42,8 @@ namespace Karma.Pages
 
         public IActionResult OnPost(ItemPost item)
         {
-            Item = ItemService.UpdatePost(item, Photo);
+	    if(ModelState.IsValid)
+		Item = ItemService.UpdatePost(item, Photo);
 
             return RedirectToPage("/Submits");
         }
