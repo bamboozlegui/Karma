@@ -1,0 +1,53 @@
+@page
+@model AccountsModel
+@{
+	ViewData["Title"] = "Accounts";
+	//Read GroupJoin documentation
+	var query = Model.Accounts.GroupJoin(Model.Submits,
+			a => a.Name,
+			s => s.PosterName,
+			(account, submits) => new
+			{
+				Account = account,
+				Submits = submits
+			}).Where(account => account.Submits.Count() != 0);
+}
+@using Karma.Extensions;
+
+@foreach (var account in query)
+{
+	<h2>@account.Account.Name</h2>
+	<div class="container-fluid row row-cols-1 row-cols-md-3 mt-3">
+	@{
+				@for (int i = account.Submits.Count() - 1; i >= 0; i--)
+				{
+					if (account.Submits.ElementAt(i).State != Models.Post.StateEnum.Hidden)
+					{
+						<div class="col mt-4">
+							<div class="card h-100 shadow-sm">
+								<img href="#" src="/images/@account.Submits.ElementAt(i).Picture" class="card-img-top " alt="...">
+								<div class="card-body">
+									<h5 class="card-title">@account.Submits.ElementAt(i).Title, @account.Submits.ElementAt(i).State</h5>
+									@if (account.Submits.ElementAt(i).Description.Length <= 50)
+									{
+										<p class="card-text">@account.Submits.ElementAt(i).Description</p>
+									}
+									else
+									{
+										<p class="card-text">@account.Submits.ElementAt(i).Description.Substring(0,50)...</p>
+									}
+									<p class="card-text">@account.Submits.ElementAt(i).Date.ShowTimeSpan()</p>
+									<a class="btn btn-secondary" target="_self" asp-page="/Item" asp-route-id=@account.Submits.ElementAt(i).ID>More info</a>
+								</div>
+								<div class="col-lg-1">
+									<form asp-page-handler="delete" asp-route-id="@account.Submits.ElementAt(i).ID" method="post">
+										<button class="btn btn-default">Delete</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					}
+				}
+			}
+	</div>
+}
