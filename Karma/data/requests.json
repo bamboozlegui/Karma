@@ -8,7 +8,7 @@
     "Title": "Edit feature",
     "Description": "I really need an edit feature",
     "Date": "2021-10-09T23:48:49.9753626+03:00",
-    "Category": null
+    "Category": "Other"
   },
   {
     "State": 2,
@@ -19,7 +19,7 @@
     "Title": "OnGet trigger",
     "Description": "return Page() does not trigger OnGet() method...",
     "Date": "2021-10-10T15:25:18.6437559+03:00",
-    "Category": null
+    "Category": "Toys"
   },
   {
     "State": 2,
@@ -30,6 +30,6 @@
     "Title": "Picture",
     "Description": "I don\u0027t know if I need it, but maybe it wouldn\u0027t hurt if I had one? UwU",
     "Date": "2021-10-11T11:29:17.0165378+03:00",
-    "Category": null
+    "Category": "Other"
   }
 ]
