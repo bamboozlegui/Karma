@@ -43,13 +43,13 @@ namespace Karma.Pages
         public static List<Account> GetDummyAccounts()
         {
             return new List<Account>()
-        {
-				new Account { Name = "Karolis"},
-				new Account { Name = "Ignas"},
-				new Account { Name = "Edvin"},
-				new Account { Name = "Boy"}
+            {
+                new Account { Name = "Karolis"},
+                new Account { Name = "Ignas"},
+                new Account { Name = "Edvin"},
+                new Account { Name = "Jokeris"}
 
-        };
+            };
 
 
         }

@@ -28,6 +28,7 @@ namespace Karma.Models
         [Required]
         public string PhoneNumber { get; set; }
 
+        [StringLength(30, MinimumLength = 1)]
         [Required]
         public string Title { get; set; }
 
