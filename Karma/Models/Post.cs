@@ -41,7 +41,7 @@ namespace Karma.Models
         [Required]
         public string Category {get; set;}
 
-        public static string[] Categories = { "Cat1", "Cat2", "Cat3", "Cat4", "Cat5" };
+        public static string[] Categories = { "Electronics", "Transportation", "Clothes", "Toys", "Other" };
         public abstract override string ToString();
 
 	//IComparable implementation. CompareTo is used by majority of LINQ methods.

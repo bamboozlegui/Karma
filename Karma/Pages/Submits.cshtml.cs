@@ -9,6 +9,7 @@ using Karma.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Karma.Pages
 {
@@ -63,6 +64,8 @@ namespace Karma.Pages
             {
                 return Page();
             }
+
+            //if (!Regex.Match(, "^[A-Z][a-zA-Z]*$").Success) { RedirectToPage("/Accounts"); }
 
             ItemService.AddPost(Item, Photo);
                 
