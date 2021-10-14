@@ -11,29 +11,29 @@
 
 
 @{ 
-    void PrintSubmits(IEnumerable<ItemPost> submitas, int counter)
+    void PrintSubmits(IEnumerable<ItemPost> submits, int submitCount)
     {
         <div class="container-fluid row row-cols-1 row-cols-md-3 mt-2 g-4">
-            @if(counter == 1)
+            @if(submitCount == 1)
             {
                 <div class="col">
-                    <div class="card">
-                        <img src="/images/@submitas.ElementAt(counter - 1).Picture" class="card-img-top" alt="...">
+                    <div class="card shadow-sm">
+                        <img src="/images/@submits.ElementAt(submitCount - 1).Picture" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">@submitas.ElementAt(counter - 1).Title</h5>
+                            <h5 class="card-title">@submits.ElementAt(submitCount - 1).Title</h5>
                         </div>
                     </div>
                 </div>
             }
             else
             {
-                for(int i = submitas.Count() - 1; i >= submitas.Count() - counter; i--)
+                for(int i = submits.Count() - 1; i >= submits.Count() - submitCount; i--)
                 {
                     <div class="col">
-                        <div class="card">
-                            <img src="/images/@submitas.ElementAt(i).Picture" class="card-img-top" alt="...">
+                        <div class="card shadow-sm">
+                            <img src="/images/@submits.ElementAt(i).Picture" class="card-img-top" alt="...">
                             <div class="card-body">
-                                <h5 class="card-title">@submitas.ElementAt(i).Title</h5>
+                                <h5 class="card-title">@submits.ElementAt(i).Title</h5>
                                 <!--More button wont work in this function, need to research why. For now i deleted it-->
                             </div>
                         </div>
@@ -80,9 +80,10 @@
 
     // Prints posts and requests. I wouldn't consider this very clean.
     // Will need to rework this in the future.
-    if(Model.Submits.Count() >= 3)  PrintSubmits(Model.Submits, 3); 
-    else if(Model.Submits.Count() > 0)  PrintSubmits(Model.Submits, Model.Submits.Count()); 
-    else PrintSubmits(Model.Submits, 0); 
+    // Using named arguments:
+    if(Model.Submits.Count() >= 3)  PrintSubmits(submitCount: 3, submits: Model.Submits); 
+    else if(Model.Submits.Count() > 0)  PrintSubmits(submits: Model.Submits, submitCount: Model.Submits.Count()); 
+    else PrintSubmits(submits: Model.Submits, submitCount: 0); 
     <div class="d-grid gap-2 col-6 mx-auto mt-3">
         <a class="btn btn-outline-secondary" target="_blank" asp-page="/Submits">View more items</a>
     </div>
