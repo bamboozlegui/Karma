@@ -21,7 +21,7 @@ namespace Karma.Pages
         [BindProperty]
         public IFormFile Photo { get; set; }
 
-        public JsonFileItemService ItemService;
+        private JsonFileItemService ItemService { get; }
 
         private IWebHostEnvironment WebHostEnvironment { get; }
 

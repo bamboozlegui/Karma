@@ -14,7 +14,7 @@ namespace Karma.Pages
         [BindProperty]
         public RequestPost Item { get; set; }
 
-        public JsonFileRequestService RequestService;   
+        private JsonFileRequestService RequestService { get; }
 
         public IEnumerable<RequestPost> Requests { get; private set; }
 
