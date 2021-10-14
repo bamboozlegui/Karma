@@ -17,20 +17,7 @@
                     <p class="card-text">@Model.Item.Description</p>
                     <h6 class="card-text text-muted mt-auto">@Model.Item.PosterName</h6>
                     <h6 class="card-text text-muted">+@Model.Item.PhoneNumber</h6>
-                    </div>
-
-
-
-                        
-
-            <!--
-            <a class="btn btn-primary w-50" href="">@Model.Item.PhoneNumber</a>
-            <h1 class="mb-0">@Model.Item.Title</h1>
-            <small class="mb-2">@Model.Item.City</small>
-            <h5>
-                @Model.Item.Description
-
-            </h5>-->
+                </div>
         </div>
     </div>
 </div>
@@ -44,7 +31,7 @@
 
 	<input hidden asp-for="Item.ID" />
 
-	<div class="form-group row">
+	<div class="form-group row mb-3 mt-3 ">
 	    <label asp-for="Item.Title" class="col-sm-2 col-form-label">
 	    </label>
 	    <div class="col-sm-10">
@@ -52,7 +39,7 @@
 	    </div>
 	</div>
 
-	<div class="form-group row">
+	<div class="form-group row mb-3">
 	    <label asp-for="Item.PosterName" class="col-sm-2 col-form-label">
 	    </label>
 	    <div class="col-sm-10">
@@ -60,28 +47,28 @@
 	    </div>
 	</div>
 
-	<div class="form-group row">
+	<div class="form-group row mb-3">
 	    <label asp-for="Item.Description" class="col-sm-2 col-form-label"></label>
 	    <div class="col-sm-10">
-		<input asp-for="Item.Description" class="form-control" placeholder="Description">
+		<textarea asp-for="Item.Description" class="form-control" rows="3" placeholder="Description"></textarea>
 	    </div>
 	</div>
 
-	<div class="form-group row">
+	<div class="form-group row mb-3">
 	    <label asp-for="Item.PhoneNumber" class="col-sm-2 col-form-label"></label>
 	    <div class="col-sm-10">
 		<input asp-for="Item.PhoneNumber" class="form-control" placeholder="Phone number">
 	    </div>
 	</div>
 
-	<div class="form-group row">
+	<div class="form-group row mb-3">
 	    <label asp-for="Item.City" class="col-sm-2 col-form-label"></label>
 	    <div class="col-sm-10">
 		<input asp-for="Item.City" class="form-control" placeholder="City">
 	    </div>
 	</div>
 
-	<div class="form-group row">
+	<div class="form-group row mb-3">
 	    <label asp-for="Photo" class="col-sm-2 col-form-label"></label>
 	    <div class="col-sm-10">
 		<div class="custom-file">
@@ -98,15 +85,3 @@
     </div>
 
 </form>
-
-<!--
-     <div class="card" style="width: 50%;">
-     <div class="card-body">
-     <h5 class="card-title">Card title</h5>
-     <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-	<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="card-link">Card link</a>
-        <a href="#" class="card-link">Another link</a>
-    </div>
-</div>
-<a class="btn btn-primary w-50" href="">@Model.Item.PhoneNumber</a>-->
