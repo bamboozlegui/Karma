@@ -49,8 +49,11 @@ namespace Karma.Pages
         }
         // TO-DO implement filter by Category, get info from checkbox
         // public List<string> Categories = new List<string>(Post.SCategories);
-        public IActionResult OnPostFilter()
+        [BindProperty]
+        public string SelectedCategory { get; set; }
+        public IActionResult OnPostFilter(string SCategory)
         {
+            //Submits = Submits.Where(x => x.Category == SelectedCategory);
             return RedirectToPage("/Submits");
         }
 
