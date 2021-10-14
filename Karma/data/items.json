@@ -9,7 +9,7 @@
     "Title": "5G antena",
     "Description": "Dave korona, nebereik",
     "Date": "2021-10-06T14:36:52.3516808+03:00",
-    "Category": null
+    "Category": "Electronics"
   },
   {
     "Picture": "d63d2004-4b1f-42ee-86c3-3ff1c40c785c_Selection_001.png",
@@ -21,7 +21,7 @@
     "Title": "neofetch",
     "Description": "neofetch for free",
     "Date": "2021-10-07T14:36:52.3516808+03:00",
-    "Category": null
+    "Category": "Electronics"
   },
   {
     "Picture": "60f8358a-b71a-4f32-a0ef-82c3bca629c3_Selection_002.png",
@@ -33,7 +33,7 @@
     "Title": "Phone",
     "Description": "Buying a new one",
     "Date": "2021-10-09T22:05:34.1874509+03:00",
-    "Category": null
+    "Category": "Electronics"
   },
   {
     "Picture": "541eb895-12e2-4a0e-a514-b1cebf28ed8a_Selection_007.png",
@@ -45,7 +45,7 @@
     "Title": "Linux",
     "Description": "Giving away linux. That\u0027s right. For free!",
     "Date": "2021-10-10T00:32:54.0540436+03:00",
-    "Category": "Cat3"
+    "Category": "Electronics"
   },
   {
     "Picture": "ff2793d6-3d3b-4cdd-b959-533add0fad59_Selection_011.png",
@@ -57,18 +57,18 @@
     "Title": "Windows",
     "Description": "Giving away windows for free (not really, if you mind getting spied)",
     "Date": "2021-10-11T11:18:07.7319016+03:00",
-    "Category": "Cat2"
+    "Category": "Electronics"
   },
   {
     "Picture": "f14e88c0-c53a-4722-ae16-300aac0c99ac_a761a3d3cc59b05732722b832ef1743a.jpg",
     "State": 1,
     "ID": "903190a7-26b8-4899-b989-3e7508a3c3f2",
-    "PosterName": "K\u0119stutis",
+    "PosterName": "K\u0119s\u010Dius",
     "City": "Joni\u0161kis",
     "PhoneNumber": "55413154841d",
     "Title": "Ungurys",
     "Description": "Tipo einu einu pa\u017Evejot ane ir tipo u\u017Eme\u010Diau me\u0161ker\u0119 bet tipo buvo be tipo masalo tai karo\u010De nu\u0117jau \u012F t\u0105 tok\u012F tipo aparatas kur duoda tipo masalo bet tipo be \u0161aibonzo buvau tipo tai \u0117jau ye\u0161kot slie\u0173 ir tipo va radau ir \u0117jau toliau \u017Evejot ir pagaliau pagavau ungur\u012F tipo bet \u017Emona sak\u0117 kad reik i\u0161mest tai galvoju gal tipo kazkas nores suvalgyt. Labai gra\u017Eus \u003C3",
     "Date": "2021-10-14T20:27:25.8879388+03:00",
-    "Category": "Cat2"
+    "Category": "Other"
   }
 ]

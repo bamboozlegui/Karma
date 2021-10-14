@@ -46,6 +46,7 @@
             <input class="form-control" type="file" asp-for="Photo">
         </div>
         <div class="mb-3">
+            <label class="form-label">Category</label>
             <select class="form-select" aria-label="category selection" asp-for="Item.Category" asp-items="@new SelectList(Karma.Models.Post.Categories)"></select>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
@@ -93,9 +94,9 @@
                 {
                     <div class="col mt-4">
                         <div class="card h-100 shadow-sm">
-                            <img href="#" src="/images/@Model.Submits.ElementAt(i).Picture" class="card-img-top " alt="...">
+                            <img href="#" src="/images/@Model.Submits.ElementAt(i).Picture" class="card-img-top" alt="...">
                             <div class="card-body">
-                                <h5 class="card-title">@Model.Submits.ElementAt(i).Title, @Model.Submits.ElementAt(i).State</h5>
+                                <h5 class="card-title">@Model.Submits.ElementAt(i).Title</h5>
                                     @if(Model.Submits.ElementAt(i).Description.Length <= 50)
                                     {
                                         <p class="card-text">@Model.Submits.ElementAt(i).Description</p>
@@ -119,7 +120,7 @@
                                     <button class="btn btn-default">Delete</button>
                                 </form>
                             </div>
-                        </div>
+                        </div>                        
                     </div>
                 }
             }
