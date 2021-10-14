@@ -37,6 +37,9 @@ namespace Karma.Pages
             Submits = ItemService.GetPosts();
         }
 
+		//Since we don't have a database deticated to accounts,
+		//we just create dummy accounts that just have names for now.
+		//Their names will be used to GroupJoin accounts and their items for demonstration
         public static List<Account> GetDummyAccounts()
         {
             return new List<Account>()
