@@ -2,6 +2,7 @@
 @model AccountsModel
 @{
 	ViewData["Title"] = "Accounts";
+	//Read GroupJoin documentation
 	var query = Model.Accounts.GroupJoin(Model.Submits,
 			a => a.Name,
 			s => s.PosterName,
