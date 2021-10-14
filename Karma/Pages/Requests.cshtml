@@ -38,6 +38,10 @@
             <input type="text" class="form-control" asp-for="Item.PhoneNumber">
             <span asp-validation-for="Item.PhoneNumber" class="text-danger"></span>
         </div>
+        <div class="mb-3">
+            <label class="form-label">Category</label>
+            <select class="form-select" aria-label="category selection" asp-for="Item.Category" asp-items="@new SelectList(Karma.Models.Post.Categories)"></select>
+        </div>
 
         <button type="submit" class="btn btn-primary">Request</button>
     </div>

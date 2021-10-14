@@ -65,8 +65,6 @@ namespace Karma.Pages
                 return Page();
             }
 
-            //if (!Regex.Match(, "^[A-Z][a-zA-Z]*$").Success) { RedirectToPage("/Accounts"); }
-
             ItemService.AddPost(Item, Photo);
                 
             return RedirectToPage("/Submits");
