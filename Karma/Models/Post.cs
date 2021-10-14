@@ -9,11 +9,11 @@ namespace Karma.Models
 
         public enum StateEnum
         {
+            None = 0,
             Recent = 1,
             Available = 2,
             Taken = 4,
-            Hidden = 8,
-            None = 0
+            Hidden = 8
         }
 
         public StateEnum State { get; set; }
