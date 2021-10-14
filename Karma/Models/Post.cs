@@ -39,7 +39,11 @@ namespace Karma.Models
         public DateTime Date { get; set; }
 
         [Required]
-        public string Category {get; set;}
+        public string Category { get; set;}
+
+	[RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage = "Bruh")]
+	[Required]
+	public string Email { get; set; }
 
         public static string[] Categories = { "Electronics", "Transportation", "Clothes", "Toys", "Other" };
         public abstract override string ToString();

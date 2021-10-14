@@ -73,8 +73,10 @@ namespace Karma.Services
                 post.Title = newPost.Title;
                 post.PosterName = newPost.PosterName;
                 post.PhoneNumber = newPost.PhoneNumber;
+                post.Email = newPost.Email;
                 post.Description = newPost.Description;
                 post.City = newPost.City;
+                post.Category = newPost.Category;
             }
 
 	    //In case we have a new picture that should be attached to the post
