@@ -29,59 +29,66 @@
     </button>
     <div id="collapseExample" class="collapse">
 
-	<input hidden asp-for="Item.ID" />
+        <input hidden asp-for="Item.ID" />
 
-	<div class="form-group row mb-3 mt-3 ">
-	    <label asp-for="Item.Title" class="col-sm-2 col-form-label">
-	    </label>
-	    <div class="col-sm-10">
-		<input asp-for="Item.Title" class="form-control" placeholder="Title">
-	    </div>
-	</div>
+        <div class="form-group row mb-3 mt-3 ">
+            <label asp-for="Item.Title" class="col-sm-2 col-form-label">
+            </label>
+            <div class="col-sm-10">
+                <input asp-for="Item.Title" class="form-control" placeholder="Title">
+            </div>
+        </div>
 
-	<div class="form-group row mb-3">
-	    <label asp-for="Item.PosterName" class="col-sm-2 col-form-label">
-	    </label>
-	    <div class="col-sm-10">
-		<input asp-for="Item.PosterName" class="form-control" placeholder="Poster name">
-	    </div>
-	</div>
+        <div class="form-group row mb-3">
+            <label asp-for="Item.PosterName" class="col-sm-2 col-form-label">
+            </label>
+            <div class="col-sm-10">
+                <input asp-for="Item.PosterName" class="form-control" placeholder="Poster name">
+            </div>
+        </div>
 
-	<div class="form-group row mb-3">
-	    <label asp-for="Item.Description" class="col-sm-2 col-form-label"></label>
-	    <div class="col-sm-10">
-		<textarea asp-for="Item.Description" class="form-control" rows="3" placeholder="Description"></textarea>
-	    </div>
-	</div>
+        <div class="form-group row mb-3">
+            <label asp-for="Item.Description" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <textarea asp-for="Item.Description" class="form-control" rows="3" placeholder="Description"></textarea>
+            </div>
+        </div>
 
-	<div class="form-group row mb-3">
-	    <label asp-for="Item.PhoneNumber" class="col-sm-2 col-form-label"></label>
-	    <div class="col-sm-10">
-		<input asp-for="Item.PhoneNumber" class="form-control" placeholder="Phone number">
-	    </div>
-	</div>
+        <div class="form-group row mb-3">
+            <label asp-for="Item.PhoneNumber" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="Item.PhoneNumber" class="form-control" placeholder="Phone number">
+            </div>
+        </div>
 
-	<div class="form-group row mb-3">
-	    <label asp-for="Item.City" class="col-sm-2 col-form-label"></label>
-	    <div class="col-sm-10">
-		<input asp-for="Item.City" class="form-control" placeholder="City">
-	    </div>
-	</div>
+        <div class="form-group row mb-3">
+            <label asp-for="Item.City" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="Item.City" class="form-control" placeholder="City">
+            </div>
+        </div>
 
-	<div class="form-group row mb-3">
-	    <label asp-for="Photo" class="col-sm-2 col-form-label"></label>
-	    <div class="col-sm-10">
-		<div class="custom-file">
-		    <input asp-for="Photo" class="custom-file-input form-control">
-		    <label class="custom-file-label">Click here to change photo</label>
-		</div>
-	    </div>
-	</div>
+        <div class="form-group row mb-3">
+            <label asp-for="Photo" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <div class="custom-file">
+                    <input asp-for="Photo" class="custom-file-input form-control">
+                    <label class="custom-file-label">Click here to change photo</label>
+                </div>
+            </div>
+        </div>
 
-	<button type="submit" class="btn btn-primary">Edit</button>
+        <div class="form-group row mb-3">
+            <label asp-for="Item.Category" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+            <select class="form-select" aria-label="category selection" asp-for="Item.Category" asp-items="@new SelectList(Karma.Models.Post.Categories)"></select>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Edit</button>
 
 
-	
+
     </div>
 
 </form>
