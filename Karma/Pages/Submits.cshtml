@@ -105,8 +105,15 @@
                                     {
                                         <p class="card-text">@Model.Submits.ElementAt(i).Description.Substring(0,50)...</p>
                                     }
-                                <p class="card-text">@Model.Submits.ElementAt(i).Date.ShowTimeSpan()</p>
-                                <a class="btn btn-secondary" target="_self" asp-page="/Item" asp-route-id=@Model.Submits.ElementAt(i).ID>More info</a>
+                                <p class="card-text">@Model.Submits.ElementAt(i).Date.ShowTimeSpan()</p>                           
+                                @if(Model.Submits.ElementAt(i).State == Models.Post.StateEnum.Taken)
+                                {
+                                    <a class="btn btn-secondary disabled" target="_self" asp-page="/Item" asp-route-id=@Model.Submits.ElementAt(i).ID>More info</a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-secondary" target="_self" asp-page="/Item" asp-route-id=@Model.Submits.ElementAt(i).ID>More info</a>
+                                }
                             </div>
                             <div class="col-lg-1">
                                 <form asp-page-handler="delete" asp-route-id="@Model.Submits.ElementAt(i).ID" method="post">
