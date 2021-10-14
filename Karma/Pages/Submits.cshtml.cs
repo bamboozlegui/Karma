@@ -66,8 +66,21 @@ namespace Karma.Pages
             }
 
             ItemService.AddPost(Item, Photo);
+            return Validate(Item);
                 
-            return RedirectToPage("/Submits");
+            //return RedirectToPage("/Submits");
+        }
+
+        public IActionResult Validate(ItemPost Item)
+        {
+            if (!Regex.Match(Item.PosterName, "^[A-Z][a-zA-Z]*$").Success)
+            {
+                ItemService.DeletePost(Item.ID);
+                return RedirectToPage("/Error");
+            }   
+
+            return RedirectToPage("/Accounts");
+
         }
     }
 }
