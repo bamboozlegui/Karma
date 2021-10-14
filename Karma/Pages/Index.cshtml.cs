@@ -17,14 +17,18 @@ namespace Karma.Pages
         //Request dalykai
         [BindProperty]
         public RequestPost RequestItem { get; set; }
+
         public JsonFileRequestService RequestService;
+
         public IEnumerable<RequestPost> Requests { get; private set; }
         
         //Submit dalykai
         [BindProperty]
         public ItemPost SubmitItem { get; set; }
+
         [BindProperty]
         public IFormFile Photo { get; set; }
+
         public JsonFileItemService ItemService;
 
         public IEnumerable<ItemPost> Submits { get; private set; }
