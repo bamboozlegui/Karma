@@ -9,7 +9,7 @@
 
 <!--do some research about this enctype thingie-->
 
-<form method="post" enctype="multipart/form-data" class="mt-4">
+<form method="post" enctype="multipart/form-data" class="mt-4 needs-validation " novalidate>
 
     <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
         aria-expanded="false" aria-controls="collapseExample">
@@ -19,31 +19,52 @@
 
         <div class="mb-3">
             <label class="form-label">Item name</label>
-            <input type="text" class="form-control" asp-for="Item.Title">
+            <input type="text" class="form-control" asp-for="Item.Title " required>
+            <div class="invalid-feedback">
+                Please enter the post title.
+            </div>
         </div>
         <div class="mb-3">
             <label class="form-label">Description</label>
-            <textarea type="text" class="form-control" rows="3" asp-for="Item.Description"></textarea>
+            <textarea type="text" class="form-control" rows="3" asp-for="Item.Description" required></textarea>
+            <div class="invalid-feedback">
+                Please provide the item's description.
+            </div>
         </div>
         <div class="mb-3">
             <label class="form-label">Your name</label>
-            <input type="text" class="form-control" asp-for="Item.PosterName">
+            <input type="text" class="form-control" asp-for="Item.PosterName" required>
+            <div class="invalid-feedback">
+                Please enter your name.
+            </div>
         </div>
         <div class="mb-3">
             <label class="form-label">City</label>
-            <input type="text" class="form-control" asp-for="Item.City">
+            <input type="text" class="form-control" asp-for="Item.City" required>
+            <div class="invalid-feedback">
+                Please provide a valid city.
+            </div>
         </div>
         <div class="mb-3">
             <label class="form-label">Phone number</label>
-            <input type="number" class="form-control" asp-for="Item.PhoneNumber">
+            <input type="number" class="form-control" asp-for="Item.PhoneNumber" required>
+            <div class="invalid-feedback">
+                Please provide your phone number.
+            </div>
         </div>
         <div class="mb-3">
             <label class="form-label">Email</label>
-            <input type="text" class="form-control" asp-for="Item.Email">
+            <input type="text" class="form-control" asp-for="Item.Email" required>
+            <div class="invalid-feedback">
+                Please provide your title.
+            </div>
         </div>
         <div class="mb-3">
             <label class="form-label">Picture</label>
-            <input class="form-control" type="file" asp-for="Photo">
+            <input class="form-control" type="file" asp-for="Photo" required>
+            <div class="invalid-feedback">
+                Please upload a picture of the item.
+            </div>
         </div>
         <div class="mb-3">
             <label class="form-label">Category</label>
