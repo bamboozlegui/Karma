@@ -7,41 +7,52 @@
 <h1>@ViewData["Title"]</h1>
 
 <!--Form for a new request-->
-<form method="post" class="mt-4">
+<form method="post" class="mt-4 needs-validation" novalidate>
     <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
         Request an item
     </button>
-    <div asp-validation-summary="All" class="text-danger"></div>
     <div id="collapseExample" class="collapse">
         <div class="mb-3">
             <label class="form-label">Item name</label>
-            <input type="text" class="form-control" asp-for="Item.Title">
-            <span asp-validation-for="Item.Title" class="text-danger"></span>
+            <input type="text" class="form-control" asp-for="Item.Title" required>
+            <div class="invalid-feedback">
+                Please enter the request title.
+            </div>
         </div>
         <div class="mb-3">
             <label class="form-label">Description</label>
-            <textarea type="text" class="form-control" rows="3" asp-for="Item.Description"></textarea>
-            <span asp-validation-for="Item.Description" class="text-danger"></span>
+            <textarea type="text" class="form-control" rows="3" asp-for="Item.Description" required></textarea>
+            <div class="invalid-feedback">
+                Please provide the item's description.
+            </div>
         </div>
         <div class="mb-3">
             <label class="form-label">Your name</label>
-            <input type="text" class="form-control" asp-for="Item.PosterName">
-            <span asp-validation-for="Item.PosterName" class="text-danger"></span>
+            <input type="text" class="form-control" asp-for="Item.PosterName" required>
+            <div class="invalid-feedback">
+                Please enter your name.
+            </div>
         </div>
         <div class="mb-3">
             <label class="form-label">City</label>
-            <input type="text" class="form-control" asp-for="Item.City">
-            <span asp-validation-for="Item.City" class="text-danger"></span>
+            <input type="text" class="form-control" asp-for="Item.City" required>
+            <div class="invalid-feedback">
+                Please provide a valid city.
+            </div>
         </div>
         <div class="mb-3">
             <label class="form-label">Email</label>
-            <input type="text" class="form-control" asp-for="Item.Email">
-            <span asp-validation-for="Item.Email" class="text-danger"></span>
+            <input type="email" class="form-control" asp-for="Item.Email" required>
+            <div class="invalid-feedback">
+                Please provide your email.
+            </div>
         </div>
         <div class="mb-3">
             <label class="form-label">Phone number</label>
-            <input type="text" class="form-control" asp-for="Item.PhoneNumber">
-            <span asp-validation-for="Item.PhoneNumber" class="text-danger"></span>
+            <input type="text" class="form-control" asp-for="Item.PhoneNumber" required>
+            <div class="invalid-feedback">
+                Please provide your phone number.
+            </div>
         </div>
         <div class="mb-3">
             <label class="form-label">Category</label>
