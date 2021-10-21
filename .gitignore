@@ -400,3 +400,4 @@ FodyWeavers.xsd
 Karma/.vscode/tasks.json
 Karma/.vscode/launch.json
 *.el
+Karma/data/*
