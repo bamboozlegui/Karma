@@ -45,6 +45,15 @@ namespace Karma.Services
 	//A way to extract posts from the service
         public IEnumerable<T> GetPosts() => _posts;
 
+	public IEnumerable<T> SearchPosts(string searchTerm)
+	{
+	    if(searchTerm == null)
+                return _posts;
+
+            return _posts.Where(post => post.Title.Contains(searchTerm) ||
+				post.PosterName.Contains(searchTerm));
+        }
+
 	//Updates all posts statuses according to theirs' timespan
         public IEnumerable<T> UpdatePostsStatus(IEnumerable<T> posts)
         {

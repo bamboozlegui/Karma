@@ -22,6 +22,12 @@ namespace Karma.Pages
         [BindProperty]
         public IFormFile Photo { get; set; }
 
+	[BindProperty(SupportsGet = true)]
+        public string SearchTerm { get; set; }
+
+        [BindProperty]
+        public string SelectedCategory { get; set; }
+
         private JsonFileItemService ItemService { get; }
 
         private IWebHostEnvironment WebHostEnvironment { get; }
@@ -38,7 +44,7 @@ namespace Karma.Pages
 
         public void OnGet()
         {
-            Submits = ItemService.GetPosts();
+            Submits = ItemService.SearchPosts(SearchTerm);
         }
 
         // Deletes Post on button trigger, refreshes posts afterwards : )
@@ -50,8 +56,6 @@ namespace Karma.Pages
         }
         // TO-DO implement filter by Category, get info from checkbox
         // public List<string> Categories = new List<string>(Post.SCategories);
-        [BindProperty]
-        public string SelectedCategory { get; set; }
         public IActionResult OnPostFilter(string SCategory)
         {
             //Submits = Submits.Where(x => x.Category == SelectedCategory);
