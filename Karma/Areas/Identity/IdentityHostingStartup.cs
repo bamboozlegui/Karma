@@ -20,7 +20,12 @@ namespace Karma.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("KarmaDbContextConnection")));
 
-                services.AddDefaultIdentity<KarmaUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                services.AddDefaultIdentity<KarmaUser>(options => {
+                    options.SignIn.RequireConfirmedAccount = false;
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireNonAlphanumeric = false;                    
+                    })
                     .AddEntityFrameworkStores<KarmaDbContext>();
             });
         }
