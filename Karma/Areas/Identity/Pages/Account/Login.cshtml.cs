@@ -57,10 +57,6 @@ namespace Karma.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            if (_signInManager.IsSignedIn(User))
-            {
-                RedirectToPage("/Index.csthml");
-            }
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
                 ModelState.AddModelError(string.Empty, ErrorMessage);
