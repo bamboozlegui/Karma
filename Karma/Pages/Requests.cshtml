@@ -34,34 +34,7 @@
                 Please provide the item's description.
             </div>
         </div>
-        @*<div class="mb-3">
-            <label class="form-label">Your name</label>
-            <input type="text" class="form-control" asp-for="Item.PosterName" required>
-            <div class="invalid-feedback">
-                Please enter your name.
-            </div>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">City</label>
-            <input type="text" class="form-control" asp-for="Item.City" required>
-            <div class="invalid-feedback">
-                Please provide a valid city.
-            </div>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Email</label>
-            <input type="email" class="form-control" asp-for="Item.Email" required>
-            <div class="invalid-feedback">
-                Please provide your email.
-            </div>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Phone number</label>
-            <input type="text" class="form-control" asp-for="Item.PhoneNumber" required>
-            <div class="invalid-feedback">
-                Please provide your phone number.
-            </div>
-        </div>*@
+        
         <div class="mb-3">
             <label class="form-label">Category</label>
             <select class="form-select" aria-label="category selection" asp-for="Item.Category" asp-items="@new SelectList(Karma.Models.Post.Categories)"></select>
@@ -71,7 +44,6 @@
         @if(SignInManager.IsSignedIn(User))
         {
             <button type="submit" class="btn btn-primary">Request</button>
-
         }
         else
         {

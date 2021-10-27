@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Data.SqlClient;
 
 namespace Karma.Pages
 {
@@ -33,6 +34,8 @@ namespace Karma.Pages
         private IWebHostEnvironment WebHostEnvironment { get; }
 
         public IEnumerable<ItemPost> Submits { get; private set; }
+
+        public string sqlConnectionString = "Server=(localdb)\\mssqllocaldb;Database=Karma;Trusted_Connection=True;MultipleActiveResultSets=true";
 
         public SubmitsModel(
 	    JsonFileItemService itemService,
@@ -64,13 +67,37 @@ namespace Karma.Pages
 
         public IActionResult OnPost()
         {
-            if (ModelState.IsValid == false)
+            /*if (ModelState.IsValid == false)
             {
                 return Page();
+            }*/
+
+            using (SqlConnection conn = new SqlConnection(sqlConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand("SELECT UserName, FirstName, City, PhoneNumber FROM Karma.dbo.AspNetUsers", conn);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        if (HttpContext.User.Identity.Name == reader.GetString(0))
+                        {
+                            Item.Email = reader.GetString(0);
+                            Item.PosterName = reader.GetString(1);
+                            Item.City = reader.GetString(2);
+                            Item.PhoneNumber = reader.GetString(3);
+                            break;
+                        }
+                    }
+                }
+                reader.Close();
+                conn.Close();
             }
 
+
             ItemService.AddPost(Item, Photo);
-            //return Validate(Item);
+            
                 
             return RedirectToPage("/Submits");
         }
