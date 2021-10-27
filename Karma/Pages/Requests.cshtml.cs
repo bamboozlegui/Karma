@@ -34,32 +34,6 @@ namespace Karma.Pages
         public void OnGet()
         {
             Requests = RequestService.GetPosts();
-
-
-
-            // Further testing required
-            using(SqlConnection conn = new SqlConnection(sqlConnectionString))
-            {
-                SqlCommand cmd = new SqlCommand("SELECT UserName, FirstName FROM Karma.dbo.AspNetUsers", conn);
-                conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        if (HttpContext.User.Identity.Name == reader.GetString(0))
-                        {
-                            System.Diagnostics.Debug.WriteLine(reader.GetString(1));
-                            break;
-                        }
-                    }
-                }   
-                reader.Close();
-                conn.Close();
-            }
-
-
         }
 
         public IActionResult OnPostDelete(string id)
@@ -74,6 +48,27 @@ namespace Karma.Pages
             if(ModelState.IsValid == false)
             {
                 return Page();
+            }
+
+            using (SqlConnection conn = new SqlConnection(sqlConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand("SELECT UserName, FirstName FROM Karma.dbo.AspNetUsers", conn);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        if (HttpContext.User.Identity.Name == reader.GetString(0))
+                        {
+                            Item.Email = reader.GetString(0);
+                            Item.PosterName = reader.GetString(1);
+                            break;
+                        }
+                    }
+                }
+                reader.Close();
+                conn.Close();
             }
 
             RequestService.AddPost(Item);
