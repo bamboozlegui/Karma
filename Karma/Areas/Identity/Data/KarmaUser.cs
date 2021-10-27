@@ -17,5 +17,10 @@ namespace Karma.Areas.Identity.Data
         [PersonalData]
         [Column(TypeName = "nvarchar(50)")]
         public string LastName { get; set; }
+
+        [PersonalData]
+        [Column(TypeName = "nvarchar(100)")]
+        public string City { get; set; }
+        
     }
 }

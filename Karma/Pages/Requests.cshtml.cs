@@ -45,14 +45,9 @@ namespace Karma.Pages
 
         public IActionResult OnPost()
         {
-            /*if(ModelState.IsValid == false)
-            {
-                return Page();
-            }*/
-
             using (SqlConnection conn = new SqlConnection(sqlConnectionString))
             {
-                SqlCommand cmd = new SqlCommand("SELECT UserName, FirstName FROM Karma.dbo.AspNetUsers", conn);
+                SqlCommand cmd = new SqlCommand("SELECT UserName, FirstName, City, PhoneNumber FROM Karma.dbo.AspNetUsers", conn);
                 conn.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.HasRows)
@@ -63,6 +58,8 @@ namespace Karma.Pages
                         {
                             Item.Email = reader.GetString(0);
                             Item.PosterName = reader.GetString(1);
+                            Item.City = reader.GetString(2);
+                            Item.PhoneNumber = reader.GetString(3);
                             break;
                         }
                     }

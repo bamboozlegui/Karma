@@ -34,5 +34,17 @@
     "Date": "2021-10-11T11:29:17.0165378+03:00",
     "Category": "Other",
     "Email": null
+  },
+  {
+    "State": 1,
+    "ID": "5e652278-bc61-428c-8fd8-29c5554c15dc",
+    "PosterName": "Carl",
+    "City": "Los Santos",
+    "PhoneNumber": "584595959",
+    "Title": "Daiktas",
+    "Description": "lsdhfjksdhfsdhfjkgsdhfsd",
+    "Date": "2021-10-27T19:33:10.0648397+03:00",
+    "Category": "Transportation",
+    "Email": "karolis@email.com"
   }
 ]

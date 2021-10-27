@@ -1,5 +1,13 @@
 ﻿@page "/Requests"
 @model Karma.Pages.RequestsModel
+
+
+@using Microsoft.AspNetCore.Identity
+@using Karma.Areas.Identity.Data
+
+@inject SignInManager<KarmaUser> SignInManager
+@inject UserManager<KarmaUser> UserManager
+
 @{
     ViewData["Title"] = "Request items";
 }
@@ -32,7 +40,7 @@
             <div class="invalid-feedback">
                 Please enter your name.
             </div>
-        </div>*@
+        </div>
         <div class="mb-3">
             <label class="form-label">City</label>
             <input type="text" class="form-control" asp-for="Item.City" required>
@@ -40,26 +48,36 @@
                 Please provide a valid city.
             </div>
         </div>
-        @*<div class="mb-3">
+        <div class="mb-3">
             <label class="form-label">Email</label>
             <input type="email" class="form-control" asp-for="Item.Email" required>
             <div class="invalid-feedback">
                 Please provide your email.
             </div>
-        </div>*@
+        </div>
         <div class="mb-3">
             <label class="form-label">Phone number</label>
             <input type="text" class="form-control" asp-for="Item.PhoneNumber" required>
             <div class="invalid-feedback">
                 Please provide your phone number.
             </div>
-        </div>
+        </div>*@
         <div class="mb-3">
             <label class="form-label">Category</label>
             <select class="form-select" aria-label="category selection" asp-for="Item.Category" asp-items="@new SelectList(Karma.Models.Post.Categories)"></select>
         </div>
 
-        <button type="submit" class="btn btn-primary">Request</button>
+        
+        @if(SignInManager.IsSignedIn(User))
+        {
+            <button type="submit" class="btn btn-primary">Request</button>
+
+        }
+        else
+        {
+            <button type="submit" class="btn btn-primary disabled">Request</button>
+        }
+
     </div>
 </form>
 
