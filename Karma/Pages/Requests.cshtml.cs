@@ -54,7 +54,9 @@ namespace Karma.Pages
                             break;
                         }
                     }
-                }              
+                }   
+                reader.Close();
+                conn.Close();
             }
 
 
