@@ -45,10 +45,10 @@ namespace Karma.Pages
 
         public IActionResult OnPost()
         {
-            if(ModelState.IsValid == false)
+            /*if(ModelState.IsValid == false)
             {
                 return Page();
-            }
+            }*/
 
             using (SqlConnection conn = new SqlConnection(sqlConnectionString))
             {
