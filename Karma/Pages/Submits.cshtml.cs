@@ -29,7 +29,7 @@ namespace Karma.Pages
         [BindProperty]
         public string SelectedCategory { get; set; }
 
-        private JsonFileItemService ItemService { get; }
+        public IItemRepository ItemService { get; set;  }
 
         private IWebHostEnvironment WebHostEnvironment { get; }
 
@@ -38,7 +38,7 @@ namespace Karma.Pages
         public string sqlConnectionString = "Server=(localdb)\\mssqllocaldb;Database=Karma;Trusted_Connection=True;MultipleActiveResultSets=true";
 
         public SubmitsModel(
-	    JsonFileItemService itemService,
+            IItemRepository itemService,
             IWebHostEnvironment webHostEnvironment)
         {
             ItemService = itemService;
