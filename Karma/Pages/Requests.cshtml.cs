@@ -19,14 +19,14 @@ namespace Karma.Pages
         [BindProperty]
         public RequestPost Item { get; set; }
 
-        private JsonFileRequestService RequestService { get; }
+        private IRequestRepository RequestService { get; }
 
         public IEnumerable<RequestPost> Requests { get; private set; }
         
         public string sqlConnectionString = "Server=(localdb)\\mssqllocaldb;Database=Karma;Trusted_Connection=True;MultipleActiveResultSets=true";
 
 
-        public RequestsModel(JsonFileRequestService requestService)
+        public RequestsModel(IRequestRepository requestService)
         {
             RequestService = requestService;
         }

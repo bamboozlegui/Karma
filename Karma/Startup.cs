@@ -33,6 +33,7 @@ namespace Karma
             services.AddRazorPages();
             services.AddControllersWithViews();
             services.AddScoped<IItemRepository, SQLItemRepository>();
+            services.AddScoped<IRequestRepository, SQLRequestRepository>();
             services.AddSingleton<JsonFileRequestService>();
             services.AddSingleton<JsonFileItemService>();
             services.AddTransient<JsonPictureService>();

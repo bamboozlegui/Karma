@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Karma.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace Karma.Services
 {
@@ -69,6 +71,20 @@ namespace Karma.Services
 
         public ItemPost UpdatePost(ItemPost newPost, IFormFile newPhoto)
         {
+            ItemPost post = context.Items.AsNoTracking().FirstOrDefault(post => post.ID == newPost.ID);
+
+            if(newPhoto != null)
+            {
+                if (post.Picture != null && post.Picture != "noimage.jpg")
+                {
+                    string filePath = Path.Combine(WebHostEnvironment.WebRootPath, "images", post.Picture);
+                    System.IO.File.Delete(filePath);
+                }
+
+                post.Picture = PictureService.ProcessUploadedFile(WebHostEnvironment, newPhoto);
+            }
+            newPost.Date = post.Date;
+            newPost.Picture = post.Picture;
             var item = context.Items.Attach(newPost);
             item.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             context.SaveChanges();
