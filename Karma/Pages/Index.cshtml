@@ -85,7 +85,7 @@
     else if(Model.Submits.Count() > 0)  PrintSubmits(submits: Model.Submits, submitCount: Model.Submits.Count()); 
     else PrintSubmits(submits: Model.Submits, submitCount: 0); 
     <div class="d-grid gap-2 col-6 mx-auto mt-3">
-        <a class="btn btn-outline-secondary" target="_blank" asp-page="/Submits">View more items</a>
+        <a class="btn btn-outline-secondary" asp-page="/Submits">View more items</a>
     </div>
 
 
@@ -93,6 +93,6 @@
     else if(Model.Requests.Count() > 0) PrintRequests(Model.Requests, Model.Requests.Count());
     else PrintRequests(Model.Requests, 0);
     <div class="d-grid gap-2 col-6 mx-auto mt-3">
-        <a class="btn btn-outline-secondary" target="_blank" asp-page="/Requests">More requests</a>
+        <a class="btn btn-outline-secondary" asp-page="/Requests">More requests</a>
     </div>
 }
