@@ -1,5 +1,13 @@
 ﻿@page "/Requests"
 @model Karma.Pages.RequestsModel
+
+
+@using Microsoft.AspNetCore.Identity
+@using Karma.Areas.Identity.Data
+
+@inject SignInManager<KarmaUser> SignInManager
+@inject UserManager<KarmaUser> UserManager
+
 @{
     ViewData["Title"] = "Request items";
 }
@@ -26,40 +34,22 @@
                 Please provide the item's description.
             </div>
         </div>
-        <div class="mb-3">
-            <label class="form-label">Your name</label>
-            <input type="text" class="form-control" asp-for="Item.PosterName" required>
-            <div class="invalid-feedback">
-                Please enter your name.
-            </div>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">City</label>
-            <input type="text" class="form-control" asp-for="Item.City" required>
-            <div class="invalid-feedback">
-                Please provide a valid city.
-            </div>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Email</label>
-            <input type="email" class="form-control" asp-for="Item.Email" required>
-            <div class="invalid-feedback">
-                Please provide your email.
-            </div>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Phone number</label>
-            <input type="number" class="form-control" asp-for="Item.PhoneNumber" required>
-            <div class="invalid-feedback">
-                Please provide your phone number.
-            </div>
-        </div>
+      
         <div class="mb-3">
             <label class="form-label">Category</label>
             <select class="form-select" aria-label="category selection" asp-for="Item.Category" asp-items="@new SelectList(Karma.Models.Post.Categories)"></select>
         </div>
 
-        <button type="submit" class="btn btn-primary">Request</button>
+        
+        @if(SignInManager.IsSignedIn(User))
+        {
+            <button type="submit" class="btn btn-primary">Request</button>
+        }
+        else
+        {
+            <button type="submit" class="btn btn-primary disabled">Request</button>
+        }
+
     </div>
 </form>
 
@@ -80,9 +70,13 @@
                     <small>@requestas.City,</small>
                     <small>@requestas.PhoneNumber,</small>
                     <small>@requestas.State</small>
+                    @if(requestas.Email == HttpContext.User.Identity.Name && SignInManager.IsSignedIn(User))
+                    {
                     <form asp-page-handler="delete" asp-route-ID="@requestas.ID" method="post">
                         <button class="btn btn-default">Delete</button>
                     </form>
+                    }
+
                 </a>
                 }
                 else
@@ -96,9 +90,12 @@
                     <small>@requestas.City,</small>
                     <small>@requestas.PhoneNumber,</small>
                     <small>@requestas.State</small>
+                    @if(requestas.Email == HttpContext.User.Identity.Name && SignInManager.IsSignedIn(User))
+                    {
                     <form asp-page-handler="delete" asp-route-ID="@requestas.ID" method="post">
                         <button class="btn btn-default">Delete</button>
                     </form>
+                    }
                 </a>
                 }
 

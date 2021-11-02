@@ -66,7 +66,7 @@
   },
   {
     "Picture": "b87bece3-47b3-4bc1-8c52-adeb954b18c9_ajqRApR_460s.jpg",
-    "State": 1,
+    "State": 2,
     "ID": "903190a7-26b8-4899-b989-3e7508a3c3f2",
     "PosterName": "K\u0119s\u010Dius",
     "City": "Joni\u0161kis",
@@ -76,5 +76,18 @@
     "Date": "2021-10-14T20:27:25.8879388+03:00",
     "Category": "Toys",
     "Email": "asdaddsad@gmail.com"
+  },
+  {
+    "Picture": "0c6913a2-f213-48a0-b1c3-e0f9197d4117_1b9.jpg",
+    "State": 1,
+    "ID": "ca3656a2-21de-4514-80d9-de1846e0596c",
+    "PosterName": "Ignas",
+    "City": "Budriai",
+    "PhoneNumber": "565926456",
+    "Title": "Gabagoo",
+    "Description": "fdsfsdfdsfsdfsdfsdfsd",
+    "Date": "2021-10-27T20:02:01.6024431+03:00",
+    "Category": "Electronics",
+    "Email": "ignas@yahoo.com"
   }
 ]

@@ -1,5 +1,13 @@
 ﻿@page "/Submits/"
 @model Karma.Pages.SubmitsModel
+
+@using Microsoft.AspNetCore.Identity
+@using Karma.Areas.Identity.Data
+
+@inject SignInManager<KarmaUser> SignInManager
+@inject UserManager<KarmaUser> UserManager
+
+
 @{
     ViewData["Title"] = "Submit Items";
 }
@@ -40,7 +48,7 @@
                 Please provide the item's description.
             </div>
         </div>
-        <div class="mb-3">
+        @*<div class="mb-3">
             <label class="form-label">Your name</label>
             <input type="text" class="form-control" asp-for="Item.PosterName" required>
             <div class="invalid-feedback">
@@ -67,7 +75,7 @@
             <div class="invalid-feedback">
                 Please provide your email.
             </div>
-        </div>
+        </div>*@
         <div class="mb-3">
             <label class="form-label">Picture</label>
             <input class="form-control" type="file" asp-for="Photo" required>
@@ -79,7 +87,17 @@
             <label class="form-label">Category</label>
             <select class="form-select" aria-label="category selection" asp-for="Item.Category" asp-items="@new SelectList(Karma.Models.Post.Categories)"></select>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+
+
+        @if(SignInManager.IsSignedIn(User))
+        {
+            <button type="submit" class="btn btn-primary">Submit</button>
+        }
+        else
+        {
+            <button type="submit" class="btn btn-primary disabled">Submit</button>
+        }
+        
     </div>
 
 </form>
@@ -146,9 +164,13 @@
                                 }
                             </div>
                             <div class="col-lg-1">
+                                @if (Model.Submits.ElementAt(i).Email == HttpContext.User.Identity.Name 
+                                                                      && SignInManager.IsSignedIn(User))
+                                {
                                 <form asp-page-handler="delete" asp-route-id="@Model.Submits.ElementAt(i).ID" method="post">
                                     <button class="btn btn-default">Delete</button>
                                 </form>
+                                }
                             </div>
                         </div>                        
                     </div>
