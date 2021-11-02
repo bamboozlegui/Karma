@@ -401,5 +401,5 @@ Karma/.vscode/tasks.json
 Karma/.vscode/launch.json
 *.el
 Karma/data/*
-Karma/data/items.json
-Karma/data/requests.json
+Karma\data\items.json
+Karma\data\requests.json

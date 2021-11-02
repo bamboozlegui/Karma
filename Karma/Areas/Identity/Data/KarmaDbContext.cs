@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Karma.Areas.Identity.Data;
+using Karma.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +16,8 @@ namespace Karma.Data
             : base(options)
         {
         }
-
+        public DbSet<ItemPost> Items { get; set; }
+        public DbSet<RequestPost> Requests { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

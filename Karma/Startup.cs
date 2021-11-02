@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Karma.Services;
 using Karma.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Karma
 {
@@ -27,6 +28,8 @@ namespace Karma
         {
             services.AddRazorPages();
             services.AddControllersWithViews();
+            services.AddScoped<IItemRepository, SQLItemRepository>();
+            services.AddScoped<IRequestRepository, SQLRequestRepository>();
             services.AddSingleton<JsonFileRequestService>();
             services.AddSingleton<JsonFileItemService>();
             services.AddTransient<JsonPictureService>();
