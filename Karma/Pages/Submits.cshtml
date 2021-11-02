@@ -164,9 +164,13 @@
                                 }
                             </div>
                             <div class="col-lg-1">
+                                @if (Model.Submits.ElementAt(i).Email == HttpContext.User.Identity.Name 
+                                                                      && SignInManager.IsSignedIn(User))
+                                {
                                 <form asp-page-handler="delete" asp-route-id="@Model.Submits.ElementAt(i).ID" method="post">
                                     <button class="btn btn-default">Delete</button>
                                 </form>
+                                }
                             </div>
                         </div>                        
                     </div>
