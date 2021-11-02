@@ -26,10 +26,6 @@ namespace Karma
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContextPool<AppDbContext>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("KarmaDBContextConnection"));
-            });
             services.AddRazorPages();
             services.AddControllersWithViews();
             services.AddScoped<IItemRepository, SQLItemRepository>();

@@ -4,15 +4,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using Karma.Models;
 using Microsoft.AspNetCore.Hosting;
+using Karma.Data;
 
 namespace Karma.Services
 {
     public class SQLRequestRepository : IRequestRepository
     {
-        private readonly AppDbContext context;
+        private readonly KarmaDbContext context;
         public IWebHostEnvironment WebHostEnvironment { get; private set; }
 
-        public SQLRequestRepository(AppDbContext context, JsonPictureService pictureService, IWebHostEnvironment webHostEnvironment)
+        public SQLRequestRepository(KarmaDbContext context, JsonPictureService pictureService, IWebHostEnvironment webHostEnvironment)
         {
             this.context = context;
             WebHostEnvironment = webHostEnvironment;

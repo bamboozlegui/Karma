@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Karma.Data;
 using Karma.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -12,12 +13,12 @@ namespace Karma.Services
 {
     public class SQLItemRepository : IItemRepository
     {
-        private readonly AppDbContext context;
+        private readonly KarmaDbContext context;
 
         private readonly JsonPictureService PictureService;
         public IWebHostEnvironment WebHostEnvironment { get; private set; }
 
-        public SQLItemRepository(AppDbContext context, JsonPictureService pictureService, IWebHostEnvironment webHostEnvironment)
+        public SQLItemRepository(KarmaDbContext context, JsonPictureService pictureService, IWebHostEnvironment webHostEnvironment)
         {
             this.context = context;
             PictureService = pictureService;
