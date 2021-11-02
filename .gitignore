@@ -403,3 +403,4 @@ Karma/.vscode/launch.json
 Karma/data/*
 Karma\data\items.json
 Karma\data\requests.json
+Karma/wwwroot/images/*
