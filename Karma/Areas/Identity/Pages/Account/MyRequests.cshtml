@@ -1,0 +1,66 @@
+﻿@page
+@model Karma.Pages.MyRequestsModel
+
+@using Microsoft.AspNetCore.Identity
+@using Karma.Areas.Identity.Data
+
+@inject SignInManager<KarmaUser> SignInManager
+@inject UserManager<KarmaUser> UserManager
+
+@{
+    ViewData["Title"] = "My Requests";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="list-group mt-4">
+    @{
+        if (ModelState.IsValid)
+        {
+            foreach (var requestas in Model.Requests)
+            {
+                if (requestas.State == Karma.Models.Post.StateEnum.Taken)
+                {
+                    <a class="list-group-item list-group-item-action disabled">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">@requestas.Title</h5>
+                            <small>@requestas.PosterName</small>
+                        </div>
+                        <p class="mb-1">@requestas.Description</p>
+                        <small>@requestas.City,</small>
+                        <small>@requestas.PhoneNumber,</small>
+                        <small>@requestas.State</small>
+                        @if (requestas.Email == HttpContext.User.Identity.Name && SignInManager.IsSignedIn(User))
+                        {
+                            <form asp-page-handler="delete" asp-route-ID="@requestas.ID" method="post">
+                                <button class="btn btn-default">Delete</button>
+                            </form>
+                        }
+
+                    </a>
+                }
+                else
+                {
+                    <a class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">@requestas.Title</h5>
+                            <small>@requestas.PosterName</small>
+                        </div>
+                        <p class="mb-1">@requestas.Description</p>
+                        <small>@requestas.City,</small>
+                        <small>@requestas.PhoneNumber,</small>
+                        <small>@requestas.State</small>
+                        @if (requestas.Email == HttpContext.User.Identity.Name && SignInManager.IsSignedIn(User))
+                        {
+                            <form asp-page-handler="delete" asp-route-ID="@requestas.ID" method="post">
+                                <button class="btn btn-default">Delete</button>
+                            </form>
+                        }
+                    </a>
+                }
+
+            }
+        }
+    }
+
+</div>
