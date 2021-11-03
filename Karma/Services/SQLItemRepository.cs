@@ -13,14 +13,14 @@ namespace Karma.Services
 {
     public class SQLItemRepository : IItemRepository
     {
-        private readonly KarmaDbContext context;
+        private readonly KarmaDbContext Context;
 
         private readonly JsonPictureService PictureService;
         public IWebHostEnvironment WebHostEnvironment { get; private set; }
 
         public SQLItemRepository(KarmaDbContext context, JsonPictureService pictureService, IWebHostEnvironment webHostEnvironment)
         {
-            this.context = context;
+            Context = context;
             PictureService = pictureService;
             WebHostEnvironment = webHostEnvironment;
         }
@@ -35,44 +35,44 @@ namespace Karma.Services
             post.Date = DateTime.Now;
             post.ID = Guid.NewGuid().ToString();
             post.State = Post.StateEnum.Recent;
-            context.Items.Add(post);
-            context.SaveChanges();
+            Context.Items.Add(post);
+            Context.SaveChanges();
             return post;
         }
 
         public ItemPost DeletePost(string id)
         {
-            ItemPost item = context.Items.Find(id);
+            ItemPost item = Context.Items.Find(id);
             if(item != null)
             {
                 PictureService.DeletePicture(WebHostEnvironment, item.Picture);
-                context.Items.Remove(item);
-                context.SaveChanges();
+                Context.Items.Remove(item);
+                Context.SaveChanges();
             }
             return item;
         }
 
         public ItemPost GetPost(string id)
         {
-            return context.Items.Find(id);
+            return Context.Items.Find(id);
         }
 
         public IEnumerable<ItemPost> GetPosts()
         {
-            return context.Items;
+            return Context.Items;
         }
 
         public IEnumerable<ItemPost> SearchPosts(string searchTerm)
         {
             if (searchTerm == null)
-                return context.Items;
+                return Context.Items;
 
-            return context.Items.Where(item => item.Title.Contains(searchTerm));
+            return Context.Items.Where(item => item.Title.Contains(searchTerm));
         }
 
         public ItemPost UpdatePost(ItemPost newPost, IFormFile newPhoto)
         {
-            ItemPost post = context.Items.AsNoTracking().FirstOrDefault(post => post.ID == newPost.ID);
+            ItemPost post = Context.Items.AsNoTracking().FirstOrDefault(post => post.ID == newPost.ID);
 
             if(newPhoto != null)
             {
@@ -86,9 +86,9 @@ namespace Karma.Services
             }
             newPost.Date = post.Date;
             newPost.Picture = post.Picture;
-            var item = context.Items.Attach(newPost);
+            var item = Context.Items.Attach(newPost);
             item.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            context.SaveChanges();
+            Context.SaveChanges();
             return newPost;
         }
     }

@@ -10,12 +10,12 @@ namespace Karma.Services
 {
     public class SQLRequestRepository : IRequestRepository
     {
-        private readonly KarmaDbContext context;
+        private readonly KarmaDbContext Context;
         public IWebHostEnvironment WebHostEnvironment { get; private set; }
 
         public SQLRequestRepository(KarmaDbContext context, JsonPictureService pictureService, IWebHostEnvironment webHostEnvironment)
         {
-            this.context = context;
+            Context = context;
             WebHostEnvironment = webHostEnvironment;
         }
         public RequestPost AddPost(RequestPost post)
@@ -23,38 +23,38 @@ namespace Karma.Services
             post.Date = DateTime.Now;
             post.ID = Guid.NewGuid().ToString();
             post.State = Post.StateEnum.Recent;
-            context.Requests.Add(post);
-            context.SaveChanges();
+            Context.Requests.Add(post);
+            Context.SaveChanges();
             return post;
         }
 
         public RequestPost DeletePost(string id)
         {
-                   RequestPost request = context.Requests.Find(id);
+                   RequestPost request = Context.Requests.Find(id);
                     if (request != null)
                     {
-                        context.Requests.Remove(request);
-                  context.SaveChanges();
+                        Context.Requests.Remove(request);
+                  Context.SaveChanges();
                 }
                return request;
         }
 
         public RequestPost GetPost(string id)
         {
-            return context.Requests.Find(id);
+            return Context.Requests.Find(id);
         }
 
         public IEnumerable<RequestPost> GetPosts()
         {
-            return context.Requests;
+            return Context.Requests;
         }
 
         public IEnumerable<RequestPost> SearchPosts(string searchTerm)
         {
             if (searchTerm == null)
-                return context.Requests;
+                return Context.Requests;
 
-            return context.Requests.Where(request => request.Title.Contains(searchTerm));
+            return Context.Requests.Where(request => request.Title.Contains(searchTerm));
         }
 
         public RequestPost UpdatePost(RequestPost newPost)

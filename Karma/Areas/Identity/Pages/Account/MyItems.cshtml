@@ -1,0 +1,96 @@
+﻿@page
+@model Karma.Pages.MyItemsModel
+@{
+}
+
+@using Microsoft.AspNetCore.Identity
+@using Karma.Areas.Identity.Data
+
+@inject SignInManager<KarmaUser> SignInManager
+@inject UserManager<KarmaUser> UserManager
+
+
+@{ ViewData["Title"] = "My Items"; }
+@using Karma.Extensions;
+
+<h1>@ViewData["Title"]</h1>
+
+<!--do some research about this enctype thingie-->
+
+<form method="get">
+    <div class="input-group">
+        <input class="form-control" asp-for="SearchTerm">
+        <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+    </div>
+</form>
+
+@*<div class="card mt-auto">
+        <header class="card-header">
+            <h6 class="title">Categories </h6>
+        </header>
+        <div class="filter-content">
+            <div class="card-body">
+                <form method="post">
+                    <select class="form-control"  name="selectedcategory"  asp-items="@new SelectList(Karma.Models.Post.Categories)"></select>
+                    @for (int i = 0; i < Karma.Models.Post.Categories.Count(); ++i)
+                    {
+                        <label class="form-check">
+                            <input name="CheckedCategories" type="checkbox" value="@Karma.Models.Post.Categories[i] ">
+                            <span class="form-check-label"> @Karma.Models.Post.Categories[i] </span>
+                            </label>
+
+                        <div class="form-check">
+                            <input type="checkbox" value="@Karma.Models.Post.Categories[i]" name="CheckedCategories" />
+                            <label>@Karma.Models.Post.Categories[i]</label>
+                        </div>
+                    }
+                </form>
+            </div>
+            <form asp-page-handler="filter">
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </div>
+            </form>
+        </div>
+    </div>*@
+
+<div class="container-fluid row row-cols-1 row-cols-md-3 mt-3">
+    @{ if (ModelState.IsValid)
+        {
+            @for (int i = Model.Submits.Count() - 1; i >= 0; i--)
+            {
+                if (Model.Submits.ElementAt(i).State != Karma.Models.Post.StateEnum.Hidden)
+                {
+                    <div class="col mt-4">
+                        <div class="card h-100 shadow-sm">
+                            <img href="#" src="/images/@Model.Submits.ElementAt(i).Picture" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">@Model.Submits.ElementAt(i).Title</h5>
+                                @if (Model.Submits.ElementAt(i).Description.Length <= 50)
+                                {
+                                    <p class="card-text">@Model.Submits.ElementAt(i).Description</p> }
+                                else
+                                {
+                                    <p class="card-text">@Model.Submits.ElementAt(i).Description.Substring(0, 50)...</p>}
+                                <p class="card-text">@Model.Submits.ElementAt(i).Date.ShowTimeSpan()</p>
+                                @if (Model.Submits.ElementAt(i).State == Karma.Models.Post.StateEnum.Taken)
+                                {
+                                    <a class="btn btn-secondary disabled" target="_self" asp-page="/Item" asp-route-id=@Model.Submits.ElementAt(i).ID>More info</a> }
+                                else
+                                {
+                                    <a class="btn btn-secondary" target="_self" asp-page="/Item" asp-route-id=@Model.Submits.ElementAt(i).ID>More info</a>}
+                            </div>
+                            <div class="col-lg-1">
+                                @if (Model.Submits.ElementAt(i).Email == HttpContext.User.Identity.Name
+                                                                    && SignInManager.IsSignedIn(User))
+                                {
+                                    <form asp-page-handler="delete" asp-route-id="@Model.Submits.ElementAt(i).ID" method="post">
+                                        <button class="btn btn-default">Delete</button>
+                                    </form>}
+                            </div>
+                        </div>
+                    </div>}
+            } } }
+</div>
