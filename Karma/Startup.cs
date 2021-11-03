@@ -30,6 +30,7 @@ namespace Karma
             services.AddControllersWithViews();
             services.AddScoped<IItemRepository, SQLItemRepository>();
             services.AddScoped<IRequestRepository, SQLRequestRepository>();
+            services.AddScoped<IInboxManager, InboxManager>();
             services.AddSingleton<JsonFileRequestService>();
             services.AddSingleton<JsonFileItemService>();
             services.AddTransient<JsonPictureService>();

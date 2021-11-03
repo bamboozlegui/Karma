@@ -13,13 +13,8 @@ namespace Karma.Models
     {
         [Required]
         [MaxLength(450)]
+        [Key]
         public int MessageId { get; set; }
-        [Required]
-        [MaxLength(50)]
-        public string FromEmail { get; set; }
-        [Required]
-        [MaxLength(50)]
-        public string ToEmail { get; set; }
         [Required]
         [MaxLength(250)]
         public string Content { get; set; }

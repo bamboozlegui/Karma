@@ -93,6 +93,40 @@ namespace Karma.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("Karma.Models.InboxMessage", b =>
+                {
+                    b.Property<int>("MessageId")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(450)
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("Date");
+
+                    b.Property<string>("FromEmail")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("KarmaUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("MessageId");
+
+                    b.HasIndex("KarmaUserId");
+
+                    b.HasIndex("MessageId")
+                        .IsUnique();
+
+                    b.ToTable("InboxMessage");
+                });
+
             modelBuilder.Entity("Karma.Models.ItemPost", b =>
                 {
                     b.Property<string>("ID")
@@ -140,7 +174,7 @@ namespace Karma.Migrations
                     b.ToTable("Items");
                 });
 
-            modelBuilder.Entity("Karma.Models.Message", b =>
+            modelBuilder.Entity("Karma.Models.OutboxMessage", b =>
                 {
                     b.Property<int>("MessageId")
                         .ValueGeneratedOnAdd()
@@ -156,10 +190,8 @@ namespace Karma.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("Date");
 
-                    b.Property<string>("FromEmail")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<string>("KarmaUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ToEmail")
                         .IsRequired()
@@ -168,10 +200,12 @@ namespace Karma.Migrations
 
                     b.HasKey("MessageId");
 
+                    b.HasIndex("KarmaUserId");
+
                     b.HasIndex("MessageId")
                         .IsUnique();
 
-                    b.ToTable("Messages");
+                    b.ToTable("OutboxMessage");
                 });
 
             modelBuilder.Entity("Karma.Models.RequestPost", b =>
@@ -353,6 +387,20 @@ namespace Karma.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Karma.Models.InboxMessage", b =>
+                {
+                    b.HasOne("Karma.Areas.Identity.Data.KarmaUser", null)
+                        .WithMany("Inbox")
+                        .HasForeignKey("KarmaUserId");
+                });
+
+            modelBuilder.Entity("Karma.Models.OutboxMessage", b =>
+                {
+                    b.HasOne("Karma.Areas.Identity.Data.KarmaUser", null)
+                        .WithMany("Outbox")
+                        .HasForeignKey("KarmaUserId");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -402,6 +450,13 @@ namespace Karma.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Karma.Areas.Identity.Data.KarmaUser", b =>
+                {
+                    b.Navigation("Inbox");
+
+                    b.Navigation("Outbox");
                 });
 #pragma warning restore 612, 618
         }
