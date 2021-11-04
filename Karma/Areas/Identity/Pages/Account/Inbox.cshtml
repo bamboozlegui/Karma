@@ -3,10 +3,19 @@
 @{
 }
 
-@if (Model.Inbox != null)
+@if (Model.Inbox.Count != 0)
 {
-    foreach (var message in Model.Inbox)
-                {
-                    <div>@message.Content from @message.FromEmail</div>
-                }
+    foreach(var message in Model.Inbox)
+    {
+        <div class="card mt-2">
+            <div class="card-header">
+                <p class="m-0">From @message.FromEmail</p>
+            </div>
+            <div class="card-body">
+                @message.Content
+            </div>
+        </div>
+    }
+}else{
+    <h1>No messages</h1>
 }
