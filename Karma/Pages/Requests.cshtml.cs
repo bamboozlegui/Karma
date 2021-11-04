@@ -25,6 +25,8 @@ namespace Karma.Pages
 
         [BindProperty]
         public Message Message { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string SearchTerm { get; set; }
 
         public string sqlConnectionString = "Server=(localdb)\\mssqllocaldb;Database=Karma;Trusted_Connection=True;MultipleActiveResultSets=true";
 
@@ -37,7 +39,7 @@ namespace Karma.Pages
 
         public void OnGet()
         {
-            Requests = RequestService.GetPosts();
+            Requests = RequestService.SearchPosts(SearchTerm);
         }
 
         public IActionResult OnPostDelete(string id)

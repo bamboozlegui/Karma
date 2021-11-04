@@ -25,7 +25,6 @@ namespace Karma.Pages
         public void OnGet()
         {
             Submits = Context.Users.Include(u => u.Items).FirstOrDefault(u => u.Email == User.Identity.Name).Items;
-            
         }
     }
 }
