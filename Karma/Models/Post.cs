@@ -24,7 +24,7 @@ namespace Karma.Models
 
         [Required]
         public string City { get; set; }
-	
+
         [Required]
         public string PhoneNumber { get; set; }
 
@@ -39,23 +39,22 @@ namespace Karma.Models
         public DateTime Date { get; set; }
 
         [Required]
-        public string Category { get; set;}
+        public string Category { get; set; }
         [Required]
         public string KarmaUserId { get; set; }
 
         [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage = "Bruh")]
-	[Required]
-	public string Email { get; set; }
+        [Required]
+        public string Email { get; set; }
 
         public static string[] Categories = { "Electronics", "Transportation", "Clothes", "Toys", "Other" };
-        public abstract override string ToString();
 
-	//IComparable implementation. CompareTo is used by majority of LINQ methods.
+        //IComparable implementation. CompareTo is used by majority of LINQ methods.
         public int CompareTo(Post otherPost)
         {
-	    if (otherPost != null)
+            if (otherPost != null)
                 return this.Date.CompareTo(otherPost.Date);
-	    else
+            else
                 throw new NullReferenceException("Object is null");
         }
     }

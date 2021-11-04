@@ -18,12 +18,12 @@ namespace Karma.Services
     {
         private readonly KarmaDbContext Context;
 
-        private readonly JsonPictureService PictureService;
+        private readonly PictureService PictureService;
 
         public UserManager<KarmaUser> UserManager { get; }
         public IWebHostEnvironment WebHostEnvironment { get; private set; }
 
-        public SQLItemRepository(KarmaDbContext context, JsonPictureService pictureService, UserManager<KarmaUser> userManager, IWebHostEnvironment webHostEnvironment)
+        public SQLItemRepository(KarmaDbContext context, PictureService pictureService, UserManager<KarmaUser> userManager, IWebHostEnvironment webHostEnvironment)
         {
             Context = context;
             PictureService = pictureService;

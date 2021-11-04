@@ -2,10 +2,7 @@
 
 namespace Karma.Models
 {
-    public class RequestPost : Post, IJsonStorable
+    public class RequestPost : Post
     {
-        public override string ToString() => JsonSerializer.Serialize<RequestPost>(this);
-
-        public string GetJsonName() => "requests.json";
     }
 }

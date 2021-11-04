@@ -34,9 +34,7 @@ namespace Karma
             services.AddScoped<IRequestRepository, SQLRequestRepository>();
             services.AddScoped<IMessageRepository, SQLMessageRepository>();
             services.AddScoped<UserManager<KarmaUser>>();
-            services.AddSingleton<JsonFileRequestService>();
-            services.AddSingleton<JsonFileItemService>();
-            services.AddTransient<JsonPictureService>();
+            services.AddTransient<PictureService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
