@@ -7,23 +7,24 @@ using Karma.Models;
 using Karma.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace Karma.Pages
 {
     public class MyItemsModel : PageModel
     {
-        public MyItemsModel(IItemRepository itemService)
+        public MyItemsModel(KarmaDbContext context)
         {
-            ItemService = itemService;
+            Context = context;
         }
         public IEnumerable<ItemPost> Submits { get; set; }
         [BindProperty(SupportsGet = true)]
         public string SearchTerm { get; set; }
-        public IItemRepository ItemService { get; }
+        public KarmaDbContext Context { get; }
 
         public void OnGet()
         {
-            Submits = ItemService.SearchPosts(SearchTerm).Where(i => i.Email == HttpContext.User.Identity.Name);
+            Submits = Context.Users.Include(u => u.Items).FirstOrDefault(u => u.Email == User.Identity.Name).Items;
             
         }
     }
