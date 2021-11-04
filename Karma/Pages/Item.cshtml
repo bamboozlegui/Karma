@@ -69,7 +69,7 @@
 
                 <div class="form-group row mb-3">
                     <label asp-for="Item.PhoneNumber" class="col-sm-2 col-form-label"></label>
-                    <div class="col-sm-10">
+                    <div class="col-sm-10"> = dummyList;
                         <input type="number" asp-for="Item.PhoneNumber" class="form-control" placeholder="Phone number" required>
                         <div class="invalid-feedback">
                             Please enter a valid phone number.
@@ -123,4 +123,27 @@
 
         </form>
     }
+    @if (HttpContext.User.Identity.IsAuthenticated && HttpContext.User.Identity.Name != Model.Item.Email)
+    {
+        <form method="post" asp-page-handler="message" asp-route-itemid="@Model.Item.ID" class="mt-4 needs-validation" novalidate>
 
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2">
+                Send owner a message
+            </button>
+            <div id="collapseExample2" class="collapse">
+                <div class="form-group row mb-3 mt-3 ">
+                    <label asp-for="Message.Content" class="col-sm-2 col-form-label">
+                    </label>
+                    <div class="col-sm-10">
+                        <input asp-for="Message.Content" class="form-control" placeholder="Content" required>
+                        <div class="invalid-feedback">
+                            Please enter a valid message.
+                        </div>
+                    </div>
+
+                </div>
+<button type="submit" class="btn btn-primary">Send</button>
+            </div>
+
+        </form>
+    }

@@ -68,7 +68,7 @@ namespace Karma.Pages
                 conn.Close();
             }
 
-            RequestService.AddPost(Item);
+            RequestService.AddPost(HttpContext.User, Item);
 
             return RedirectToPage("/Requests");
         }

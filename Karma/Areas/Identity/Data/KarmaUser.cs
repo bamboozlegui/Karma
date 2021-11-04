@@ -22,8 +22,8 @@ namespace Karma.Areas.Identity.Data
         [PersonalData]
         [Column(TypeName = "nvarchar(100)")]
         public string City { get; set; }
-
-        public List<OutboxMessage> Outbox { get; set; } = new List<OutboxMessage>();
-        public List<InboxMessage> Inbox { get; set; } = new List<InboxMessage>();
+        public List<Message> Messages { get; set; } = new List<Message>();
+        public List<RequestPost> Requests  { get; set; } = new List<RequestPost>();
+        public List<ItemPost> Items { get; set; } = new List<ItemPost>();
     }
 }

@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using Karma.Services;
 using Karma.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Karma.Areas.Identity.Data;
 
 namespace Karma
 {
@@ -30,8 +32,8 @@ namespace Karma
             services.AddControllersWithViews();
             services.AddScoped<IItemRepository, SQLItemRepository>();
             services.AddScoped<IRequestRepository, SQLRequestRepository>();
-            services.AddScoped<IInboxManager, InboxManager>();
-            services.AddScoped<IOutboxManager, OutboxManager>();
+            services.AddScoped<IMessageRepository, SQLMessageRepository>();
+            services.AddScoped<UserManager<KarmaUser>>();
             services.AddSingleton<JsonFileRequestService>();
             services.AddSingleton<JsonFileItemService>();
             services.AddTransient<JsonPictureService>();

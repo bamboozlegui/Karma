@@ -19,17 +19,22 @@ namespace Karma.Pages
         private IWebHostEnvironment WebHostEnvironment { get; }
 
         private IItemRepository ItemService { get; }
-
+        public IMessageRepository MessageService { get; }
         [BindProperty]
         public IFormFile Photo { get; set; }
 
         public ItemPost Item { get; set; }
 
+        [BindProperty]
+        public Message Message { get; set; }
+
         public ItemModel(
             IItemRepository itemService,
+            IMessageRepository messageService,
             IWebHostEnvironment webHostEnvironment)
         {
             ItemService = itemService;
+            MessageService = messageService;
             WebHostEnvironment = webHostEnvironment;
         }
 
@@ -44,6 +49,17 @@ namespace Karma.Pages
         {
 	        if(ModelState.IsValid)
 		        Item = ItemService.UpdatePost(item, Photo);
+
+            return RedirectToPage("/Submits");
+        }
+
+        public IActionResult OnPostMessage(string itemId)
+        {
+            Item = ItemService.GetPost(itemId);
+            Message.FromEmail = User.Identity.Name;
+            Message.ToEmail = Item.Email;
+            Message.Date = DateTime.Now;
+            MessageService.AddMessage(Message);
 
             return RedirectToPage("/Submits");
         }

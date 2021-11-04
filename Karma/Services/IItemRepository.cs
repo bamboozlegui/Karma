@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Karma.Models;
 using Microsoft.AspNetCore.Http;
@@ -14,7 +15,7 @@ namespace Karma.Services
         public IEnumerable<ItemPost> SearchPosts(string searchTerm);
 
         public ItemPost GetPost(string id);
-        public ItemPost AddPost(ItemPost post, IFormFile photo);
+        public ItemPost AddPost(ClaimsPrincipal user, ItemPost post, IFormFile photo);
 
         public ItemPost DeletePost(string id);
 

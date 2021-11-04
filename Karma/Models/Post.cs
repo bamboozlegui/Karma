@@ -40,8 +40,10 @@ namespace Karma.Models
 
         [Required]
         public string Category { get; set;}
+        [Required]
+        public string KarmaUserId { get; set; }
 
-	[RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage = "Bruh")]
+        [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage = "Bruh")]
 	[Required]
 	public string Email { get; set; }
 

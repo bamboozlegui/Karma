@@ -12,26 +12,28 @@ namespace Karma.Areas.Identity.Pages.Account
     public class OutboxModel : PageModel
     {
 
-        public OutboxModel(IOutboxManager inboxManager)
+        public OutboxModel(IMessageRepository messageService)
         {
-            OutboxManager = inboxManager;
+            MessageService = messageService;
         }
 
-        public IOutboxManager OutboxManager { get; }
-        public List<OutboxMessage> Outbox { get; set; }
+        public List<Message> Outbox { get; set; }
+        public IMessageRepository MessageService { get; }
 
         public void OnGet()
         {
-            Outbox = OutboxManager.GetMessages(HttpContext.User.Identity.Name);
-            AddDummyMessages();
+            Outbox = MessageService.GetMessages().Where(delegate (Message m)
+            {
+                return m.FromEmail == HttpContext.User.Identity.Name;
+            }).ToList();
         }
 
         private void AddDummyMessages()
         {
-            var dummyList = new List<OutboxMessage>()
+            var dummyList = new List<Message>()
             {
-                new OutboxMessage() { Content = "heyheyhey"},
-                new OutboxMessage() { Content = "Whatsup"}
+                new Message() { Content = "heyheyhey"},
+                new Message() { Content = "Whatsup"}
             };
 
             Outbox = dummyList;

@@ -6,8 +6,9 @@ using Karma.Models;
 
 namespace Karma.Services
 {
-    public interface IInboxManager
+    public interface IMessageRepository
     {
-        List<InboxMessage> GetMessages(string email);
+        List<Message> GetMessages();
+        Message AddMessage(Message message);
     }
 }

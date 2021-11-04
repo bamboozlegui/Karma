@@ -12,29 +12,27 @@ namespace Karma.Areas.Identity.Pages.Account
     public class InboxModel : PageModel
     {
 
-        public InboxModel(IInboxManager inboxManager)
+        public InboxModel(IMessageRepository messageService)
         {
-            InboxManager = inboxManager;
+            MessageService = messageService;
         }
-
-        public IInboxManager InboxManager { get; }
-        public List<InboxMessage> Inbox { get; set; }
+        public List<Message> Inbox { get; set; }
+        public IMessageRepository MessageService { get; }
 
         public void OnGet()
         {
-            Inbox = InboxManager.GetMessages(HttpContext.User.Identity.Name);
-            AddDummyMessages();
+            Inbox = MessageService.GetMessages().Where(m => m.ToEmail == HttpContext.User.Identity.Name).ToList();
         }
 
         private void AddDummyMessages()
         {
-            var dummyList = new List<InboxMessage>()
+            var dummyList = new List<Message>()
             {
-                new InboxMessage() { Content = "heyheyhey"},
-                new InboxMessage() { Content = "Whatsup"}
+                new Message() { Content = "heyheyhey", FromEmail = HttpContext.User.Identity.Name},
+                new Message() { Content = "Whatsup", FromEmail = HttpContext.User.Identity.Name}
             };
 
-            Inbox = dummyList;
+            Inbox = Inbox.Concat<Message>(dummyList).ToList();
         }
     }
 }

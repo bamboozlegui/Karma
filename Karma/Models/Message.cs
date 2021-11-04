@@ -12,7 +12,6 @@ namespace Karma.Models
     public class Message
     {
         [Required]
-        [MaxLength(450)]
         [Key]
         public int MessageId { get; set; }
         [Required]
@@ -21,6 +20,11 @@ namespace Karma.Models
         [Required]
         [Column(TypeName = "Date")]
         public DateTime Date { get; set; }
-
+        [Required]
+        [MaxLength(50)]
+        public string FromEmail { get; set; }
+        [Required]
+        [MaxLength(50)]
+        public string ToEmail { get; set; }
     }
 }
