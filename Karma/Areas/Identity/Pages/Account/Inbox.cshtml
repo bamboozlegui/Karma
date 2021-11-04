@@ -1,0 +1,12 @@
+﻿@page
+@model Karma.Areas.Identity.Pages.Account.InboxModel
+@{
+}
+
+@if (Model.Inbox != null)
+{
+    foreach (var message in Model.Inbox)
+                {
+                    <div>@message.Content from @message.FromEmail</div>
+                }
+}

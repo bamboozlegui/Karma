@@ -20,26 +20,43 @@ namespace Karma.Pages
         public RequestPost Item { get; set; }
 
         private IRequestRepository RequestService { get; }
-
+        public IMessageRepository MessageService { get; }
         public IEnumerable<RequestPost> Requests { get; private set; }
-        
+
+        [BindProperty]
+        public Message Message { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string SearchTerm { get; set; }
+
         public string sqlConnectionString = "Server=(localdb)\\mssqllocaldb;Database=Karma;Trusted_Connection=True;MultipleActiveResultSets=true";
 
 
-        public RequestsModel(IRequestRepository requestService)
+        public RequestsModel(IRequestRepository requestService, IMessageRepository messageService)
         {
             RequestService = requestService;
+            MessageService = messageService;
         }
 
         public void OnGet()
         {
-            Requests = RequestService.GetPosts();
+            Requests = RequestService.SearchPosts(SearchTerm);
         }
 
         public IActionResult OnPostDelete(string id)
         {
             RequestService.DeletePost(id);
 
+            return RedirectToPage("/Requests");
+        }
+
+        public IActionResult OnPostMessage(string itemId)
+        {
+            Item = RequestService.GetPost(itemId);
+            Message.FromEmail = User.Identity.Name;
+            Message.ToEmail = Item.Email;
+            Message.Date = DateTime.Now;
+            MessageService.AddMessage(Message);
+            
             return RedirectToPage("/Requests");
         }
 
@@ -68,7 +85,7 @@ namespace Karma.Pages
                 conn.Close();
             }
 
-            RequestService.AddPost(Item);
+            RequestService.AddPost(HttpContext.User, Item);
 
             return RedirectToPage("/Requests");
         }

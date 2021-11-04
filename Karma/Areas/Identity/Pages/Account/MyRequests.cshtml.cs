@@ -2,26 +2,30 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Karma.Areas.Identity.Data;
 using Karma.Data;
 using Karma.Models;
 using Karma.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace Karma.Pages
 {
     public class MyRequestsModel : PageModel
     {
-        public MyRequestsModel(IRequestRepository requestService)
+        public MyRequestsModel(KarmaDbContext context)
         {
-            RequestService = requestService;
+            Context = context;
         }
         public IEnumerable<RequestPost> Requests { get; set; }
         public IRequestRepository RequestService { get; }
+        public KarmaDbContext Context { get; }
 
         public void OnGet()
         {
-            Requests = RequestService.GetPosts().Where(r => r.Email == HttpContext.User.Identity.Name);
+            Requests = Context.Users.Include(u => u.Requests).FirstOrDefault(u => u.Email == User.Identity.Name).Requests;
         }
     }
 }

@@ -19,104 +19,132 @@
                     <h6 class="card-text text-muted">@Model.Item.Email</h6>
                     <h6 class="card-text text-muted">+@Model.Item.PhoneNumber</h6>
                 </div>
+            </div>
         </div>
     </div>
+
+    @if (Model.Item.Email == HttpContext.User.Identity.Name)
+    {
+        <form method="post" enctype="multipart/form-data" class="mt-4 needs-validation" novalidate>
+
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                Edit item
+            </button>
+            <div id="collapseExample" class="collapse">
+
+                <input hidden asp-for="Item.ID" />
+
+                <div class="form-group row mb-3 mt-3 ">
+                    <label asp-for="Item.Title" class="col-sm-2 col-form-label">
+                    </label>
+                    <div class="col-sm-10">
+                        <input asp-for="Item.Title" class="form-control" placeholder="Title" required>
+                        <div class="invalid-feedback">
+                            Please enter a valid title.
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group row mb-3">
+                    <label asp-for="Item.PosterName" class="col-sm-2 col-form-label">
+                    </label>
+                    <div class="col-sm-10">
+                        <input asp-for="Item.PosterName" class="form-control" placeholder="Poster name" required>
+                        <div class="invalid-feedback">
+                            Please enter a valid name.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row mb-3">
+                    <label asp-for="Item.Description" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                        <textarea asp-for="Item.Description" class="form-control" rows="3" placeholder="Description" required></textarea>
+                        <div class="invalid-feedback">
+                            Please enter a valid description.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row mb-3">
+                    <label asp-for="Item.PhoneNumber" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10"> = dummyList;
+                        <input type="number" asp-for="Item.PhoneNumber" class="form-control" placeholder="Phone number" required>
+                        <div class="invalid-feedback">
+                            Please enter a valid phone number.
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group row mb-3">
+                    <label asp-for="Item.City" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                        <input asp-for="Item.City" class="form-control" placeholder="City" required>
+                        <div class="invalid-feedback">
+                            Please enter a valid city.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row mb-3">
+                    <label asp-for="Item.Email" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                        <input type="email" asp-for="Item.Email" class="form-control" placeholder="Email" required>
+                        <div class="invalid-feedback">
+                            Please enter a valid email.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row mb-3">
+                    <label asp-for="Photo" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                        <div class="custom-file">
+                            <input asp-for="Photo" class="custom-file-input form-control">
+                            <label class="custom-file-label">Click here to change photo</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row mb-3">
+                    <label asp-for="Item.Category" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                        <select class="form-select" aria-label="category selection" asp-for="Item.Category" asp-items="@new SelectList(Karma.Models.Post.Categories)"></select>
+
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Edit</button>
+
+
+
+            </div>
+
+        </form>
+    }
+    @if (HttpContext.User.Identity.IsAuthenticated && HttpContext.User.Identity.Name != Model.Item.Email)
+    {
+        <form method="post" asp-page-handler="message" asp-route-itemid="@Model.Item.ID" class="mt-4 needs-validation" novalidate>
+
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2">
+                Send owner a message
+            </button>
+            <div id="collapseExample2" class="collapse">
+                <div class="form-group row mb-3 mt-3 ">
+                    <label asp-for="Message.Content" class="col-sm-2 col-form-label">
+                    </label>
+                    <div class="col-sm-10">
+                        <input asp-for="Message.Content" class="form-control" placeholder="Content" required>
+                        <div class="invalid-feedback">
+                            Please enter a valid message.
+                        </div>
+                    </div>
+
+                </div>
+<button type="submit" class="btn btn-primary">Send</button>
+            </div>
+
+        </form>
+    }
 </div>
-
-<form method="post" enctype="multipart/form-data" class="mt-4 needs-validation" novalidate>
-
-    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-	Edit item
-    </button>
-    <div id="collapseExample" class="collapse">
-
-        <input hidden asp-for="Item.ID" />
-
-        <div class="form-group row mb-3 mt-3 ">
-            <label asp-for="Item.Title" class="col-sm-2 col-form-label">
-            </label>
-            <div class="col-sm-10">
-                <input asp-for="Item.Title" class="form-control" placeholder="Title" required>
-                <div class="invalid-feedback">
-                    Please enter a valid title.
-                </div>
-            </div>
-            
-        </div>
-
-        <div class="form-group row mb-3">
-            <label asp-for="Item.PosterName" class="col-sm-2 col-form-label">
-            </label>
-            <div class="col-sm-10">
-                <input asp-for="Item.PosterName" class="form-control" placeholder="Poster name" required>
-                <div class="invalid-feedback">
-                    Please enter a valid name.
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group row mb-3">
-            <label asp-for="Item.Description" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-10">
-                <textarea asp-for="Item.Description" class="form-control" rows="3" placeholder="Description" required></textarea>
-                <div class="invalid-feedback">
-                    Please enter a valid description.
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group row mb-3">
-            <label asp-for="Item.PhoneNumber" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-10">
-                <input type="number" asp-for="Item.PhoneNumber" class="form-control" placeholder="Phone number" required>
-                <div class="invalid-feedback">
-                    Please enter a valid phone number.
-                </div>
-            </div>
-
-        </div>
-
-        <div class="form-group row mb-3">
-            <label asp-for="Item.City" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-10">
-                <input asp-for="Item.City" class="form-control" placeholder="City" required>
-                <div class="invalid-feedback">
-                    Please enter a valid city.
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group row mb-3">
-            <label asp-for="Item.Email" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-10">
-                <input type="email" asp-for="Item.Email" class="form-control" placeholder="Email" required>
-                <div class="invalid-feedback">
-                    Please enter a valid email.
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group row mb-3">
-            <label asp-for="Photo" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-10">
-                <div class="custom-file">
-                    <input asp-for="Photo" class="custom-file-input form-control">
-                    <label class="custom-file-label">Click here to change photo</label>
-                </div>
-            </div>
-        </div>
-        <div class="form-group row mb-3">
-            <label asp-for="Item.Category" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-10">
-                <select class="form-select" aria-label="category selection" asp-for="Item.Category" asp-items="@new SelectList(Karma.Models.Post.Categories)"></select>
-
-            </div>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Edit</button>
-
-
-
-    </div>
-
-</form>

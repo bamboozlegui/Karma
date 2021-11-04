@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using Karma.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace Karma.Areas.Identity.Data
@@ -21,6 +22,8 @@ namespace Karma.Areas.Identity.Data
         [PersonalData]
         [Column(TypeName = "nvarchar(100)")]
         public string City { get; set; }
-        
+        public List<Message> Messages { get; set; } = new List<Message>();
+        public List<RequestPost> Requests  { get; set; } = new List<RequestPost>();
+        public List<ItemPost> Items { get; set; } = new List<ItemPost>();
     }
 }

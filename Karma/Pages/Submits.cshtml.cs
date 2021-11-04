@@ -96,7 +96,7 @@ namespace Karma.Pages
             }
 
 
-            ItemService.AddPost(Item, Photo);
+            ItemService.AddPost(HttpContext.User, Item, Photo);
             
                 
             return RedirectToPage("/Submits");

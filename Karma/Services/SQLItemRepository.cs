@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Karma.Areas.Identity.Data;
 using Karma.Data;
 using Karma.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Karma.Services
@@ -15,17 +18,20 @@ namespace Karma.Services
     {
         private readonly KarmaDbContext Context;
 
-        private readonly JsonPictureService PictureService;
+        private readonly PictureService PictureService;
+
+        public UserManager<KarmaUser> UserManager { get; }
         public IWebHostEnvironment WebHostEnvironment { get; private set; }
 
-        public SQLItemRepository(KarmaDbContext context, JsonPictureService pictureService, IWebHostEnvironment webHostEnvironment)
+        public SQLItemRepository(KarmaDbContext context, PictureService pictureService, UserManager<KarmaUser> userManager, IWebHostEnvironment webHostEnvironment)
         {
             Context = context;
             PictureService = pictureService;
+            UserManager = userManager;
             WebHostEnvironment = webHostEnvironment;
         }
 
-        public ItemPost AddPost(ItemPost post, IFormFile photo)
+        public ItemPost AddPost(ClaimsPrincipal user, ItemPost post, IFormFile photo)
         {
             if (post.Picture != null)
             {
@@ -35,6 +41,7 @@ namespace Karma.Services
             post.Date = DateTime.Now;
             post.ID = Guid.NewGuid().ToString();
             post.State = Post.StateEnum.Recent;
+            post.KarmaUserId = UserManager.GetUserId(user);
             Context.Items.Add(post);
             Context.SaveChanges();
             return post;

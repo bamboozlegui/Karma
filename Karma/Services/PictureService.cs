@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Karma.Services
 {
-    public class JsonPictureService
+    public class PictureService
     {
 	public void DeletePicture(IWebHostEnvironment webEnv, string photoName)
 	{

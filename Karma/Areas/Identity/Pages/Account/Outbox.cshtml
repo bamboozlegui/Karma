@@ -1,0 +1,12 @@
+﻿@page
+@model Karma.Areas.Identity.Pages.Account.OutboxModel
+@{
+}
+
+@if (Model.Outbox != null)
+{
+    foreach (var message in Model.Outbox)
+    {
+        <div>@message.Content to @message.ToEmail</div>
+    }
+}
