@@ -14,16 +14,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Karma.Services
 {
-    public class SQLItemRepository : IItemRepository
+    public class SqlItemRepository : IItemRepository
     {
-        private readonly KarmaDbContext Context;
 
-        private readonly PictureService PictureService;
 
+        public KarmaDbContext Context { get; }
+        public PictureService PictureService { get; }
         public UserManager<KarmaUser> UserManager { get; }
         public IWebHostEnvironment WebHostEnvironment { get; private set; }
 
-        public SQLItemRepository(KarmaDbContext context, PictureService pictureService, UserManager<KarmaUser> userManager, IWebHostEnvironment webHostEnvironment)
+        public SqlItemRepository(KarmaDbContext context, PictureService pictureService, UserManager<KarmaUser> userManager, IWebHostEnvironment webHostEnvironment)
         {
             Context = context;
             PictureService = pictureService;
@@ -83,7 +83,7 @@ namespace Karma.Services
 
             if(newPhoto != null)
             {
-                if (post.Picture != null && post.Picture != "noimage.jpg")
+                if (post != null && post.Picture != null && post.Picture != "noimage.jpg")
                 {
                     string filePath = Path.Combine(WebHostEnvironment.WebRootPath, "images", post.Picture);
                     System.IO.File.Delete(filePath);

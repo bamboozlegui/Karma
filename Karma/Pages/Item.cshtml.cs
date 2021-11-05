@@ -56,7 +56,7 @@ namespace Karma.Pages
         public IActionResult OnPostMessage(string itemId)
         {
             Item = ItemService.GetPost(itemId);
-            Message.FromEmail = User.Identity.Name;
+            if (User.Identity != null) Message.FromEmail = User.Identity.Name;
             Message.ToEmail = Item.Email;
             Message.Date = DateTime.Now;
             MessageService.AddMessage(Message);

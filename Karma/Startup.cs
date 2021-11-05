@@ -30,8 +30,8 @@ namespace Karma
         {
             services.AddRazorPages();
             services.AddControllersWithViews();
-            services.AddScoped<IItemRepository, SQLItemRepository>();
-            services.AddScoped<IRequestRepository, SQLRequestRepository>();
+            services.AddScoped<IItemRepository, SqlItemRepository>();
+            services.AddScoped<IRequestRepository, SqlRequestRepository>();
             services.AddScoped<IMessageRepository, SQLMessageRepository>();
             services.AddScoped<UserManager<KarmaUser>>();
             services.AddTransient<PictureService>();

@@ -35,7 +35,7 @@ namespace Karma.Pages
 
         public IEnumerable<ItemPost> Submits { get; private set; }
 
-        public string sqlConnectionString = "Server=(localdb)\\mssqllocaldb;Database=Karma;Trusted_Connection=True;MultipleActiveResultSets=true";
+        public string SqlConnectionString = "Server=(localdb)\\mssqllocaldb;Database=Karma;Trusted_Connection=True;MultipleActiveResultSets=true";
 
         public SubmitsModel(
             IItemRepository itemService,
@@ -59,7 +59,7 @@ namespace Karma.Pages
         }
         // TO-DO implement filter by Category, get info from checkbox
         // public List<string> Categories = new List<string>(Post.SCategories);
-        public IActionResult OnPostFilter(string SCategory)
+        public IActionResult OnPostFilter(string sCategory)
         {
             //Submits = Submits.Where(x => x.Category == SelectedCategory);
             return RedirectToPage("/Submits");
@@ -72,7 +72,7 @@ namespace Karma.Pages
                 return Page();
             }*/
 
-            using (SqlConnection conn = new SqlConnection(sqlConnectionString))
+            using (SqlConnection conn = new SqlConnection(SqlConnectionString))
             {
                 SqlCommand cmd = new SqlCommand("SELECT UserName, FirstName, City, PhoneNumber FROM Karma.dbo.AspNetUsers", conn);
                 conn.Open();
@@ -81,7 +81,7 @@ namespace Karma.Pages
                 {
                     while (reader.Read())
                     {
-                        if (HttpContext.User.Identity.Name == reader.GetString(0))
+                        if (HttpContext.User.Identity != null && HttpContext.User.Identity.Name == reader.GetString(0))
                         {
                             Item.Email = reader.GetString(0);
                             Item.PosterName = reader.GetString(1);

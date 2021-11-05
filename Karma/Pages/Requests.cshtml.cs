@@ -28,7 +28,7 @@ namespace Karma.Pages
         [BindProperty(SupportsGet = true)]
         public string SearchTerm { get; set; }
 
-        public string sqlConnectionString = "Server=(localdb)\\mssqllocaldb;Database=Karma;Trusted_Connection=True;MultipleActiveResultSets=true";
+        public string SqlConnectionString = "Server=(localdb)\\mssqllocaldb;Database=Karma;Trusted_Connection=True;MultipleActiveResultSets=true";
 
 
         public RequestsModel(IRequestRepository requestService, IMessageRepository messageService)
@@ -52,7 +52,7 @@ namespace Karma.Pages
         public IActionResult OnPostMessage(string itemId)
         {
             Item = RequestService.GetPost(itemId);
-            Message.FromEmail = User.Identity.Name;
+            if (User.Identity != null) Message.FromEmail = User.Identity.Name;
             Message.ToEmail = Item.Email;
             Message.Date = DateTime.Now;
             MessageService.AddMessage(Message);
@@ -62,7 +62,7 @@ namespace Karma.Pages
 
         public IActionResult OnPost()
         {
-            using (SqlConnection conn = new SqlConnection(sqlConnectionString))
+            using (SqlConnection conn = new SqlConnection(SqlConnectionString))
             {
                 SqlCommand cmd = new SqlCommand("SELECT UserName, FirstName, City, PhoneNumber FROM Karma.dbo.AspNetUsers", conn);
                 conn.Open();
@@ -71,7 +71,7 @@ namespace Karma.Pages
                 {
                     while (reader.Read())
                     {
-                        if (HttpContext.User.Identity.Name == reader.GetString(0))
+                        if (HttpContext.User.Identity != null && HttpContext.User.Identity.Name == reader.GetString(0))
                         {
                             Item.Email = reader.GetString(0);
                             Item.PosterName = reader.GetString(1);

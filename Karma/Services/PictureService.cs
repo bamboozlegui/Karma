@@ -7,30 +7,30 @@ namespace Karma.Services
 {
     public class PictureService
     {
-	public void DeletePicture(IWebHostEnvironment webEnv, string photoName)
-	{
-            if(photoName != null && photoName != "noimage.jpg")
+        public void DeletePicture(IWebHostEnvironment webEnv, string photoName)
+        {
+            if (photoName != null && photoName != "noimage.jpg")
             {
-		string filePath = Path.Combine(webEnv.WebRootPath, "images", photoName);
-		System.IO.File.Delete(filePath);
+                string filePath = Path.Combine(webEnv.WebRootPath, "images", photoName);
+                System.IO.File.Delete(filePath);
             }
         }
 
         internal string ProcessUploadedFile(IWebHostEnvironment webEnv, IFormFile photo)
-	{
-	    string uniqueFileName = "noimage.jpg";
+        {
+            string uniqueFileName = "noimage.jpg";
 
-	    if (photo != null)
-	    {
-		string uploadsFolder = Path.Combine(webEnv.WebRootPath, "images");
+            if (photo != null)
+            {
+                string uploadsFolder = Path.Combine(webEnv.WebRootPath, "images");
 
-		uniqueFileName = Guid.NewGuid().ToString() + "_" + photo.FileName;
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + photo.FileName;
 
-		string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
-		using (var fileStream = new FileStream(filePath, FileMode.Create))
-		{
-		    photo.CopyTo(fileStream);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    photo.CopyTo(fileStream);
                 }
             }
 

@@ -11,14 +11,13 @@ using Karma.Areas.Identity.Data;
 
 namespace Karma.Services
 {
-    public class SQLRequestRepository : IRequestRepository
+    public class SqlRequestRepository : IRequestRepository
     {
-        private readonly KarmaDbContext Context;
-
+        public KarmaDbContext Context { get; }
         public UserManager<KarmaUser> UserManager { get; }
         public IWebHostEnvironment WebHostEnvironment { get; private set; }
 
-        public SQLRequestRepository(KarmaDbContext context, UserManager<KarmaUser> userManager, IWebHostEnvironment webHostEnvironment)
+        public SqlRequestRepository(KarmaDbContext context, UserManager<KarmaUser> userManager, IWebHostEnvironment webHostEnvironment)
         {
             Context = context;
             UserManager = userManager;
@@ -37,13 +36,13 @@ namespace Karma.Services
 
         public RequestPost DeletePost(string id)
         {
-                   RequestPost request = Context.Requests.Find(id);
-                    if (request != null)
-                    {
-                        Context.Requests.Remove(request);
-                  Context.SaveChanges();
-                }
-               return request;
+            RequestPost request = Context.Requests.Find(id);
+
+            if (request == null) return null;
+
+            Context.Requests.Remove(request);
+            Context.SaveChanges();
+            return request;
         }
 
         public RequestPost GetPost(string id)
