@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Data.SqlClient;
+using System.Threading;
 
 namespace Karma.Pages
 {
@@ -18,22 +19,22 @@ namespace Karma.Pages
     {
 
         [BindProperty]
-        public ItemPost Item { get; set; }   
-        
+        public ItemPost Item { get; set; }
+
         [BindProperty]
         public IFormFile Photo { get; set; }
 
-	[BindProperty(SupportsGet = true)]
+        [BindProperty(SupportsGet = true)]
         public string SearchTerm { get; set; }
 
         [BindProperty]
         public string SelectedCategory { get; set; }
 
-        public IItemRepository ItemService { get; set;  }
+        public IItemRepository ItemService { get; set; }
 
         private IWebHostEnvironment WebHostEnvironment { get; }
 
-        public IEnumerable<ItemPost> Submits { get; private set; }
+        public List<ItemPost> Submits { get; private set; }
 
         public string SqlConnectionString = "Server=(localdb)\\mssqllocaldb;Database=Karma;Trusted_Connection=True;MultipleActiveResultSets=true";
 
@@ -42,18 +43,20 @@ namespace Karma.Pages
             IWebHostEnvironment webHostEnvironment)
         {
             ItemService = itemService;
-            WebHostEnvironment = webHostEnvironment;    
+            WebHostEnvironment = webHostEnvironment;
         }
 
-        public void OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            Submits = ItemService.SearchPosts(SearchTerm);
+            Submits = await ItemService.SearchPosts(SearchTerm);
+            return Page();
         }
 
         // Deletes Post on button trigger, refreshes posts afterwards : )
-        public IActionResult OnPostDelete(string id)
+        public async Task<IActionResult> OnPostDelete(string id)
         {
-            ItemService.DeletePost(id);
+            Thread.Sleep(5000);
+            await ItemService.DeletePost(id);
 
             return RedirectToPage("/Submits");
         }
@@ -65,8 +68,9 @@ namespace Karma.Pages
             return RedirectToPage("/Submits");
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
+            Thread.Sleep(5000);
             /*if (ModelState.IsValid == false)
             {
                 return Page();
@@ -76,7 +80,7 @@ namespace Karma.Pages
             {
                 SqlCommand cmd = new SqlCommand("SELECT UserName, FirstName, City, PhoneNumber FROM Karma.dbo.AspNetUsers", conn);
                 conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
+                SqlDataReader reader = await cmd.ExecuteReaderAsync();
                 if (reader.HasRows)
                 {
                     while (reader.Read())
@@ -96,9 +100,9 @@ namespace Karma.Pages
             }
 
 
-            ItemService.AddPost(HttpContext.User, Item, Photo);
-            
-                
+            await ItemService.AddPost(HttpContext.User, Item, Photo);
+
+
             return RedirectToPage("/Submits");
         }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Karma.Data;
 using Karma.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Karma.Services
 {
@@ -17,16 +18,16 @@ namespace Karma.Services
 
         public KarmaDbContext Context { get; }
 
-        public Message AddMessage(Message message)
+        public async Task<Message> AddMessage(Message message)
         {
-            Context.Messages.Add(message);
-            Context.SaveChanges();
+            await Context.Messages.AddAsync(message);
+            await Context.SaveChangesAsync();
             return message;
         }
 
-        public List<Message> GetMessages()
+        public async Task<List<Message>> GetMessages()
         {
-            return Context.Messages.ToList();
+            return await Context.Messages.ToListAsync();
         }
     }
 }

@@ -8,6 +8,7 @@ using Karma.Data;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Karma.Areas.Identity.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Karma.Services
 {
@@ -23,47 +24,47 @@ namespace Karma.Services
             UserManager = userManager;
             WebHostEnvironment = webHostEnvironment;
         }
-        public RequestPost AddPost(ClaimsPrincipal user, RequestPost post)
+        public async Task<RequestPost> AddPost(ClaimsPrincipal user, RequestPost post)
         {
             post.Date = DateTime.Now;
             post.ID = Guid.NewGuid().ToString();
             post.State = Post.StateEnum.Recent;
             post.KarmaUserId = UserManager.GetUserId(user);
-            Context.Requests.Add(post);
-            Context.SaveChanges();
+            await Context.Requests.AddAsync(post);
+            await Context.SaveChangesAsync();
             return post;
         }
 
-        public RequestPost DeletePost(string id)
+        public async Task<RequestPost> DeletePost(string id)
         {
-            RequestPost request = Context.Requests.Find(id);
+            RequestPost request = await Context.Requests.FindAsync(id);
 
             if (request == null) return null;
 
             Context.Requests.Remove(request);
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
             return request;
         }
 
-        public RequestPost GetPost(string id)
+        public async Task<RequestPost> GetPost(string id)
         {
-            return Context.Requests.Find(id);
+            return await Context.Requests.FindAsync(id);
         }
 
-        public IEnumerable<RequestPost> GetPosts()
+        public async Task<List<RequestPost>> GetPosts()
         {
-            return Context.Requests;
+            return await Context.Requests.ToListAsync();
         }
 
-        public IEnumerable<RequestPost> SearchPosts(string searchTerm)
+        public async Task<List<RequestPost>> SearchPosts(string searchTerm)
         {
             if (searchTerm == null)
-                return Context.Requests;
+                return await Context.Requests.ToListAsync();
 
-            return Context.Requests.Where(request => request.Title.Contains(searchTerm));
+            return await Context.Requests.Where(request => request.Title.Contains(searchTerm)).ToListAsync();
         }
 
-        public RequestPost UpdatePost(RequestPost newPost)
+        public Task<RequestPost> UpdatePost(RequestPost newPost)
         {
             throw new NotImplementedException();
         }

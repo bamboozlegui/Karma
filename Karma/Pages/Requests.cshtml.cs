@@ -21,7 +21,7 @@ namespace Karma.Pages
 
         private IRequestRepository RequestService { get; }
         public IMessageRepository MessageService { get; }
-        public IEnumerable<RequestPost> Requests { get; private set; }
+        public List<RequestPost> Requests { get; private set; }
 
         [BindProperty]
         public Message Message { get; set; }
@@ -37,9 +37,9 @@ namespace Karma.Pages
             MessageService = messageService;
         }
 
-        public void OnGet()
+        public async void OnGet()
         {
-            Requests = RequestService.SearchPosts(SearchTerm);
+            Requests = await RequestService.SearchPosts(SearchTerm);
         }
 
         public IActionResult OnPostDelete(string id)
@@ -49,24 +49,24 @@ namespace Karma.Pages
             return RedirectToPage("/Requests");
         }
 
-        public IActionResult OnPostMessage(string itemId)
+        public async Task<IActionResult> OnPostMessage(string itemId)
         {
-            Item = RequestService.GetPost(itemId);
+            Item = await RequestService.GetPost(itemId);
             if (User.Identity != null) Message.FromEmail = User.Identity.Name;
             Message.ToEmail = Item.Email;
             Message.Date = DateTime.Now;
-            MessageService.AddMessage(Message);
+            await MessageService.AddMessage(Message);
             
             return RedirectToPage("/Requests");
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
             using (SqlConnection conn = new SqlConnection(SqlConnectionString))
             {
                 SqlCommand cmd = new SqlCommand("SELECT UserName, FirstName, City, PhoneNumber FROM Karma.dbo.AspNetUsers", conn);
                 conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
+                SqlDataReader reader = await cmd.ExecuteReaderAsync();
                 if (reader.HasRows)
                 {
                     while (reader.Read())
@@ -85,7 +85,7 @@ namespace Karma.Pages
                 conn.Close();
             }
 
-            RequestService.AddPost(HttpContext.User, Item);
+            await RequestService.AddPost(HttpContext.User, Item);
 
             return RedirectToPage("/Requests");
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
 using Karma.Areas.Identity.Data;
 using Karma.Data;
@@ -31,7 +32,7 @@ namespace Karma.Services
             WebHostEnvironment = webHostEnvironment;
         }
 
-        public ItemPost AddPost(ClaimsPrincipal user, ItemPost post, IFormFile photo)
+        public async Task<ItemPost> AddPost(ClaimsPrincipal user, ItemPost post, IFormFile photo)
         {
             if (post.Picture != null)
             {
@@ -42,44 +43,44 @@ namespace Karma.Services
             post.ID = Guid.NewGuid().ToString();
             post.State = Post.StateEnum.Recent;
             post.KarmaUserId = UserManager.GetUserId(user);
-            Context.Items.Add(post);
-            Context.SaveChanges();
+            await Context.Items.AddAsync(post);
+            await Context.SaveChangesAsync();
             return post;
         }
 
-        public ItemPost DeletePost(string id)
+        public async Task<ItemPost> DeletePost(string id)
         {
-            ItemPost item = Context.Items.Find(id);
+            ItemPost item = await Context.Items.FindAsync(id);
             if(item != null)
             {
                 PictureService.DeletePicture(WebHostEnvironment, item.Picture);
                 Context.Items.Remove(item);
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             return item;
         }
 
-        public ItemPost GetPost(string id)
+        public async Task<ItemPost> GetPost(string id)
         {
-            return Context.Items.Find(id);
+            return await Context.Items.FindAsync(id);
         }
 
-        public IEnumerable<ItemPost> GetPosts()
+        public async Task<List<ItemPost>> GetPosts()
         {
-            return Context.Items;
+            return await Context.Items.ToListAsync();
         }
 
-        public IEnumerable<ItemPost> SearchPosts(string searchTerm)
+        public async Task<List<ItemPost>> SearchPosts(string searchTerm)
         {
             if (searchTerm == null)
-                return Context.Items;
+                return await Context.Items.ToListAsync();
 
-            return Context.Items.Where(item => item.Title.Contains(searchTerm));
+            return  await Context.Items.Where(item => item.Title.Contains(searchTerm)).ToListAsync();
         }
 
-        public ItemPost UpdatePost(ItemPost newPost, IFormFile newPhoto)
+        public async Task<ItemPost> UpdatePost(ItemPost newPost, IFormFile newPhoto)
         {
-            ItemPost post = Context.Items.AsNoTracking().FirstOrDefault(post => post.ID == newPost.ID);
+            ItemPost post = await Context.Items.AsNoTracking().FirstOrDefaultAsync(post => post.ID == newPost.ID);
 
             if(newPhoto != null)
             {
@@ -93,9 +94,10 @@ namespace Karma.Services
             }
             newPost.Date = post.Date;
             newPost.Picture = post.Picture;
+            newPost.KarmaUserId = post.KarmaUserId;
             var item = Context.Items.Attach(newPost);
             item.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
             return newPost;
         }
     }

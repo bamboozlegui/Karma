@@ -20,7 +20,7 @@ namespace Karma.Pages
 
         private IRequestRepository RequestService { get;  }
 
-        public IEnumerable<RequestPost> Requests { get; private set; }
+        public List<RequestPost> Requests { get; private set; }
         
         //Submit dalykai
         [BindProperty]
@@ -31,7 +31,7 @@ namespace Karma.Pages
 
         private IItemRepository ItemService { get;  }
 
-        public IEnumerable<ItemPost> Submits { get; private set; }
+        public List<ItemPost> Submits { get; private set; }
 
         public IndexModel(IRequestRepository requestService, IItemRepository itemService)
         {
@@ -39,10 +39,11 @@ namespace Karma.Pages
             ItemService = itemService;
         }
         
-        public void OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            Requests = RequestService.GetPosts();
-            Submits = ItemService.GetPosts();
+            Requests = await RequestService.GetPosts();
+            Submits = await ItemService.GetPosts();
+            return Page();
         }
     }
 }
