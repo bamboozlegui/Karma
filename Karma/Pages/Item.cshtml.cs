@@ -21,9 +21,11 @@ namespace Karma.Pages
 
         private IItemRepository ItemService { get; }
         public IMessageRepository MessageService { get; }
+        public PictureService PictureService { get; }
         [BindProperty]
         public IFormFile Photo { get; set; }
 
+        [BindProperty]
         public ItemPost Item { get; set; }
 
         [BindProperty]
@@ -32,10 +34,12 @@ namespace Karma.Pages
         public ItemModel(
             IItemRepository itemService,
             IMessageRepository messageService,
+            PictureService pictureService,
             IWebHostEnvironment webHostEnvironment)
         {
             ItemService = itemService;
             MessageService = messageService;
+            PictureService = pictureService;
             WebHostEnvironment = webHostEnvironment;
         }
 
@@ -46,9 +50,19 @@ namespace Karma.Pages
             return Page();
         }
 
-        public async Task<IActionResult> OnPost(ItemPost item)
+        public async Task<IActionResult> OnPost()
         {
-		    Item = await ItemService.UpdatePost(item, Photo);
+            if(Photo != null)
+            {
+                if (Item.Picture != null)
+                {
+                    string filePath = Path.Combine(WebHostEnvironment.WebRootPath, "images", Item.Picture);
+                    System.IO.File.Delete(filePath);
+                }
+
+                Item.Picture = PictureService.ProcessUploadedFile(WebHostEnvironment, Photo);
+            }
+		    Item = await ItemService.UpdatePost(Item);
 
             return RedirectToPage("/Submits");
         }

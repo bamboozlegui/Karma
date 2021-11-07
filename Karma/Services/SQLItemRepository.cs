@@ -72,22 +72,16 @@ namespace Karma.Services
             return  await Context.Items.Where(item => item.Title.Contains(searchTerm)).ToListAsync();
         }
 
-        public async Task<ItemPost> UpdatePost(ItemPost newPost, IFormFile newPhoto)
+        public async Task<ItemPost> UpdatePost(ItemPost newPost)
         {
             ItemPost post = await Context.Items.AsNoTracking().FirstOrDefaultAsync(post => post.ID == newPost.ID);
-
-            if(newPhoto != null)
+            if(post == null)
             {
-                if (post != null && post.Picture != null && post.Picture != "noimage.jpg")
-                {
-                    string filePath = Path.Combine(WebHostEnvironment.WebRootPath, "images", post.Picture);
-                    System.IO.File.Delete(filePath);
-                }
-
-                post.Picture = PictureService.ProcessUploadedFile(WebHostEnvironment, newPhoto);
+                return null;
             }
+
             newPost.Date = post.Date;
-            newPost.Picture = post.Picture;
+            if(newPost.Picture == null) newPost.Picture = post.Picture;
             newPost.KarmaUserId = post.KarmaUserId;
             var item = Context.Items.Attach(newPost);
             item.State = Microsoft.EntityFrameworkCore.EntityState.Modified;

@@ -19,6 +19,6 @@ namespace Karma.Services
 
         public Task<ItemPost> DeletePost(string id);
 
-        public Task<ItemPost> UpdatePost(ItemPost newPost, IFormFile newPhoto);
+        public Task<ItemPost> UpdatePost(ItemPost newPost);
     }
 }
