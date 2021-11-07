@@ -40,7 +40,7 @@ namespace Karma.Pages
         public async Task<IActionResult> OnGetAsync()
         {
             Requests = await RequestService.SearchPosts(SearchTerm);
-            Return Page();
+            return Page();
         }
 
         public IActionResult OnPostDelete(string id)
