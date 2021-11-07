@@ -46,7 +46,7 @@ namespace Karma.Pages
             return Page();
         }
 
-        public async Task<IActionResult> OnPost(ItemPost item)
+        public async Task<IActionResult> OnPostAsync(ItemPost item)
         {
 		    Item = await ItemService.UpdatePost(item, Photo);
 
