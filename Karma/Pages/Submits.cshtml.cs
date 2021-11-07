@@ -12,6 +12,8 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Data.SqlClient;
 using System.Threading;
+using Microsoft.AspNetCore.Identity;
+using Karma.Areas.Identity.Data;
 
 namespace Karma.Pages
 {
@@ -31,7 +33,7 @@ namespace Karma.Pages
         public string SelectedCategory { get; set; }
 
         public IItemRepository ItemService { get; set; }
-
+        public PictureService PictureService { get; }
         private IWebHostEnvironment WebHostEnvironment { get; }
 
         public List<ItemPost> Submits { get; private set; }
@@ -40,9 +42,11 @@ namespace Karma.Pages
 
         public SubmitsModel(
             IItemRepository itemService,
+            PictureService pictureService,
             IWebHostEnvironment webHostEnvironment)
         {
             ItemService = itemService;
+            PictureService = pictureService;
             WebHostEnvironment = webHostEnvironment;
         }
 
@@ -78,7 +82,7 @@ namespace Karma.Pages
 
             using (SqlConnection conn = new SqlConnection(SqlConnectionString))
             {
-                SqlCommand cmd = new SqlCommand("SELECT UserName, FirstName, City, PhoneNumber FROM Karma.dbo.AspNetUsers", conn);
+                SqlCommand cmd = new SqlCommand("SELECT UserName, FirstName, City, PhoneNumber, Id FROM Karma.dbo.AspNetUsers", conn);
                 conn.Open();
                 SqlDataReader reader = await cmd.ExecuteReaderAsync();
                 if (reader.HasRows)
@@ -91,6 +95,7 @@ namespace Karma.Pages
                             Item.PosterName = reader.GetString(1);
                             Item.City = reader.GetString(2);
                             Item.PhoneNumber = reader.GetString(3);
+                            Item.KarmaUserId = reader.GetString(4);
                             break;
                         }
                     }
@@ -99,8 +104,9 @@ namespace Karma.Pages
                 conn.Close();
             }
 
+            Item.Picture = PictureService.ProcessUploadedFile(WebHostEnvironment, Photo); //Check definition
 
-            await ItemService.AddPost(HttpContext.User, Item, Photo);
+            await ItemService.AddPost(Item);
 
 
             return RedirectToPage("/Submits");

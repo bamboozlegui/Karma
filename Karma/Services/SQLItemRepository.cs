@@ -32,17 +32,11 @@ namespace Karma.Services
             WebHostEnvironment = webHostEnvironment;
         }
 
-        public async Task<ItemPost> AddPost(ClaimsPrincipal user, ItemPost post, IFormFile photo)
+        public async Task<ItemPost> AddPost(ItemPost post)
         {
-            if (post.Picture != null)
-            {
-                PictureService.DeletePicture(WebHostEnvironment, post.Picture);
-            }
-            post.Picture = PictureService.ProcessUploadedFile(WebHostEnvironment, photo); //Check definition
             post.Date = DateTime.Now;
             post.ID = Guid.NewGuid().ToString();
             post.State = Post.StateEnum.Recent;
-            post.KarmaUserId = UserManager.GetUserId(user);
             await Context.Items.AddAsync(post);
             await Context.SaveChangesAsync();
             return post;
