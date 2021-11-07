@@ -60,7 +60,7 @@ namespace Karma.Pages
         public async Task<IActionResult> OnPostDelete(string id)
         {
             var item = await ItemService.GetPost(id);
-            PictureService.DeletePicture(WebHostEnvironment, item.Picture);
+            PictureService.DeletePicture(WebHostEnvironment.WebRootPath, item.Picture);
             await ItemService.DeletePost(id);
 
             return RedirectToPage("/Submits");
@@ -105,7 +105,7 @@ namespace Karma.Pages
                 conn.Close();
             }
 
-            Item.Picture = PictureService.ProcessUploadedFile(WebHostEnvironment, Photo); //Check definition
+            Item.Picture = PictureService.ProcessUploadedFile(WebHostEnvironment.WebRootPath, Photo); //Check definition
 
             await ItemService.AddPost(Item);
 

@@ -60,7 +60,7 @@ namespace Karma.Pages
                     System.IO.File.Delete(filePath);
                 }
 
-                Item.Picture = PictureService.ProcessUploadedFile(WebHostEnvironment, Photo);
+                Item.Picture = PictureService.ProcessUploadedFile(WebHostEnvironment.WebRootPath, Photo);
             }
 		    Item = await ItemService.UpdatePost(Item);
 
