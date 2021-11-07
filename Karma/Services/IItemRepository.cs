@@ -10,15 +10,15 @@ namespace Karma.Services
 {
     public interface IItemRepository
     {
-        public IEnumerable<ItemPost> GetPosts();
+        public Task<List<ItemPost>> GetPosts();
 
-        public IEnumerable<ItemPost> SearchPosts(string searchTerm);
+        public Task<List<ItemPost>> SearchPosts(string searchTerm);
 
-        public ItemPost GetPost(string id);
-        public ItemPost AddPost(ClaimsPrincipal user, ItemPost post, IFormFile photo);
+        public Task<ItemPost> GetPost(string id);
+        public Task<ItemPost> AddPost(ClaimsPrincipal user, ItemPost post, IFormFile photo);
 
-        public ItemPost DeletePost(string id);
+        public Task<ItemPost> DeletePost(string id);
 
-        public ItemPost UpdatePost(ItemPost newPost, IFormFile newPhoto);
+        public Task<ItemPost> UpdatePost(ItemPost newPost, IFormFile newPhoto);
     }
 }

@@ -19,9 +19,10 @@ namespace Karma.Areas.Identity.Pages.Account
         public List<Message> Inbox { get; set; }
         public IMessageRepository MessageService { get; }
 
-        public void OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            Inbox = MessageService.GetMessages().Where(m => m.ToEmail == HttpContext.User.Identity.Name).ToList();
+            Inbox = (await MessageService.GetMessages()).Where(m => m.ToEmail == HttpContext.User.Identity.Name).ToList();
+            return Page();
         }
 
         private void AddDummyMessages()

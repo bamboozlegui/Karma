@@ -8,7 +8,7 @@ namespace Karma.Services
 {
     public interface IMessageRepository
     {
-        List<Message> GetMessages();
-        Message AddMessage(Message message);
+        public Task<List<Message>> GetMessages();
+        public Task<Message> AddMessage(Message message);
     }
 }

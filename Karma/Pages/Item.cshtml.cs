@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using Karma.Services;
 using Microsoft.AspNetCore.Http;
+using System.Threading;
 
 namespace Karma.Pages
 {
@@ -38,28 +39,27 @@ namespace Karma.Pages
             WebHostEnvironment = webHostEnvironment;
         }
 
-        public IActionResult OnGet(string ID)
+        public async Task<IActionResult> OnGetAsync(string ID)
         {
-            Item = ItemService.GetPost(ID);
+            Item = await ItemService.GetPost(ID);
 
             return Page();
         }
 
-        public IActionResult OnPost(ItemPost item)
+        public async Task<IActionResult> OnPostAsync(ItemPost item)
         {
-	        if(ModelState.IsValid)
-		        Item = ItemService.UpdatePost(item, Photo);
+		    Item = await ItemService.UpdatePost(item, Photo);
 
             return RedirectToPage("/Submits");
         }
 
-        public IActionResult OnPostMessage(string itemId)
+        public async Task<IActionResult> OnPostMessage(string itemId)
         {
-            Item = ItemService.GetPost(itemId);
+            Item = await ItemService.GetPost(itemId);
             if (User.Identity != null) Message.FromEmail = User.Identity.Name;
             Message.ToEmail = Item.Email;
             Message.Date = DateTime.Now;
-            MessageService.AddMessage(Message);
+            await MessageService.AddMessage(Message);
 
             return RedirectToPage("/Submits");
         }
