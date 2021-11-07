@@ -91,7 +91,7 @@
 
         @if(SignInManager.IsSignedIn(User))
         {
-            <button type="submit" class="btn btn-primary">Submit. Thread.Sleep(5000) XD You can go to other pages meanwhile</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
         }
         else
         {
@@ -168,7 +168,7 @@
                                                                       && SignInManager.IsSignedIn(User))
                                 {
                                 <form asp-page-handler="delete" asp-route-id="@Model.Submits.ElementAt(i).ID" method="post">
-                                    <button class="btn btn-default">Delete. Thread.Sleep(5000)</button>
+                                    <button class="btn btn-default">Delete</button>
                                 </form>
                                 }
                             </div>

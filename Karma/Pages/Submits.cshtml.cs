@@ -55,7 +55,6 @@ namespace Karma.Pages
         // Deletes Post on button trigger, refreshes posts afterwards : )
         public async Task<IActionResult> OnPostDelete(string id)
         {
-            Thread.Sleep(5000);
             await ItemService.DeletePost(id);
 
             return RedirectToPage("/Submits");
@@ -70,7 +69,6 @@ namespace Karma.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-            Thread.Sleep(5000);
             /*if (ModelState.IsValid == false)
             {
                 return Page();
