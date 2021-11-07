@@ -20,7 +20,7 @@ namespace Karma.Areas.Identity.Pages.Account
         public List<Message> Outbox { get; set; }
         public IMessageRepository MessageService { get; }
 
-        public async Task<IActionResult> OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
             Outbox = (await MessageService.GetMessages()).Where(delegate (Message m)
             {
