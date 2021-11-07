@@ -20,16 +20,10 @@ namespace Karma.Services
 
 
         public KarmaDbContext Context { get; }
-        public PictureService PictureService { get; }
-        public UserManager<KarmaUser> UserManager { get; }
-        public IWebHostEnvironment WebHostEnvironment { get; private set; }
 
         public SqlItemRepository(KarmaDbContext context, PictureService pictureService, UserManager<KarmaUser> userManager, IWebHostEnvironment webHostEnvironment)
         {
             Context = context;
-            PictureService = pictureService;
-            UserManager = userManager;
-            WebHostEnvironment = webHostEnvironment;
         }
 
         public async Task<ItemPost> AddPost(ItemPost post)
@@ -47,7 +41,6 @@ namespace Karma.Services
             ItemPost item = await Context.Items.FindAsync(id);
             if(item != null)
             {
-                PictureService.DeletePicture(WebHostEnvironment, item.Picture);
                 Context.Items.Remove(item);
                 await Context.SaveChangesAsync();
             }
