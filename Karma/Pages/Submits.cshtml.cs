@@ -75,12 +75,6 @@ namespace Karma.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-            Thread.Sleep(5000);
-            /*if (ModelState.IsValid == false)
-            {
-                return Page();
-            }*/
-
             using (SqlConnection conn = new SqlConnection(SqlConnectionString))
             {
                 SqlCommand cmd = new SqlCommand("SELECT UserName, FirstName, City, PhoneNumber, Id FROM Karma.dbo.AspNetUsers", conn);

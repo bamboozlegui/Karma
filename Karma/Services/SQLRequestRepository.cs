@@ -16,20 +16,16 @@ namespace Karma.Services
     {
         public KarmaDbContext Context { get; }
         public UserManager<KarmaUser> UserManager { get; }
-        public IWebHostEnvironment WebHostEnvironment { get; private set; }
 
-        public SqlRequestRepository(KarmaDbContext context, UserManager<KarmaUser> userManager, IWebHostEnvironment webHostEnvironment)
+        public SqlRequestRepository(KarmaDbContext context)
         {
             Context = context;
-            UserManager = userManager;
-            WebHostEnvironment = webHostEnvironment;
         }
-        public async Task<RequestPost> AddPost(ClaimsPrincipal user, RequestPost post)
+        public async Task<RequestPost> AddPost(RequestPost post)
         {
             post.Date = DateTime.Now;
             post.ID = Guid.NewGuid().ToString();
             post.State = Post.StateEnum.Recent;
-            post.KarmaUserId = UserManager.GetUserId(user);
             await Context.Requests.AddAsync(post);
             await Context.SaveChangesAsync();
             return post;

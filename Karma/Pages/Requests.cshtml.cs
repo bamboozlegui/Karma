@@ -64,7 +64,7 @@ namespace Karma.Pages
         {
             using (SqlConnection conn = new SqlConnection(SqlConnectionString))
             {
-                SqlCommand cmd = new SqlCommand("SELECT UserName, FirstName, City, PhoneNumber FROM Karma.dbo.AspNetUsers", conn);
+                SqlCommand cmd = new SqlCommand("SELECT UserName, FirstName, City, PhoneNumber, Id FROM Karma.dbo.AspNetUsers", conn);
                 conn.Open();
                 SqlDataReader reader = await cmd.ExecuteReaderAsync();
                 if (reader.HasRows)
@@ -77,6 +77,7 @@ namespace Karma.Pages
                             Item.PosterName = reader.GetString(1);
                             Item.City = reader.GetString(2);
                             Item.PhoneNumber = reader.GetString(3);
+                            Item.KarmaUserId = reader.GetString(4);
                             break;
                         }
                     }
@@ -85,7 +86,7 @@ namespace Karma.Pages
                 conn.Close();
             }
 
-            await RequestService.AddPost(HttpContext.User, Item);
+            await RequestService.AddPost(Item);
 
             return RedirectToPage("/Requests");
         }
