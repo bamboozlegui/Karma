@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Karma.Models;
 using Karma.Services;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -53,13 +54,15 @@ namespace Karma.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<ActionResult<ItemPost>> Post(ItemPost newItem, string userId)
+        [HttpPost("{userId}")]
+        public async Task<ActionResult<ItemPost>> Post(string userId, ItemPost newItem)
         {
             try
             {
                 if (newItem == null)
                     return BadRequest();
+
+                newItem.Picture = "noimage.jpg";
 
                 var createdItem = await ItemService.AddPost(newItem, userId);
 
@@ -74,24 +77,28 @@ namespace Karma.Controllers
             }
         }
 
-        [HttpPut]
-        public async Task<ActionResult<ItemPost>> Put(ItemPost newItem)
+        [HttpPut("{itemId:int}")]
+        public async Task<ActionResult<ItemPost>> Put(int itemId, ItemPost newItem)
         {
             try
             {
                 if (newItem == null)
                     return BadRequest();
 
-                var updatedItem = await ItemService.UpdatePost(newItem);
+                var itemToUpdate = await ItemService.GetPost(itemId);
 
-                if (updatedItem == null)
-                    return NotFound();
+                if(itemToUpdate == null)
+                {
+                    return NotFound($"Item with Id = {itemId} not found");
+                }
 
-                return CreatedAtAction(nameof(Get), new { id = updatedItem.Id }, updatedItem);
+                newItem.Id = itemId;
+
+                return await ItemService.UpdatePost(newItem);
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from the database");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error updating data from the database");
             }
         }
     }
