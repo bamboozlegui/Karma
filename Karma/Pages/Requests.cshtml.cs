@@ -40,9 +40,9 @@ namespace Karma.Pages
             return Page();
         }
 
-        public IActionResult OnPostDelete(int id)
+        public async Task<IActionResult> OnPostDelete(int id)
         {
-            RequestService.DeletePost(id);
+            await RequestService.DeletePost(id);
 
             return RedirectToPage("/Requests");
         }
