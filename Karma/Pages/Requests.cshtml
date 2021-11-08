@@ -108,7 +108,7 @@
                         }
                         @if (HttpContext.User.Identity.IsAuthenticated && HttpContext.User.Identity.Name != requestas.KarmaUser.Email)
                         {
-                            <form method="post" asp-page-handler="message" asp-route-itemid="collapse @requestas.CollapseId()" class="mt-4 needs-validation" novalidate>
+                            <form method="post" asp-page-handler="message" asp-route-itemid="@requestas.Id" class="mt-4 needs-validation" novalidate>
 
                                 <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#@requestas.CollapseId()" aria-expanded="false" aria-controls="@requestas.Id">
                                     Send owner a message
