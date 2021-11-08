@@ -101,5 +101,25 @@ namespace Karma.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error updating data from the database");
             }
         }
+        
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<ItemPost>> Delete(int id)
+        {
+            try
+            {
+                var result = await ItemService.GetPost(id);
+
+                if(result == null)
+                {
+                    return NotFound();
+                }
+
+                return await ItemService.DeletePost(id);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from the database");
+            }
+        }
     }
 }
