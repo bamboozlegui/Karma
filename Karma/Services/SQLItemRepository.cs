@@ -26,17 +26,19 @@ namespace Karma.Services
             Context = context;
         }
 
-        public async Task<ItemPost> AddPost(ItemPost post)
+        public async Task<ItemPost> AddPost(ItemPost post, string userId)
         {
             post.Date = DateTime.Now;
-            post.ID = Guid.NewGuid().ToString();
             post.State = Post.StateEnum.Recent;
+            post.KarmaUser = await Context.Users.FindAsync(userId);
+            if (post.KarmaUser == null)
+                return null;
             await Context.Items.AddAsync(post);
             await Context.SaveChangesAsync();
             return post;
         }
 
-        public async Task<ItemPost> DeletePost(string id)
+        public async Task<ItemPost> DeletePost(int id)
         {
             ItemPost item = await Context.Items.FindAsync(id);
             if(item != null)
@@ -47,27 +49,27 @@ namespace Karma.Services
             return item;
         }
 
-        public async Task<ItemPost> GetPost(string id)
+        public async Task<ItemPost> GetPost(int id)
         {
-            return await Context.Items.FindAsync(id);
+            return await Context.Items.Include(i => i.KarmaUser).FirstOrDefaultAsync(i => i.Id == id);
         }
 
         public async Task<List<ItemPost>> GetPosts()
         {
-            return await Context.Items.ToListAsync();
+            return await Context.Items.Include(i => i.KarmaUser).ToListAsync();
         }
 
         public async Task<List<ItemPost>> SearchPosts(string searchTerm)
         {
             if (searchTerm == null)
-                return await Context.Items.ToListAsync();
+                return await GetPosts();
 
-            return  await Context.Items.Where(item => item.Title.Contains(searchTerm)).ToListAsync();
+            return  await Context.Items.Include(i => i.KarmaUser).Where(item => item.Title.Contains(searchTerm)).ToListAsync();
         }
 
         public async Task<ItemPost> UpdatePost(ItemPost newPost)
         {
-            ItemPost post = await Context.Items.AsNoTracking().FirstOrDefaultAsync(post => post.ID == newPost.ID);
+            ItemPost post = await Context.Items.AsNoTracking().FirstOrDefaultAsync(post => post.Id == newPost.Id);
             if(post == null)
             {
                 return null;
@@ -75,7 +77,6 @@ namespace Karma.Services
 
             newPost.Date = post.Date;
             if(newPost.Picture == null) newPost.Picture = post.Picture;
-            newPost.KarmaUserId = post.KarmaUserId;
             var item = Context.Items.Attach(newPost);
             item.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             await Context.SaveChangesAsync();

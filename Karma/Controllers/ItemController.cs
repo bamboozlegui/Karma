@@ -34,7 +34,7 @@ namespace Karma.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ItemPost>> Get(string id)
+        public async Task<ActionResult<ItemPost>> Get(int id)
         {
             try
             {
@@ -54,16 +54,19 @@ namespace Karma.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ItemPost>> Post(ItemPost newItem)
+        public async Task<ActionResult<ItemPost>> Post(ItemPost newItem, string userId)
         {
             try
             {
                 if (newItem == null)
                     return BadRequest();
 
-                var createdItem = await ItemService.AddPost(newItem);
+                var createdItem = await ItemService.AddPost(newItem, userId);
 
-                return CreatedAtAction(nameof(Get), new { id = createdItem.ID }, createdItem);
+                if (createdItem == null)
+                    return NotFound();
+
+                return CreatedAtAction(nameof(Get), new { id = createdItem.Id }, createdItem);
             }
             catch (Exception)
             {

@@ -95,14 +95,12 @@ namespace Karma.Migrations
 
             modelBuilder.Entity("Karma.Models.ItemPost", b =>
                 {
-                    b.Property<string>("ID")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -113,22 +111,11 @@ namespace Karma.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("KarmaUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Picture")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PosterName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("State")
@@ -139,7 +126,10 @@ namespace Karma.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
 
                     b.HasIndex("KarmaUserId");
 
@@ -186,14 +176,12 @@ namespace Karma.Migrations
 
             modelBuilder.Entity("Karma.Models.RequestPost", b =>
                 {
-                    b.Property<string>("ID")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -204,20 +192,9 @@ namespace Karma.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("KarmaUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PosterName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("State")
                         .HasColumnType("int");
@@ -227,7 +204,10 @@ namespace Karma.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
 
                     b.HasIndex("KarmaUserId");
 
@@ -371,11 +351,13 @@ namespace Karma.Migrations
 
             modelBuilder.Entity("Karma.Models.ItemPost", b =>
                 {
-                    b.HasOne("Karma.Areas.Identity.Data.KarmaUser", null)
+                    b.HasOne("Karma.Areas.Identity.Data.KarmaUser", "KarmaUser")
                         .WithMany("Items")
                         .HasForeignKey("KarmaUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("KarmaUser");
                 });
 
             modelBuilder.Entity("Karma.Models.Message", b =>
@@ -387,11 +369,13 @@ namespace Karma.Migrations
 
             modelBuilder.Entity("Karma.Models.RequestPost", b =>
                 {
-                    b.HasOne("Karma.Areas.Identity.Data.KarmaUser", null)
+                    b.HasOne("Karma.Areas.Identity.Data.KarmaUser", "KarmaUser")
                         .WithMany("Requests")
                         .HasForeignKey("KarmaUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("KarmaUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

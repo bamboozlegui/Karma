@@ -14,7 +14,8 @@ using System.Data.SqlClient;
 using System.Threading;
 using Microsoft.AspNetCore.Identity;
 using Karma.Areas.Identity.Data;
-
+using Karma.Data;
+using Shared.Web.MvcExtensions;
 namespace Karma.Pages
 {
     public class SubmitsModel : PageModel
@@ -38,8 +39,6 @@ namespace Karma.Pages
 
         public List<ItemPost> Submits { get; private set; }
 
-        public string SqlConnectionString = "Server=(localdb)\\mssqllocaldb;Database=Karma;Trusted_Connection=True;MultipleActiveResultSets=true";
-
         public SubmitsModel(
             IItemRepository itemService,
             PictureService pictureService,
@@ -56,8 +55,7 @@ namespace Karma.Pages
             return Page();
         }
 
-        // Deletes Post on button trigger, refreshes posts afterwards : )
-        public async Task<IActionResult> OnPostDelete(string id)
+        public async Task<IActionResult> OnPostDelete(int id)
         {
             var item = await ItemService.GetPost(id);
             PictureService.DeletePicture(WebHostEnvironment.WebRootPath, item.Picture);
@@ -75,49 +73,11 @@ namespace Karma.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-            using (SqlConnection conn = new SqlConnection(SqlConnectionString))
-            {
-                SqlCommand cmd = new SqlCommand("SELECT UserName, FirstName, City, PhoneNumber, Id FROM Karma.dbo.AspNetUsers", conn);
-                conn.Open();
-                SqlDataReader reader = await cmd.ExecuteReaderAsync();
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        if (HttpContext.User.Identity != null && HttpContext.User.Identity.Name == reader.GetString(0))
-                        {
-                            Item.Email = reader.GetString(0);
-                            Item.PosterName = reader.GetString(1);
-                            Item.City = reader.GetString(2);
-                            Item.PhoneNumber = reader.GetString(3);
-                            Item.KarmaUserId = reader.GetString(4);
-                            break;
-                        }
-                    }
-                }
-                reader.Close();
-                conn.Close();
-            }
-
             Item.Picture = PictureService.ProcessUploadedFile(WebHostEnvironment.WebRootPath, Photo); //Check definition
-
-            await ItemService.AddPost(Item);
-
+            var userId = User.GetUserId();
+            await ItemService.AddPost(Item, userId);
 
             return RedirectToPage("/Submits");
         }
-
-        /*
-        public IActionResult Validate(ItemPost Item)
-        {
-            if (!Regex.Match(Item.PosterName, "^[A-Z][a-zA-Z]*$").Success)
-            {
-                ItemService.DeletePost(Item.ID);
-                return RedirectToPage("/Error");
-            }   
-
-            return RedirectToPage("/Accounts");
-
-        }*/
     }
 }

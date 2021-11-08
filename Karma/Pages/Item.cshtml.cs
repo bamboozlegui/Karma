@@ -43,9 +43,9 @@ namespace Karma.Pages
             WebHostEnvironment = webHostEnvironment;
         }
 
-        public async Task<IActionResult> OnGetAsync(string ID)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            Item = await ItemService.GetPost(ID);
+            Item = await ItemService.GetPost(id);
 
             return Page();
         }
@@ -67,11 +67,11 @@ namespace Karma.Pages
             return RedirectToPage("/Submits");
         }
 
-        public async Task<IActionResult> OnPostMessage(string itemId)
+        public async Task<IActionResult> OnPostMessage(int itemId)
         {
             Item = await ItemService.GetPost(itemId);
             if (User.Identity != null) Message.FromEmail = User.Identity.Name;
-            Message.ToEmail = Item.Email;
+            Message.ToEmail = Item.KarmaUser.Email;
             Message.Date = DateTime.Now;
             await MessageService.AddMessage(Message);
 

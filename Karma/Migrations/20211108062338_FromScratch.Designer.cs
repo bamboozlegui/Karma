@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Karma.Migrations
 {
     [DbContext(typeof(KarmaDbContext))]
-    [Migration("20211104081007_ToSingleMsgDb")]
-    partial class ToSingleMsgDb
+    [Migration("20211108062338_FromScratch")]
+    partial class FromScratch
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -97,8 +97,10 @@ namespace Karma.Migrations
 
             modelBuilder.Entity("Karma.Models.ItemPost", b =>
                 {
-                    b.Property<string>("ID")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Category")
                         .IsRequired()
@@ -119,6 +121,10 @@ namespace Karma.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("KarmaUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -137,7 +143,12 @@ namespace Karma.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("KarmaUserId");
 
                     b.ToTable("Items");
                 });
@@ -182,8 +193,10 @@ namespace Karma.Migrations
 
             modelBuilder.Entity("Karma.Models.RequestPost", b =>
                 {
-                    b.Property<string>("ID")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Category")
                         .IsRequired()
@@ -204,6 +217,10 @@ namespace Karma.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("KarmaUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -219,7 +236,12 @@ namespace Karma.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("KarmaUserId");
 
                     b.ToTable("Requests");
                 });
@@ -359,11 +381,33 @@ namespace Karma.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Karma.Models.ItemPost", b =>
+                {
+                    b.HasOne("Karma.Areas.Identity.Data.KarmaUser", "KarmaUser")
+                        .WithMany("Items")
+                        .HasForeignKey("KarmaUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("KarmaUser");
+                });
+
             modelBuilder.Entity("Karma.Models.Message", b =>
                 {
                     b.HasOne("Karma.Areas.Identity.Data.KarmaUser", null)
                         .WithMany("Messages")
                         .HasForeignKey("KarmaUserId");
+                });
+
+            modelBuilder.Entity("Karma.Models.RequestPost", b =>
+                {
+                    b.HasOne("Karma.Areas.Identity.Data.KarmaUser", "KarmaUser")
+                        .WithMany("Requests")
+                        .HasForeignKey("KarmaUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("KarmaUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -419,7 +463,11 @@ namespace Karma.Migrations
 
             modelBuilder.Entity("Karma.Areas.Identity.Data.KarmaUser", b =>
                 {
+                    b.Navigation("Items");
+
                     b.Navigation("Messages");
+
+                    b.Navigation("Requests");
                 });
 #pragma warning restore 612, 618
         }

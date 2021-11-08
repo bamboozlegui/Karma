@@ -13,17 +13,17 @@
             <div class="card h-100">
                 <div class="card-body d-flex flex-column">
                     <h2 class="card-title">@Model.Item.Title</h2>
-                    <h6 class="card-subtitle mb-2 text-muted">@Model.Item.City</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">@Model.Item.KarmaUser.City</h6>
                     <p class="card-text">@Model.Item.Description</p>
-                    <h6 class="card-text text-muted mt-auto">@Model.Item.PosterName</h6>
-                    <h6 class="card-text text-muted">@Model.Item.Email</h6>
-                    <h6 class="card-text text-muted">+@Model.Item.PhoneNumber</h6>
+                    <h6 class="card-text text-muted mt-auto">@Model.Item.KarmaUser.FirstName</h6>
+                    <h6 class="card-text text-muted">@Model.Item.KarmaUser.Email</h6>
+                    <h6 class="card-text text-muted">+@Model.Item.KarmaUser.PhoneNumber</h6>
                 </div>
             </div>
         </div>
     </div>
 
-    @if (Model.Item.Email == HttpContext.User.Identity.Name)
+    @if (Model.Item.KarmaUser.Email == HttpContext.User.Identity.Name)
     {
         <form method="post" enctype="multipart/form-data" class="mt-4 needs-validation" novalidate>
 
@@ -32,7 +32,7 @@
             </button>
             <div id="collapseExample" class="collapse">
 
-                <input hidden asp-for="Item.ID" />
+                <input hidden asp-for="Item.Id" />
 
                 <div class="form-group row mb-3 mt-3 ">
                     <label asp-for="Item.Title" class="col-sm-2 col-form-label">
@@ -47,53 +47,11 @@
                 </div>
 
                 <div class="form-group row mb-3">
-                    <label asp-for="Item.PosterName" class="col-sm-2 col-form-label">
-                    </label>
-                    <div class="col-sm-10">
-                        <input asp-for="Item.PosterName" class="form-control" placeholder="Poster name" required>
-                        <div class="invalid-feedback">
-                            Please enter a valid name.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group row mb-3">
                     <label asp-for="Item.Description" class="col-sm-2 col-form-label"></label>
                     <div class="col-sm-10">
                         <textarea asp-for="Item.Description" class="form-control" rows="3" placeholder="Description" required></textarea>
                         <div class="invalid-feedback">
                             Please enter a valid description.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group row mb-3">
-                    <label asp-for="Item.PhoneNumber" class="col-sm-2 col-form-label"></label>
-                    <div class="col-sm-10">
-                        <input type="number" asp-for="Item.PhoneNumber" class="form-control" placeholder="Phone number" required>
-                        <div class="invalid-feedback">
-                            Please enter a valid phone number.
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="form-group row mb-3">
-                    <label asp-for="Item.City" class="col-sm-2 col-form-label"></label>
-                    <div class="col-sm-10">
-                        <input asp-for="Item.City" class="form-control" placeholder="City" required>
-                        <div class="invalid-feedback">
-                            Please enter a valid city.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group row mb-3">
-                    <label asp-for="Item.Email" class="col-sm-2 col-form-label"></label>
-                    <div class="col-sm-10">
-                        <input type="email" asp-for="Item.Email" class="form-control" placeholder="Email" required>
-                        <div class="invalid-feedback">
-                            Please enter a valid email.
                         </div>
                     </div>
                 </div>
@@ -123,9 +81,9 @@
 
         </form>
     }
-    @if (HttpContext.User.Identity.IsAuthenticated && HttpContext.User.Identity.Name != Model.Item.Email)
+    @if (HttpContext.User.Identity.IsAuthenticated && HttpContext.User.Identity.Name != Model.Item.KarmaUser.Email)
     {
-        <form method="post" asp-page-handler="message" asp-route-itemid="@Model.Item.ID" class="mt-4 needs-validation" novalidate>
+        <form method="post" asp-page-handler="message" asp-route-itemid="@Model.Item.Id" class="mt-4 needs-validation" novalidate>
 
             <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2">
                 Send owner a message
