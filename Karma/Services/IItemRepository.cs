@@ -14,11 +14,11 @@ namespace Karma.Services
 
         public Task<List<ItemPost>> SearchPosts(string searchTerm);
 
-        public Task<ItemPost> GetPost(string id);
-        public Task<ItemPost> AddPost(ClaimsPrincipal user, ItemPost post, IFormFile photo);
+        public Task<ItemPost> GetPost(int id);
+        public Task<ItemPost> AddPost(ItemPost post, string userId);
 
-        public Task<ItemPost> DeletePost(string id);
+        public Task<ItemPost> DeletePost(int id);
 
-        public Task<ItemPost> UpdatePost(ItemPost newPost, IFormFile newPhoto);
+        public Task<ItemPost> UpdatePost(ItemPost newPost);
     }
 }

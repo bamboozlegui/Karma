@@ -51,11 +51,11 @@
                 <a href="#" class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1">@Model.Requests.ElementAt(counter - 1).Title</h5>
-                        <small>@Model.Requests.ElementAt(counter - 1).PosterName</small>
+                        <small>@Model.Requests.ElementAt(counter - 1).KarmaUser.FirstName</small>
                     </div>
                     <p class="mb-1">@Model.Requests.ElementAt(counter - 1).Description</p>
-                    <small>@Model.Requests.ElementAt(counter - 1).City,</small>
-                    <small>@Model.Requests.ElementAt(counter - 1).PhoneNumber</small>
+                    <small>@Model.Requests.ElementAt(counter - 1).KarmaUser.City,</small>
+                    <small>@Model.Requests.ElementAt(counter - 1).KarmaUser.PhoneNumber</small>
                 </a>
             }
             else
@@ -65,11 +65,11 @@
                     <a href="#" class="list-group-item list-group-item-action">
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1">@Model.Requests.ElementAt(i).Title</h5>
-                            <small>@Model.Requests.ElementAt(i).PosterName</small>
+                            <small>@Model.Requests.ElementAt(i).KarmaUser.FirstName</small>
                         </div>
                         <p class="mb-1">@Model.Requests.ElementAt(i).Description</p>
-                        <small>@Model.Requests.ElementAt(i).City,</small>
-                        <small>@Model.Requests.ElementAt(i).PhoneNumber</small>
+                        <small>@Model.Requests.ElementAt(i).KarmaUser.City,</small>
+                        <small>@Model.Requests.ElementAt(i).KarmaUser.PhoneNumber</small>
                     </a>
                 }
             }

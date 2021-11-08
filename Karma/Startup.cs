@@ -13,6 +13,9 @@ using Karma.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Karma.Areas.Identity.Data;
+using System.Text.Json.Serialization;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace Karma
 {
@@ -28,12 +31,17 @@ namespace Karma
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
-            services.AddControllersWithViews();
+            services.AddRazorPages()
+                .AddJsonOptions(o =>
+                {
+                    o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+                    o.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+                });
             services.AddScoped<IItemRepository, SqlItemRepository>();
             services.AddScoped<IRequestRepository, SqlRequestRepository>();
             services.AddScoped<IMessageRepository, SQLMessageRepository>();
             services.AddScoped<UserManager<KarmaUser>>();
+            services.AddScoped<HttpClient>();
             services.AddTransient<PictureService>();
         }
 
@@ -57,7 +65,7 @@ namespace Karma
             app.UseRouting();
 
             app.UseAuthentication();
-            app.UseAuthorization();            
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

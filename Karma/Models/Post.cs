@@ -1,9 +1,12 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
+using Karma.Areas.Identity.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Karma.Models
 {
+    [Index(nameof(Post.Id), IsUnique = true)]
     public abstract class Post : IComparable<Post>
     {
 
@@ -18,15 +21,8 @@ namespace Karma.Models
 
         public StateEnum State { get; set; }
 
-        public string ID { get; set; }
-
-        public string PosterName { get; set; }
-
-        [Required]
-        public string City { get; set; }
-
-        [Required]
-        public string PhoneNumber { get; set; }
+        [Key]
+        public int Id { get; set; }
 
         [StringLength(30, MinimumLength = 1)]
         [Required]
@@ -36,16 +32,11 @@ namespace Karma.Models
         public string Description { get; set; }
 
         [Required]
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set; } 
 
         [Required]
         public string Category { get; set; }
-        [Required]
-        public string KarmaUserId { get; set; }
-
-        [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage = "Bruh")]
-        [Required]
-        public string Email { get; set; }
+        public KarmaUser KarmaUser { get; set; }
 
         public static string[] Categories = { "Electronics", "Transportation", "Clothes", "Toys", "Other" };
 

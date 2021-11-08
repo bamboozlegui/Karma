@@ -20,83 +20,64 @@ namespace Karma.Services
 
 
         public KarmaDbContext Context { get; }
-        public PictureService PictureService { get; }
-        public UserManager<KarmaUser> UserManager { get; }
-        public IWebHostEnvironment WebHostEnvironment { get; private set; }
 
         public SqlItemRepository(KarmaDbContext context, PictureService pictureService, UserManager<KarmaUser> userManager, IWebHostEnvironment webHostEnvironment)
         {
             Context = context;
-            PictureService = pictureService;
-            UserManager = userManager;
-            WebHostEnvironment = webHostEnvironment;
         }
 
-        public async Task<ItemPost> AddPost(ClaimsPrincipal user, ItemPost post, IFormFile photo)
+        public async Task<ItemPost> AddPost(ItemPost post, string userId)
         {
-            if (post.Picture != null)
-            {
-                PictureService.DeletePicture(WebHostEnvironment, post.Picture);
-            }
-            post.Picture = PictureService.ProcessUploadedFile(WebHostEnvironment, photo); //Check definition
             post.Date = DateTime.Now;
-            post.ID = Guid.NewGuid().ToString();
             post.State = Post.StateEnum.Recent;
-            post.KarmaUserId = UserManager.GetUserId(user);
+            post.KarmaUser = await Context.Users.FindAsync(userId);
+            if (post.KarmaUser == null)
+                return null;
             await Context.Items.AddAsync(post);
             await Context.SaveChangesAsync();
             return post;
         }
 
-        public async Task<ItemPost> DeletePost(string id)
+        public async Task<ItemPost> DeletePost(int id)
         {
             ItemPost item = await Context.Items.FindAsync(id);
             if(item != null)
             {
-                PictureService.DeletePicture(WebHostEnvironment, item.Picture);
                 Context.Items.Remove(item);
                 await Context.SaveChangesAsync();
             }
             return item;
         }
 
-        public async Task<ItemPost> GetPost(string id)
+        public async Task<ItemPost> GetPost(int id)
         {
-            return await Context.Items.FindAsync(id);
+            return await Context.Items.Include(i => i.KarmaUser).FirstOrDefaultAsync(i => i.Id == id);
         }
 
         public async Task<List<ItemPost>> GetPosts()
         {
-            return await Context.Items.ToListAsync();
+            return await Context.Items.Include(i => i.KarmaUser).ToListAsync();
         }
 
         public async Task<List<ItemPost>> SearchPosts(string searchTerm)
         {
             if (searchTerm == null)
-                return await Context.Items.ToListAsync();
+                return await GetPosts();
 
-            return  await Context.Items.Where(item => item.Title.Contains(searchTerm)).ToListAsync();
+            return  await Context.Items.Include(i => i.KarmaUser).Where(item => item.Title.Contains(searchTerm)).ToListAsync();
         }
 
-        public async Task<ItemPost> UpdatePost(ItemPost newPost, IFormFile newPhoto)
+        public async Task<ItemPost> UpdatePost(ItemPost newPost)
         {
-            ItemPost post = await Context.Items.AsNoTracking().FirstOrDefaultAsync(post => post.ID == newPost.ID);
-
-            if(newPhoto != null)
+            ItemPost post = await Context.Items.FirstOrDefaultAsync(post => post.Id == newPost.Id);
+            if(post == null)
             {
-                if (post != null && post.Picture != null && post.Picture != "noimage.jpg")
-                {
-                    string filePath = Path.Combine(WebHostEnvironment.WebRootPath, "images", post.Picture);
-                    System.IO.File.Delete(filePath);
-                }
-
-                post.Picture = PictureService.ProcessUploadedFile(WebHostEnvironment, newPhoto);
+                return null;
             }
-            newPost.Date = post.Date;
-            newPost.Picture = post.Picture;
-            newPost.KarmaUserId = post.KarmaUserId;
-            var item = Context.Items.Attach(newPost);
-            item.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            if(newPost.Picture != null) post.Picture = newPost.Picture;
+            post.Title = newPost.Title;
+            post.Description = newPost.Description;
+            post.Category = newPost.Category;
             await Context.SaveChangesAsync();
             return newPost;
         }

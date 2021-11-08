@@ -74,15 +74,15 @@
                     <a class="list-group-item list-group-item-action disabled">
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1">@requestas.Title</h5>
-                            <small>@requestas.PosterName</small>
+                            <small>@requestas.KarmaUser.FirstName</small>
                         </div>
                         <p class="mb-1">@requestas.Description</p>
-                        <small>@requestas.City,</small>
-                        <small>@requestas.PhoneNumber,</small>
+                        <small>@requestas.KarmaUser.City,</small>
+                        <small>@requestas.KarmaUser.PhoneNumber,</small>
                         <small>@requestas.State</small>
-                        @if (requestas.Email == HttpContext.User.Identity.Name && SignInManager.IsSignedIn(User))
+                        @if (requestas.KarmaUser.Email == HttpContext.User.Identity.Name && SignInManager.IsSignedIn(User))
                         {
-                            <form asp-page-handler="delete" asp-route-ID="@requestas.ID" method="post">
+                            <form asp-page-handler="delete" asp-route-ID="@requestas.Id" method="post">
                                 <button class="btn btn-default">Delete</button>
                             </form>
                         }
@@ -94,26 +94,26 @@
                     <a class="list-group-item list-group-item-action">
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1">@requestas.Title</h5>
-                            <small>@requestas.PosterName</small>
+                            <small>@requestas.KarmaUser.FirstName</small>
                         </div>
                         <p class="mb-1">@requestas.Description</p>
-                        <small>@requestas.City,</small>
-                        <small>@requestas.PhoneNumber,</small>
+                        <small>@requestas.KarmaUser.City,</small>
+                        <small>@requestas.KarmaUser.PhoneNumber,</small>
                         <small>@requestas.State</small>
-                        @if (requestas.Email == HttpContext.User.Identity.Name && SignInManager.IsSignedIn(User))
+                        @if (requestas.KarmaUser.Email == HttpContext.User.Identity.Name && SignInManager.IsSignedIn(User))
                         {
-                            <form asp-page-handler="delete" asp-route-ID="@requestas.ID" method="post">
+                            <form asp-page-handler="delete" asp-route-ID="@requestas.Id" method="post">
                                 <button class="btn btn-default">Delete</button>
                             </form>
                         }
-                        @if (HttpContext.User.Identity.IsAuthenticated && HttpContext.User.Identity.Name != requestas.Email)
+                        @if (HttpContext.User.Identity.IsAuthenticated && HttpContext.User.Identity.Name != requestas.KarmaUser.Email)
                         {
-                            <form method="post" asp-page-handler="message" asp-route-itemid="@requestas.ID" class="mt-4 needs-validation" novalidate>
+                            <form method="post" asp-page-handler="message" asp-route-itemid="@requestas.Id" class="mt-4 needs-validation" novalidate>
 
-                                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#@requestas.ID" aria-expanded="false" aria-controls="@requestas.ID">
+                                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#@requestas.CollapseId()" aria-expanded="false" aria-controls="@requestas.Id">
                                     Send owner a message
                                 </button>
-                                <div id="@requestas.ID" class="collapse">
+                                <div id="@requestas.CollapseId()" class="collapse">
                                     <div class="form-group row mb-3 mt-3 ">
                                         <label asp-for="Message.Content" class="col-sm-2 col-form-label">
                                         </label>
