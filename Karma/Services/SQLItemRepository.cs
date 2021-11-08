@@ -69,16 +69,15 @@ namespace Karma.Services
 
         public async Task<ItemPost> UpdatePost(ItemPost newPost)
         {
-            ItemPost post = await Context.Items.AsNoTracking().FirstOrDefaultAsync(post => post.Id == newPost.Id);
+            ItemPost post = await Context.Items.FirstOrDefaultAsync(post => post.Id == newPost.Id);
             if(post == null)
             {
                 return null;
             }
-
-            newPost.Date = post.Date;
-            if(newPost.Picture == null) newPost.Picture = post.Picture;
-            var item = Context.Items.Attach(newPost);
-            item.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            if(newPost.Picture != null) post.Picture = newPost.Picture;
+            post.Title = newPost.Title;
+            post.Description = newPost.Description;
+            post.Category = newPost.Category;
             await Context.SaveChangesAsync();
             return newPost;
         }
