@@ -41,7 +41,7 @@ namespace Karma.Controllers
             {
                 var result = await ItemService.GetPost(id);
 
-                if(result == null)
+                if (result == null)
                 {
                     return NotFound();
                 }
@@ -87,7 +87,7 @@ namespace Karma.Controllers
 
                 var itemToUpdate = await ItemService.GetPost(itemId);
 
-                if(itemToUpdate == null)
+                if (itemToUpdate == null)
                 {
                     return NotFound($"Item with Id = {itemId} not found");
                 }
@@ -101,7 +101,7 @@ namespace Karma.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error updating data from the database");
             }
         }
-        
+
         [HttpDelete("{id}")]
         public async Task<ActionResult<ItemPost>> Delete(int id)
         {
@@ -109,7 +109,7 @@ namespace Karma.Controllers
             {
                 var result = await ItemService.GetPost(id);
 
-                if(result == null)
+                if (result == null)
                 {
                     return NotFound();
                 }
