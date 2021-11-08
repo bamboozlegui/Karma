@@ -12,6 +12,8 @@ using System.IO;
 using Karma.Services;
 using Microsoft.AspNetCore.Http;
 using System.Threading;
+using System.Net.Http;
+using System.Net.Http.Json;
 
 namespace Karma.Pages
 {
@@ -20,6 +22,7 @@ namespace Karma.Pages
         private IWebHostEnvironment WebHostEnvironment { get; }
 
         private IItemRepository ItemService { get; }
+        public HttpClient HttpClient { get; }
         public IMessageRepository MessageService { get; }
         public PictureService PictureService { get; }
         [BindProperty]
@@ -33,11 +36,13 @@ namespace Karma.Pages
 
         public ItemModel(
             IItemRepository itemService,
+            HttpClient httpClient,
             IMessageRepository messageService,
             PictureService pictureService,
             IWebHostEnvironment webHostEnvironment)
         {
             ItemService = itemService;
+            HttpClient = httpClient;
             MessageService = messageService;
             PictureService = pictureService;
             WebHostEnvironment = webHostEnvironment;
@@ -45,7 +50,10 @@ namespace Karma.Pages
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            Item = await ItemService.GetPost(id);
+            var options = new JsonSerializerOptions();
+            options.PropertyNameCaseInsensitive = true;
+            options.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+            Item = await HttpClient.GetFromJsonAsync<ItemPost>($"https://localhost:5001/api/items/{id}", options);
 
             return Page();
         }
