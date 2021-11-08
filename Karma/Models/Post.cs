@@ -36,7 +36,6 @@ namespace Karma.Models
 
         [Required]
         public string Category { get; set; }
-        [Required]
         public KarmaUser KarmaUser { get; set; }
 
         public static string[] Categories = { "Electronics", "Transportation", "Clothes", "Toys", "Other" };
