@@ -55,7 +55,7 @@ namespace Karma.Pages
             return Page();
         }
 
-        public async Task<IActionResult> OnPostDelete(int id)
+        public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
             var item = await ItemService.GetPost(id);
             PictureService.DeletePicture(WebHostEnvironment.WebRootPath, item.Picture);

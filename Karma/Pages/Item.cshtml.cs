@@ -58,7 +58,7 @@ namespace Karma.Pages
             return Page();
         }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             if(Photo != null)
             {
@@ -75,7 +75,7 @@ namespace Karma.Pages
             return RedirectToPage("/Submits");
         }
 
-        public async Task<IActionResult> OnPostMessage(int itemId)
+        public async Task<IActionResult> OnPostMessageAsync(int itemId)
         {
             Item = await ItemService.GetPost(itemId);
             if (User.Identity != null) Message.FromEmail = User.Identity.Name;

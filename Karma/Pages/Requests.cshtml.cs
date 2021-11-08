@@ -40,14 +40,14 @@ namespace Karma.Pages
             return Page();
         }
 
-        public async Task<IActionResult> OnPostDelete(int id)
+        public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
             await RequestService.DeletePost(id);
 
             return RedirectToPage("/Requests");
         }
 
-        public async Task<IActionResult> OnPostMessage(int itemId)
+        public async Task<IActionResult> OnPostMessageAsync(int itemId)
         {
             Item = await RequestService.GetPost(itemId);
             if (User.Identity != null) Message.FromEmail = User.Identity.Name;
@@ -58,7 +58,7 @@ namespace Karma.Pages
             return RedirectToPage("/Requests");
         }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             var userId = User.GetUserId();
             await RequestService.AddPost(Item, userId);

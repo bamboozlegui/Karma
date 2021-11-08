@@ -28,16 +28,5 @@ namespace Karma.Areas.Identity.Pages.Account
             }).ToList();
             return Page();
         }
-
-        private void AddDummyMessages()
-        {
-            var dummyList = new List<Message>()
-            {
-                new Message() { Content = "heyheyhey"},
-                new Message() { Content = "Whatsup"}
-            };
-
-            Outbox = dummyList;
-        }
     }
 }
