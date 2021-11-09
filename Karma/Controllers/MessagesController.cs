@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Karma.Models;
 using Karma.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,18 +23,40 @@ namespace Karma.Controllers
 
         public IMessageRepository MessageService { get; }
 
+        [Authorize]
         [HttpGet("to/{email}")]
         public async Task<ActionResult<Message>> GetMessagesTo(string email)
         {
-            var messages = await MessageService.GetMessagesToEmail(email);
-            return Ok(messages);
+            try
+            {
+                if (email != User.Identity.Name)
+                    return Unauthorized();
+
+                var messages = await MessageService.GetMessagesToEmail(email);
+                return Ok(messages);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from the database");
+            }
         }
 
+        [Authorize]
         [HttpGet("from/{email}")]
         public async Task<ActionResult<Message>> GetMessagesFrom(string email)
         {
-            var messages = await MessageService.GetMessagesFromEmail(email);
-            return Ok(messages);
+            try
+            {
+                if (email != User.Identity.Name)
+                    return Unauthorized();
+
+                var messages = await MessageService.GetMessagesFromEmail(email);
+                return Ok(messages);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from the database");
+            }
         }
     }
 }
