@@ -30,9 +30,13 @@ namespace Karma.Services
             return await Context.Messages.ToListAsync();
         }
 
-        public async Task<List<Message>> GetMessagesByEmail(string email)
+        public async Task<List<Message>> GetMessagesToEmail(string email)
         {
             return await Context.Messages.Where(m => m.ToEmail == email).ToListAsync();
+        }
+        public async Task<List<Message>> GetMessagesFromEmail(string email)
+        {
+            return await Context.Messages.Where(m => m.FromEmail == email).ToListAsync();
         }
     }
 }
