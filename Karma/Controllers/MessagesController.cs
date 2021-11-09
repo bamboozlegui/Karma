@@ -20,10 +20,17 @@ namespace Karma.Controllers
 
         public IMessageRepository MessageService { get; }
 
-        [HttpGet("{email}")]
-        public async Task<ActionResult<Message>> Get(string email)
+        [HttpGet("to/{email}")]
+        public async Task<ActionResult<Message>> GetMessagesTo(string email)
         {
-            var messages = await MessageService.GetMessagesByEmail(email);
+            var messages = await MessageService.GetMessagesToEmail(email);
+            return Ok(messages);
+        }
+
+        [HttpGet("from/{email}")]
+        public async Task<ActionResult<Message>> GetMessagesFrom(string email)
+        {
+            var messages = await MessageService.GetMessagesFromEmail(email);
             return Ok(messages);
         }
     }
