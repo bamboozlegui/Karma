@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Http;
 using System.Threading;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text.Json.Serialization;
 
 namespace Karma.Pages
 {
@@ -50,10 +51,12 @@ namespace Karma.Pages
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            var options = new JsonSerializerOptions();
-            options.PropertyNameCaseInsensitive = true;
-            options.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
-            Item = await HttpClient.GetFromJsonAsync<ItemPost>($"https://localhost:5001/api/items/{id}", options);
+            Item = await HttpClient.GetFromJsonAsync<ItemPost>($"https://localhost:5001/api/items/{id}",
+                new JsonSerializerOptions()
+                {
+                    PropertyNameCaseInsensitive = true,
+                    ReferenceHandler = ReferenceHandler.Preserve
+                });
 
             return Page();
         }
