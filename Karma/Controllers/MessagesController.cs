@@ -23,33 +23,25 @@ namespace Karma.Controllers
 
         public IMessageRepository MessageService { get; }
 
-        [Authorize]
         [HttpGet("to/{email}")]
         public async Task<ActionResult<Message>> GetMessagesTo(string email)
         {
             try
             {
-                if (email != User.Identity.Name)
-                    return Unauthorized();
-
                 var messages = await MessageService.GetMessagesToEmail(email);
                 return Ok(messages);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from the database");
             }
         }
 
-        [Authorize]
         [HttpGet("from/{email}")]
         public async Task<ActionResult<Message>> GetMessagesFrom(string email)
         {
             try
             {
-                if (email != User.Identity.Name)
-                    return Unauthorized();
-
                 var messages = await MessageService.GetMessagesFromEmail(email);
                 return Ok(messages);
             }
