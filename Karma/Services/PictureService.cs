@@ -28,10 +28,22 @@ namespace Karma.Services
 
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                try
                 {
-                    photo.CopyTo(fileStream);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        photo.CopyTo(fileStream);
+                    }
                 }
+                catch
+                {
+                    System.IO.Directory.CreateDirectory(filePath);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        photo.CopyTo(fileStream);
+                    }
+                }
+
             }
 
             return uniqueFileName;
