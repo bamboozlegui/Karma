@@ -36,41 +36,32 @@ namespace Karma.Pages
         public Message Message { get; set; }
 
         public ItemModel(
-            IItemRepository itemService,
             HttpClient httpClient,
-            IMessageRepository messageService,
-            IWebHostEnvironment webHostEnvironment)
+            IMessageRepository messageService)
         {
-            ItemService = itemService;
             HttpClient = httpClient;
             MessageService = messageService;
-            WebHostEnvironment = webHostEnvironment;
         }
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            Item = await HttpClient.GetFromJsonAsync<ItemPost>($"https://localhost:5001/api/items/{id}",
-                new JsonSerializerOptions()
-                {
-                    PropertyNameCaseInsensitive = true,
-                    ReferenceHandler = ReferenceHandler.Preserve
-                });
+            Item = await RequestItemGetAsync(id);
 
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            Item.Picture = await UpdatePictureAsync();
-		    Item = await ItemService.UpdatePost(Item);
+            Item.Picture = await RequestPictureUpdateAsync();
+            await HttpClient.PutAsJsonAsync<ItemPost>($"https://localhost:5001/api/items/{Item.Id}", Item);
 
             return RedirectToPage("/Submits");
         }
 
         public async Task<IActionResult> OnPostMessageAsync(int itemId)
         {
-            Item = await ItemService.GetPost(itemId);
-            if (User.Identity != null) Message.FromEmail = User.Identity.Name;
+            Item = await RequestItemGetAsync(itemId);
+            Message.FromEmail = User.Identity.Name;
             Message.ToEmail = Item.KarmaUser.Email;
             Message.Date = DateTime.Now;
             await MessageService.AddMessage(Message);
@@ -78,7 +69,18 @@ namespace Karma.Pages
             return RedirectToPage("/Submits");
         }
 
-        private async Task<string> UpdatePictureAsync()
+        private async Task<ItemPost> RequestItemGetAsync(int id)
+        {
+            return Item = await HttpClient.GetFromJsonAsync<ItemPost>($"https://localhost:5001/api/items/{id}",
+                new JsonSerializerOptions()
+                {
+                    PropertyNameCaseInsensitive = true,
+                    ReferenceHandler = ReferenceHandler.Preserve
+                });
+
+        }
+
+        private async Task<string> RequestPictureUpdateAsync()
         {
             var newFileName = "";
             if (Photo != null) 
