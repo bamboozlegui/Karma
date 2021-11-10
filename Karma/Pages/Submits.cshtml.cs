@@ -16,10 +16,13 @@ using Microsoft.AspNetCore.Identity;
 using Karma.Areas.Identity.Data;
 using Karma.Data;
 using Shared.Web.MvcExtensions;
+
 namespace Karma.Pages
 {
     public class SubmitsModel : PageModel
     {
+        private readonly UserManager<KarmaUser> _userManager;
+        private readonly SignInManager<KarmaUser> _signInManager;
 
         [BindProperty]
         public ItemPost Item { get; set; }
@@ -42,11 +45,16 @@ namespace Karma.Pages
         public SubmitsModel(
             IItemRepository itemService,
             PictureService pictureService,
-            IWebHostEnvironment webHostEnvironment)
+            IWebHostEnvironment webHostEnvironment,
+            UserManager<KarmaUser> userManager,
+            SignInManager<KarmaUser> signInManager
+            )
         {
             ItemService = itemService;
             PictureService = pictureService;
             WebHostEnvironment = webHostEnvironment;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -77,7 +85,24 @@ namespace Karma.Pages
             var userId = User.GetUserId();
             await ItemService.AddPost(Item, userId);
 
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            user.KarmaPoints += 1;
+            KarmaUser.ProcessKarmaBalance(user.IncreaseKarmaPoints, 5);
+            await _userManager.UpdateAsync(user);
+            Console.Out.WriteLine(user.KarmaPoints);
+
+
             return RedirectToPage("/Submits");
+        }
+
+        public async Task<KarmaUser> GetCurrentUser()
+        {
+            return null;
         }
     }
 }
