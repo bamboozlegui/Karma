@@ -24,7 +24,7 @@ namespace Karma.Pages
         private IWebHostEnvironment WebHostEnvironment { get; }
 
         private IItemRepository ItemService { get; }
-        public HttpClient HttpClient { get; }
+        public HttpClient HttpClient { get; } = new HttpClient();
         public IMessageRepository MessageService { get; }
         [BindProperty]
         public IFormFile Photo { get; set; }
@@ -35,12 +35,8 @@ namespace Karma.Pages
         [BindProperty]
         public Message Message { get; set; }
 
-        public ItemModel(
-            HttpClient httpClient,
-            IMessageRepository messageService)
+        public ItemModel()
         {
-            HttpClient = httpClient;
-            MessageService = messageService;
         }
 
         public async Task<IActionResult> OnGetAsync(int id)
@@ -64,7 +60,7 @@ namespace Karma.Pages
             Message.FromEmail = User.Identity.Name;
             Message.ToEmail = Item.KarmaUser.Email;
             Message.Date = DateTime.Now;
-            await MessageService.AddMessage(Message);
+            await HttpClient.PostAsJsonAsync<Message>($"https://localhost:5001/api/messages", Message);
 
             return RedirectToPage("/Submits");
         }

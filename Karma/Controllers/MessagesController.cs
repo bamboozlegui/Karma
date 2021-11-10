@@ -50,5 +50,19 @@ namespace Karma.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from the database");
             }
         }
+
+        [HttpPost]
+        public async Task<ActionResult<Message>> PostMessage(Message message)
+        {
+            try
+            {
+                var postedMessage = await MessageService.AddMessage(message);
+                return Ok(postedMessage);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from the database");
+            }
+        }
     }
 }
