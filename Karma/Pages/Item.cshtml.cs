@@ -67,7 +67,7 @@ namespace Karma.Pages
             {
                 if (Item.Picture != null)
                 {
-                    PictureService.DeletePicture(WebHostEnvironment.WebRootPath, Item.Picture);
+                    await HttpClient.DeleteAsync($"https://localhost:5001/api/image/{Item.Picture}");
                 }
 
                 Item.Picture = PictureService.ProcessUploadedFile(WebHostEnvironment.WebRootPath, Photo);

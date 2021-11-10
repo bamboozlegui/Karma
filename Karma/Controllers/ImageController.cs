@@ -40,7 +40,7 @@ namespace ImageUploadDemo.Controllers
 
         }
         
-        [HttpDelete]
+        [HttpDelete("{fileName}")]
         public ActionResult<bool> Delete(string fileName)
         {
             if (PictureService.DeletePicture(WebHostEnvironment.WebRootPath, fileName))
