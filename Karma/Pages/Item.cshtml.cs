@@ -61,28 +61,7 @@ namespace Karma.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if(Photo != null)
-            {
-                if (Item.Picture != null)
-                {
-                    await HttpClient.DeleteAsync($"https://localhost:5001/api/image/{Item.Picture}");
-                }
-                var fileName = ContentDispositionHeaderValue.Parse(Photo.ContentDisposition).FileName.Trim('"');
-                using (var content = new MultipartFormDataContent())
-                {
-                    var photoContent = new StreamContent(Photo.OpenReadStream())
-                    {
-                        Headers =
-                        {
-                            ContentLength = Photo.Length,
-                            ContentType = new MediaTypeHeaderValue(Photo.ContentType)
-                        }
-                    };
-                    content.Add(photoContent, "File", fileName);
-                    HttpResponseMessage response = await HttpClient.PostAsync($"https://localhost:5001/api/image", content);
-                    Item.Picture = await response.Content.ReadAsStringAsync();
-                }
-            }
+            Item.Picture = await UpdatePictureAsync();
 		    Item = await ItemService.UpdatePost(Item);
 
             return RedirectToPage("/Submits");
@@ -97,6 +76,37 @@ namespace Karma.Pages
             await MessageService.AddMessage(Message);
 
             return RedirectToPage("/Submits");
+        }
+
+        private async Task<string> UpdatePictureAsync()
+        {
+            var newFileName = "";
+            if (Photo != null) 
+            {
+                if (Item.Picture != null)
+                {
+                    await HttpClient.DeleteAsync($"https://localhost:5001/api/image/{Item.Picture}");
+                }
+
+                var fileName = ContentDispositionHeaderValue.Parse(Photo.ContentDisposition).FileName.Trim('"');
+
+                using (var content = new MultipartFormDataContent())
+                {
+                    var photoContent = new StreamContent(Photo.OpenReadStream())
+                    {
+                        Headers =
+                        {
+                            ContentLength = Photo.Length,
+                            ContentType = new MediaTypeHeaderValue(Photo.ContentType)
+                        }
+                    };
+
+                    content.Add(photoContent, "File", fileName);
+                    HttpResponseMessage response = await HttpClient.PostAsync($"https://localhost:5001/api/image", content);
+                    newFileName = await response.Content.ReadAsStringAsync();
+                }
+            }
+            return newFileName;
         }
     }
 }
