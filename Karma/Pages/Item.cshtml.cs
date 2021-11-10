@@ -21,11 +21,9 @@ namespace Karma.Pages
 {
     public class ItemModel : PageModel
     {
-        private IWebHostEnvironment WebHostEnvironment { get; }
+        private const string baseAddress = "https://localhost:5001/api/";
 
-        private IItemRepository ItemService { get; }
         public HttpClient HttpClient { get; } = new HttpClient();
-        public IMessageRepository MessageService { get; }
         [BindProperty]
         public IFormFile Photo { get; set; }
 
@@ -49,7 +47,7 @@ namespace Karma.Pages
         public async Task<IActionResult> OnPostAsync()
         {
             Item.Picture = await RequestPictureUpdateAsync();
-            await HttpClient.PutAsJsonAsync<ItemPost>($"https://localhost:5001/api/items/{Item.Id}", Item);
+            await HttpClient.PutAsJsonAsync<ItemPost>($"{baseAddress}items/{Item.Id}", Item);
 
             return RedirectToPage("/Submits");
         }
@@ -60,14 +58,14 @@ namespace Karma.Pages
             Message.FromEmail = User.Identity.Name;
             Message.ToEmail = Item.KarmaUser.Email;
             Message.Date = DateTime.Now;
-            await HttpClient.PostAsJsonAsync<Message>($"https://localhost:5001/api/messages", Message);
+            await HttpClient.PostAsJsonAsync<Message>($"{baseAddress}messages", Message);
 
             return RedirectToPage("/Submits");
         }
 
         private async Task<ItemPost> RequestItemGetAsync(int id)
         {
-            return Item = await HttpClient.GetFromJsonAsync<ItemPost>($"https://localhost:5001/api/items/{id}",
+            return Item = await HttpClient.GetFromJsonAsync<ItemPost>($"{baseAddress}items/{id}",
                 new JsonSerializerOptions()
                 {
                     PropertyNameCaseInsensitive = true,
@@ -83,7 +81,7 @@ namespace Karma.Pages
             {
                 if (Item.Picture != null)
                 {
-                    await HttpClient.DeleteAsync($"https://localhost:5001/api/image/{Item.Picture}");
+                    await HttpClient.DeleteAsync($"{baseAddress}image/{Item.Picture}");
                 }
 
                 var fileName = ContentDispositionHeaderValue.Parse(Photo.ContentDisposition).FileName.Trim('"');
@@ -100,7 +98,7 @@ namespace Karma.Pages
                     };
 
                     content.Add(photoContent, "File", fileName);
-                    HttpResponseMessage response = await HttpClient.PostAsync($"https://localhost:5001/api/image", content);
+                    HttpResponseMessage response = await HttpClient.PostAsync($"{baseAddress}image", content);
                     newFileName = await response.Content.ReadAsStringAsync();
                 }
             }
