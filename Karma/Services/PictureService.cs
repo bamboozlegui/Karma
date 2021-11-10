@@ -7,13 +7,15 @@ namespace Karma.Services
 {
     public class PictureService
     {
-        public void DeletePicture(string rootPath, string photoName)
+        public bool DeletePicture(string rootPath, string photoName)
         {
             if (photoName != null && photoName != "noimage.jpg")
             {
                 string filePath = Path.Combine(rootPath, "images", photoName);
                 System.IO.File.Delete(filePath);
+                return true;
             }
+            return false;
         }
 
         internal string ProcessUploadedFile(string rootPath, IFormFile photo)

@@ -39,5 +39,17 @@ namespace ImageUploadDemo.Controllers
             return NotFound();
 
         }
+        
+        [HttpDelete]
+        public ActionResult<bool> Delete(string fileName)
+        {
+            if (PictureService.DeletePicture(WebHostEnvironment.WebRootPath, fileName))
+            {
+                return Ok(true);
+            }
+
+            return NotFound(false);
+
+        }
     }
 }
