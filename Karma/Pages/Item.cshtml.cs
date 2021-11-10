@@ -79,11 +79,6 @@ namespace Karma.Pages
             var newFileName = "";
             if (Photo != null) 
             {
-                if (Item.Picture != null)
-                {
-                    await HttpClient.DeleteAsync($"{baseAddress}image/{Item.Picture}");
-                }
-
                 var fileName = ContentDispositionHeaderValue.Parse(Photo.ContentDisposition).FileName.Trim('"');
 
                 using (var content = new MultipartFormDataContent())
@@ -96,9 +91,9 @@ namespace Karma.Pages
                             ContentType = new MediaTypeHeaderValue(Photo.ContentType)
                         }
                     };
-
                     content.Add(photoContent, "File", fileName);
-                    HttpResponseMessage response = await HttpClient.PostAsync($"{baseAddress}image", content);
+
+                    HttpResponseMessage response = await HttpClient.PutAsync($"{baseAddress}image/{Item.Picture}", content);
                     newFileName = await response.Content.ReadAsStringAsync();
                 }
             }

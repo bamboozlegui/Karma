@@ -36,10 +36,35 @@ namespace ImageUploadDemo.Controllers
                 }
             }
 
-            return NotFound();
+            return NotFound(null);
 
         }
-        
+
+        [HttpPut("{existingFileName}")]
+        public ActionResult<string> Put(string existingFileName)
+        {
+            var picture = HttpContext.Request.Form.Files[0];
+            if (picture != null)
+            {
+                try
+                {
+                    if (existingFileName != null)
+                    {
+                        PictureService.DeletePicture(WebHostEnvironment.WebRootPath, existingFileName);
+                    }
+
+                    var path = PictureService.ProcessUploadedFile(WebHostEnvironment.WebRootPath, picture);
+                    return Ok(path);
+                }
+                catch (Exception)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, "Error uploading data to the server");
+                }
+            }
+
+            return NotFound(null);
+        }
+
         [HttpDelete("{fileName}")]
         public ActionResult<bool> Delete(string fileName)
         {
