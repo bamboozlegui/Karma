@@ -15,6 +15,7 @@ using System.Threading;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json.Serialization;
+using System.Net.Http.Headers;
 
 namespace Karma.Pages
 {
@@ -25,7 +26,6 @@ namespace Karma.Pages
         private IItemRepository ItemService { get; }
         public HttpClient HttpClient { get; }
         public IMessageRepository MessageService { get; }
-        public PictureService PictureService { get; }
         [BindProperty]
         public IFormFile Photo { get; set; }
 
@@ -39,13 +39,11 @@ namespace Karma.Pages
             IItemRepository itemService,
             HttpClient httpClient,
             IMessageRepository messageService,
-            PictureService pictureService,
             IWebHostEnvironment webHostEnvironment)
         {
             ItemService = itemService;
             HttpClient = httpClient;
             MessageService = messageService;
-            PictureService = pictureService;
             WebHostEnvironment = webHostEnvironment;
         }
 
@@ -69,8 +67,21 @@ namespace Karma.Pages
                 {
                     await HttpClient.DeleteAsync($"https://localhost:5001/api/image/{Item.Picture}");
                 }
-
-                Item.Picture = PictureService.ProcessUploadedFile(WebHostEnvironment.WebRootPath, Photo);
+                var fileName = ContentDispositionHeaderValue.Parse(Photo.ContentDisposition).FileName.Trim('"');
+                using (var content = new MultipartFormDataContent())
+                {
+                    var photoContent = new StreamContent(Photo.OpenReadStream())
+                    {
+                        Headers =
+                        {
+                            ContentLength = Photo.Length,
+                            ContentType = new MediaTypeHeaderValue(Photo.ContentType)
+                        }
+                    };
+                    content.Add(photoContent, "File", fileName);
+                    HttpResponseMessage response = await HttpClient.PostAsync($"https://localhost:5001/api/image", content);
+                    Item.Picture = await response.Content.ReadAsStringAsync();
+                }
             }
 		    Item = await ItemService.UpdatePost(Item);
 
