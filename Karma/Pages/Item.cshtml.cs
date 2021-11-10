@@ -67,8 +67,7 @@ namespace Karma.Pages
             {
                 if (Item.Picture != null)
                 {
-                    string filePath = Path.Combine(WebHostEnvironment.WebRootPath, "images", Item.Picture);
-                    System.IO.File.Delete(filePath);
+                    PictureService.DeletePicture(WebHostEnvironment.WebRootPath, Item.Picture);
                 }
 
                 Item.Picture = PictureService.ProcessUploadedFile(WebHostEnvironment.WebRootPath, Photo);
