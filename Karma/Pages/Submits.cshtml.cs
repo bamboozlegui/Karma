@@ -16,7 +16,6 @@ using Microsoft.AspNetCore.Identity;
 using Karma.Areas.Identity.Data;
 using Karma.Data;
 using Shared.Web.MvcExtensions;
-using KarmaWorkerService;
 
 namespace Karma.Pages
 {
