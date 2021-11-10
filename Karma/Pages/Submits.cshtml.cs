@@ -16,11 +16,12 @@ using Microsoft.AspNetCore.Identity;
 using Karma.Areas.Identity.Data;
 using Karma.Data;
 using Shared.Web.MvcExtensions;
+using KarmaWorkerService;
+
 namespace Karma.Pages
 {
     public class SubmitsModel : PageModel
     {
-
         [BindProperty]
         public ItemPost Item { get; set; }
 
@@ -32,7 +33,7 @@ namespace Karma.Pages
 
         [BindProperty]
         public string SelectedCategory { get; set; }
-
+        public KarmaPointService KarmaPointService { get; }
         public IItemRepository ItemService { get; set; }
         public PictureService PictureService { get; }
         private IWebHostEnvironment WebHostEnvironment { get; }
@@ -40,13 +41,16 @@ namespace Karma.Pages
         public List<ItemPost> Submits { get; private set; }
 
         public SubmitsModel(
+            KarmaPointService karmaPointService,
             IItemRepository itemService,
             PictureService pictureService,
             IWebHostEnvironment webHostEnvironment)
         {
+            KarmaPointService = karmaPointService;
             ItemService = itemService;
             PictureService = pictureService;
             WebHostEnvironment = webHostEnvironment;
+            ItemService.ItemPosted += KarmaPointService.OnItemPosted;
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -76,6 +80,7 @@ namespace Karma.Pages
             Item.Picture = PictureService.ProcessUploadedFile(WebHostEnvironment.WebRootPath, Photo); //Check definition
             var userId = User.GetUserId();
             await ItemService.AddPost(Item, userId);
+
 
             return RedirectToPage("/Submits");
         }
