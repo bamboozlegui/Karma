@@ -21,8 +21,6 @@ namespace Karma.Pages
 {
     public class SubmitsModel : PageModel
     {
-        private readonly UserManager<KarmaUser> _userManager;
-        private readonly SignInManager<KarmaUser> _signInManager;
         [BindProperty]
         public ItemPost Item { get; set; }
 
@@ -35,6 +33,7 @@ namespace Karma.Pages
         [BindProperty]
         public string SelectedCategory { get; set; }
         public NotificationService NotificationService { get; }
+        public KarmaPointService KarmaPointService { get; }
         public IItemRepository ItemService { get; set; }
         public PictureService PictureService { get; }
         private IWebHostEnvironment WebHostEnvironment { get; }
@@ -43,20 +42,17 @@ namespace Karma.Pages
 
         public SubmitsModel(
             NotificationService notificationService,
+            KarmaPointService karmaPointService,
             IItemRepository itemService,
             PictureService pictureService,
-            IWebHostEnvironment webHostEnvironment,
-            UserManager<KarmaUser> userManager,
-            SignInManager<KarmaUser> signInManager
+            IWebHostEnvironment webHostEnvironment
             )
         {
             NotificationService = notificationService;
+            KarmaPointService = karmaPointService;
             ItemService = itemService;
             PictureService = pictureService;
             WebHostEnvironment = webHostEnvironment;
-
-            _userManager = userManager;
-            _signInManager = signInManager;
             ItemService.ItemPosted += NotificationService.OnPosted;
 
         }
