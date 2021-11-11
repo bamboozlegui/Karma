@@ -69,6 +69,10 @@ namespace Karma.Pages
 
         public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
+            var userId = User.GetUserId();
+            Func<int, int> Subtract = (x => x - 6);
+            KarmaPointService.ProcessKarmaBalance(userId, Subtract);
+
             var item = await ItemService.GetPost(id);
             PictureService.DeletePicture(WebHostEnvironment.WebRootPath, item.Picture);
             await ItemService.DeletePost(id);
@@ -89,24 +93,10 @@ namespace Karma.Pages
             var userId = User.GetUserId();
             await ItemService.AddPost(Item, userId);
 
-
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
-
-            user.KarmaPoints += 1;
-            KarmaUser.ProcessKarmaBalance(user.IncreaseKarmaPoints, 5);
-            await _userManager.UpdateAsync(user);
-            Console.Out.WriteLine(user.KarmaPoints);
+            Func<int, int> Add = (x => x + 6);
+            KarmaPointService.ProcessKarmaBalance(userId, Add);
 
             return RedirectToPage("/Submits");
-        }
-
-        public async Task<KarmaUser> GetCurrentUser()
-        {
-            return null;
         }
     }
 }
