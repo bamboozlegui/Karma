@@ -44,6 +44,9 @@ namespace Karma.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int>("KarmaPoints")
+                        .HasColumnType("int");
+
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(50)");
 
@@ -112,7 +115,6 @@ namespace Karma.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("KarmaUserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Picture")
@@ -193,7 +195,6 @@ namespace Karma.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("KarmaUserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("State")
@@ -353,9 +354,7 @@ namespace Karma.Migrations
                 {
                     b.HasOne("Karma.Areas.Identity.Data.KarmaUser", "KarmaUser")
                         .WithMany("Items")
-                        .HasForeignKey("KarmaUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("KarmaUserId");
 
                     b.Navigation("KarmaUser");
                 });
@@ -371,9 +370,7 @@ namespace Karma.Migrations
                 {
                     b.HasOne("Karma.Areas.Identity.Data.KarmaUser", "KarmaUser")
                         .WithMany("Requests")
-                        .HasForeignKey("KarmaUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("KarmaUserId");
 
                     b.Navigation("KarmaUser");
                 });
