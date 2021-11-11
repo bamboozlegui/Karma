@@ -22,10 +22,10 @@ namespace Karma.Areas.Identity.Data
         [PersonalData]
         [Column(TypeName = "nvarchar(100)")]
         public string City { get; set; }
-
         [PersonalData]
         [Column(TypeName = "int")]
         public int KarmaPoints { get; set; }
+       
         public List<Message> Messages { get; set; } = new List<Message>();
         public List<RequestPost> Requests  { get; set; } = new List<RequestPost>();
         public List<ItemPost> Items { get; set; } = new List<ItemPost>();
