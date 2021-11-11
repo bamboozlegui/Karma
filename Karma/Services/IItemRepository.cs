@@ -15,7 +15,8 @@ namespace Karma.Services
         public Task<List<ItemPost>> SearchPosts(string searchTerm);
 
         public Task<ItemPost> GetPost(int id);
-        public Task<ItemPost> AddPost(ItemPost post, string userId);
+        public Task<ItemPost> AddPostAsync(ItemPost post, string userId);
+        public ItemPost AddPost(ItemPost post, string userId);
 
         public Task<ItemPost> DeletePost(int id);
 

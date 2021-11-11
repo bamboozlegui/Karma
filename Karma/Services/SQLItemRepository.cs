@@ -35,7 +35,7 @@ namespace Karma.Services
             }
         }
 
-        public async Task<ItemPost> AddPost(ItemPost post, string userId)
+        public async Task<ItemPost> AddPostAsync(ItemPost post, string userId)
         {
             post.Date = DateTime.Now;
             post.State = Post.StateEnum.Recent;
@@ -44,6 +44,18 @@ namespace Karma.Services
                 return null;
             await Context.Items.AddAsync(post);
             await Context.SaveChangesAsync();
+            OnItemPosted(post, userId);
+            return post;
+        }
+        public ItemPost AddPost(ItemPost post, string userId)
+        {
+            post.Date = DateTime.Now;
+            post.State = Post.StateEnum.Recent;
+            post.KarmaUser = Context.Users.Find(userId);
+            if (post.KarmaUser == null)
+                return null;
+            Context.Items.Add(post);
+            Context.SaveChanges();
             OnItemPosted(post, userId);
             return post;
         }

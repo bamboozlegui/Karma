@@ -65,7 +65,7 @@ namespace Karma.Controllers
                 if (newItem.Picture == null)
                     newItem.Picture = "noimage.jpg";
 
-                var createdItem = await ItemService.AddPost(newItem, userId);
+                var createdItem = await ItemService.AddPostAsync(newItem, userId);
 
                 if (createdItem == null)
                     return NotFound();
