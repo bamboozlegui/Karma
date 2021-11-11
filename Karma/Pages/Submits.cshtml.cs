@@ -34,7 +34,7 @@ namespace Karma.Pages
 
         [BindProperty]
         public string SelectedCategory { get; set; }
-        public KarmaPointService KarmaPointService { get; }
+        public NotificationService NotificationService { get; }
         public IItemRepository ItemService { get; set; }
         public PictureService PictureService { get; }
         private IWebHostEnvironment WebHostEnvironment { get; }
@@ -42,7 +42,7 @@ namespace Karma.Pages
         public List<ItemPost> Submits { get; private set; }
 
         public SubmitsModel(
-            KarmaPointService karmaPointService,
+            NotificationService notificationService,
             IItemRepository itemService,
             PictureService pictureService,
             IWebHostEnvironment webHostEnvironment,
@@ -50,14 +50,14 @@ namespace Karma.Pages
             SignInManager<KarmaUser> signInManager
             )
         {
-            KarmaPointService = karmaPointService;
+            NotificationService = notificationService;
             ItemService = itemService;
             PictureService = pictureService;
             WebHostEnvironment = webHostEnvironment;
 
             _userManager = userManager;
             _signInManager = signInManager;
-            ItemService.ItemPosted += KarmaPointService.OnItemPosted;
+            ItemService.ItemPosted += NotificationService.OnPosted;
 
         }
 
