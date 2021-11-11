@@ -7,13 +7,15 @@ namespace Karma.Services
 {
     public class PictureService
     {
-        public void DeletePicture(string rootPath, string photoName)
+        public bool DeletePicture(string rootPath, string photoName)
         {
             if (photoName != null && photoName != "noimage.jpg")
             {
                 string filePath = Path.Combine(rootPath, "images", photoName);
                 System.IO.File.Delete(filePath);
+                return true;
             }
+            return false;
         }
 
         internal string ProcessUploadedFile(string rootPath, IFormFile photo)
@@ -28,10 +30,22 @@ namespace Karma.Services
 
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                try
                 {
-                    photo.CopyTo(fileStream);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        photo.CopyTo(fileStream);
+                    }
                 }
+                catch
+                {
+                    System.IO.Directory.CreateDirectory(filePath);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        photo.CopyTo(fileStream);
+                    }
+                }
+
             }
 
             return uniqueFileName;

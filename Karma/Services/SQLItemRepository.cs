@@ -17,8 +17,13 @@ namespace Karma.Services
 {
     public class SqlItemRepository : IItemRepository
     {
+        public event IItemRepository.ItemPostedEventHandler ItemPosted;
 
-
+        protected virtual void OnItemPosted()
+        {
+            if (ItemPosted != null)
+                ItemPosted(this, EventArgs.Empty);
+        }
         public KarmaDbContext Context { get; }
 
         public SqlItemRepository(KarmaDbContext context, PictureService pictureService, UserManager<KarmaUser> userManager, IWebHostEnvironment webHostEnvironment)
@@ -35,6 +40,7 @@ namespace Karma.Services
                 return null;
             await Context.Items.AddAsync(post);
             await Context.SaveChangesAsync();
+            OnItemPosted();
             return post;
         }
 

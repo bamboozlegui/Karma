@@ -14,17 +14,16 @@ using Microsoft.AspNetCore.Http;
 using System.Threading;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text.Json.Serialization;
+using System.Net.Http.Headers;
 
 namespace Karma.Pages
 {
     public class ItemModel : PageModel
     {
-        private IWebHostEnvironment WebHostEnvironment { get; }
+        private const string baseAddress = "https://localhost:5001/api/";
 
-        private IItemRepository ItemService { get; }
-        public HttpClient HttpClient { get; }
-        public IMessageRepository MessageService { get; }
-        public PictureService PictureService { get; }
+        public HttpClient HttpClient { get; } = new HttpClient();
         [BindProperty]
         public IFormFile Photo { get; set; }
 
@@ -34,56 +33,71 @@ namespace Karma.Pages
         [BindProperty]
         public Message Message { get; set; }
 
-        public ItemModel(
-            IItemRepository itemService,
-            HttpClient httpClient,
-            IMessageRepository messageService,
-            PictureService pictureService,
-            IWebHostEnvironment webHostEnvironment)
+        public ItemModel()
         {
-            ItemService = itemService;
-            HttpClient = httpClient;
-            MessageService = messageService;
-            PictureService = pictureService;
-            WebHostEnvironment = webHostEnvironment;
         }
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            var options = new JsonSerializerOptions();
-            options.PropertyNameCaseInsensitive = true;
-            options.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
-            Item = await HttpClient.GetFromJsonAsync<ItemPost>($"https://localhost:5001/api/items/{id}", options);
+            Item = await RequestItemGetAsync(id);
 
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if(Photo != null)
-            {
-                if (Item.Picture != null)
-                {
-                    string filePath = Path.Combine(WebHostEnvironment.WebRootPath, "images", Item.Picture);
-                    System.IO.File.Delete(filePath);
-                }
-
-                Item.Picture = PictureService.ProcessUploadedFile(WebHostEnvironment.WebRootPath, Photo);
-            }
-		    Item = await ItemService.UpdatePost(Item);
+            Item.Picture = await RequestPictureUpdateAsync();
+            await HttpClient.PutAsJsonAsync<ItemPost>($"{baseAddress}items/{Item.Id}", Item);
 
             return RedirectToPage("/Submits");
         }
 
         public async Task<IActionResult> OnPostMessageAsync(int itemId)
         {
-            Item = await ItemService.GetPost(itemId);
-            if (User.Identity != null) Message.FromEmail = User.Identity.Name;
+            Item = await RequestItemGetAsync(itemId);
+            Message.FromEmail = User.Identity.Name;
             Message.ToEmail = Item.KarmaUser.Email;
             Message.Date = DateTime.Now;
-            await MessageService.AddMessage(Message);
+            await HttpClient.PostAsJsonAsync<Message>($"{baseAddress}messages", Message);
 
             return RedirectToPage("/Submits");
+        }
+
+        private async Task<ItemPost> RequestItemGetAsync(int id)
+        {
+            return Item = await HttpClient.GetFromJsonAsync<ItemPost>($"{baseAddress}items/{id}",
+                new JsonSerializerOptions()
+                {
+                    PropertyNameCaseInsensitive = true,
+                    ReferenceHandler = ReferenceHandler.Preserve
+                });
+
+        }
+
+        private async Task<string> RequestPictureUpdateAsync()
+        {
+            var newFileName = "";
+            if (Photo != null) 
+            {
+                var fileName = ContentDispositionHeaderValue.Parse(Photo.ContentDisposition).FileName.Trim('"');
+
+                using (var content = new MultipartFormDataContent())
+                {
+                    var photoContent = new StreamContent(Photo.OpenReadStream())
+                    {
+                        Headers =
+                        {
+                            ContentLength = Photo.Length,
+                            ContentType = new MediaTypeHeaderValue(Photo.ContentType)
+                        }
+                    };
+                    content.Add(photoContent, "File", fileName);
+
+                    HttpResponseMessage response = await HttpClient.PutAsync($"{baseAddress}image/{Item.Picture}", content);
+                    newFileName = await response.Content.ReadAsStringAsync();
+                }
+            }
+            return newFileName;
         }
     }
 }

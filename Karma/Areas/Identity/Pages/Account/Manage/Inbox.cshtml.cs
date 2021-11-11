@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Karma.Models;
 using Karma.Services;
@@ -25,12 +26,14 @@ namespace Karma.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnGetAsync()
         {
             var email = User.Identity.Name;
-            var options = new JsonSerializerOptions();
-            options.PropertyNameCaseInsensitive = true;
-            options.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
-            var jsonString = await HttpClient.GetStringAsync($"https://localhost:5001/api/messages/{email}");
-            Inbox = JsonSerializer.Deserialize<List<Message>>(jsonString, options);
-            //Inbox = JsonSerializer.Deserialize<List<Message>>("[{\"MessageId\":4,\"FromEmail\":\"d@gmail.com\", \"ToEmail\":\"ayy@gmail\", \"Content\":\"Text\"}]");
+
+            Inbox = await HttpClient.GetFromJsonAsync<List<Message>>($"https://localhost:5001/api/messages/to/{email}",
+                new JsonSerializerOptions()
+                {
+                    PropertyNameCaseInsensitive = true,
+                    ReferenceHandler = ReferenceHandler.Preserve
+                });
+
             return Page();
         }
     }

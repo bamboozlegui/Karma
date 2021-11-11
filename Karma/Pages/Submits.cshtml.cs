@@ -23,7 +23,6 @@ namespace Karma.Pages
     {
         private readonly UserManager<KarmaUser> _userManager;
         private readonly SignInManager<KarmaUser> _signInManager;
-
         [BindProperty]
         public ItemPost Item { get; set; }
 
@@ -35,7 +34,7 @@ namespace Karma.Pages
 
         [BindProperty]
         public string SelectedCategory { get; set; }
-
+        public KarmaPointService KarmaPointService { get; }
         public IItemRepository ItemService { get; set; }
         public PictureService PictureService { get; }
         private IWebHostEnvironment WebHostEnvironment { get; }
@@ -43,6 +42,7 @@ namespace Karma.Pages
         public List<ItemPost> Submits { get; private set; }
 
         public SubmitsModel(
+            KarmaPointService karmaPointService,
             IItemRepository itemService,
             PictureService pictureService,
             IWebHostEnvironment webHostEnvironment,
@@ -50,11 +50,15 @@ namespace Karma.Pages
             SignInManager<KarmaUser> signInManager
             )
         {
+            KarmaPointService = karmaPointService;
             ItemService = itemService;
             PictureService = pictureService;
             WebHostEnvironment = webHostEnvironment;
+
             _userManager = userManager;
             _signInManager = signInManager;
+            ItemService.ItemPosted += KarmaPointService.OnItemPosted;
+
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -85,6 +89,7 @@ namespace Karma.Pages
             var userId = User.GetUserId();
             await ItemService.AddPost(Item, userId);
 
+
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
@@ -95,7 +100,6 @@ namespace Karma.Pages
             KarmaUser.ProcessKarmaBalance(user.IncreaseKarmaPoints, 5);
             await _userManager.UpdateAsync(user);
             Console.Out.WriteLine(user.KarmaPoints);
-
 
             return RedirectToPage("/Submits");
         }

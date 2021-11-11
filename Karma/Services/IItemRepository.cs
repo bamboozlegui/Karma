@@ -20,5 +20,8 @@ namespace Karma.Services
         public Task<ItemPost> DeletePost(int id);
 
         public Task<ItemPost> UpdatePost(ItemPost newPost);
+
+        public delegate void ItemPostedEventHandler(object source, EventArgs args);
+        public event ItemPostedEventHandler ItemPosted;
     }
 }
