@@ -67,7 +67,7 @@ namespace Karma.Pages
         {
             var userId = User.GetUserId();
             Func<int, int> Subtract = (x => x - 6);
-            KarmaPointService.ProcessKarmaBalance(userId, Subtract);
+            await KarmaPointService.ProcessKarmaBalanceAsync(userId, Subtract);
 
             var item = await ItemService.GetPost(id);
             PictureService.DeletePicture(WebHostEnvironment.WebRootPath, item.Picture);
@@ -85,12 +85,13 @@ namespace Karma.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-            Item.Picture = PictureService.ProcessUploadedFile(WebHostEnvironment.WebRootPath, Photo); //Check definition
             var userId = User.GetUserId();
-            await ItemService.AddPost(Item, userId);
-
             Func<int, int> Add = (x => x + 6);
-            KarmaPointService.ProcessKarmaBalance(userId, Add);
+            await KarmaPointService.ProcessKarmaBalanceAsync(userId, Add);
+
+            Item.Picture = PictureService.ProcessUploadedFile(WebHostEnvironment.WebRootPath, Photo); //Check definition
+            await ItemService.AddPostAsync(Item, userId);
+
 
             return RedirectToPage("/Submits");
         }
