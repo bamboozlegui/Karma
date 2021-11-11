@@ -23,27 +23,11 @@ namespace Karma.Areas.Identity.Data
         [Column(TypeName = "nvarchar(100)")]
         public string City { get; set; }
 
+        [PersonalData]
+        [Column(TypeName = "int")]
         public int KarmaPoints { get; set; }
         public List<Message> Messages { get; set; } = new List<Message>();
         public List<RequestPost> Requests  { get; set; } = new List<RequestPost>();
         public List<ItemPost> Items { get; set; } = new List<ItemPost>();
-        
-        public delegate void KarmaBalance(int kp);
-
-        public static void ProcessKarmaBalance(KarmaBalance AddKP, int amount)
-        {
-            AddKP(amount);
-        }
-
-        public void IncreaseKarmaPoints(int kp)
-        {
-            KarmaPoints += kp;
-        }
-
-        public void DecreaseKarmaPoints(int kp)
-        {
-            KarmaPoints -= kp;
-        }
-
     }
 }
