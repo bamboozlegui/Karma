@@ -43,7 +43,7 @@ namespace Karma
             services.AddScoped<UserManager<KarmaUser>>();
             services.AddScoped<HttpClient>();
             services.AddTransient<PictureService>();
-            services.AddScoped<KarmaPointService>();
+            services.AddScoped<NotificationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
