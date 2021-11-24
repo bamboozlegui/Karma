@@ -8,7 +8,6 @@
 @inject SignInManager<KarmaUser> SignInManager
 @inject UserManager<KarmaUser> UserManager
 
-<div class="request-body">
 @*<form method="get">
     <div class="input-group">
         <input class="form-control" asp-for="SearchTerm">
@@ -59,6 +58,10 @@
 <!--Request list-->
 <div class="list-group request-list">
     @{
+        if(Model.Requests.Count() == 0)
+            {
+                <h3 class="empty">Looks like there are no requests. <br /> Be the first one to ask for something!</h3>
+            }
         if (ModelState.IsValid)
         {
             foreach (var requestas in Model.Requests)
@@ -67,8 +70,8 @@
                 {
                     <a class="list-group-item list-group-item-action disabled">
                         <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">@requestas.Title</h5>
-                            <small>@requestas.KarmaUser.FirstName</small>
+                            <h5 class="mb-1 request-title">@requestas.Title</h5>
+                            <small>@requestas.KarmaUser.FirstName @requestas.KarmaUser.KarmaPoints</small>
                         </div>
                         <p class="mb-1">@requestas.Description</p>
                         <small>@requestas.KarmaUser.City,</small>
@@ -77,7 +80,7 @@
                         @if (requestas.KarmaUser.Email == HttpContext.User.Identity.Name && SignInManager.IsSignedIn(User))
                         {
                             <form asp-page-handler="delete" asp-route-ID="@requestas.Id" method="post">
-                                <button class="btn btn-default">Delete</button>
+                                <button class="btn btn-default p-0">Delete</button>
                             </form>
                         }
 
@@ -87,8 +90,8 @@
                 {
                     <a class="list-group-item list-group-item-action request-page-card rounded-0">
                         <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">@requestas.Title</h5>
-                            <small>@requestas.KarmaUser.FirstName</small>
+                            <h5 class="mb-1 request-title">@requestas.Title</h5>
+                            <small>@requestas.KarmaUser.FirstName @requestas.KarmaUser.KarmaPoints</small>
                         </div>
                         <p class="mb-1">@requestas.Description</p>
                         <small>@requestas.KarmaUser.City,</small>
@@ -97,7 +100,7 @@
                         @if (requestas.KarmaUser.Email == HttpContext.User.Identity.Name && SignInManager.IsSignedIn(User))
                         {
                             <form asp-page-handler="delete" asp-route-ID="@requestas.Id" method="post">
-                                <button class="btn btn-default">Delete</button>
+                                <button class="btn btn-default p-0">Delete</button>
                             </form>
                         }
                         @if (HttpContext.User.Identity.IsAuthenticated && HttpContext.User.Identity.Name != requestas.KarmaUser.Email)
@@ -130,7 +133,5 @@
             }
         }
     }
-
-</div>
 
 </div>

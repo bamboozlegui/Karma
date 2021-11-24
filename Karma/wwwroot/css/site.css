@@ -235,6 +235,32 @@ a.nav-link {
 .request-page-card:hover {
     background-color: #FDFBF5;
 }
+.request-title {
+    font-size: 25px;
+}
+.empty {
+    font-size: 40px;
+    text-align: center;
+    margin-top: 50px;
+}
+@media (max-width: 768px) {
+    .request-list{
+        margin: 20px 50px 20px 50px;
+    }
+}
+
+/*Log in page stuff*/
+.login-page {
+    margin-top: 100px;
+}
+
+.login-header {
+    font-size: 45px;
+    font-style: italic;
+}
+
+
+
 /* Provide sufficient contrast against white background */
 a {
     color: #0366d6;

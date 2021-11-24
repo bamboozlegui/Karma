@@ -95,10 +95,14 @@
                 <div class="card index-cards rounded-0">
                     <img src="/images/request.jpg" class="card-img-top rounded-0" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">@Model.Submits.ElementAt(Model.Submits.Count() - 1).Title</h5>
+                        <h5 class="card-title">@Model.Requests.ElementAt(Model.Requests.Count() - 1).Title</h5>
                     </div>
                 </div>
             </div>
+        }
+        else if(Model.Requests.Count() == 0)
+        {
+
         }
         else
         {
@@ -108,7 +112,7 @@
                     <div class="card index-cards rounded-0">
                         <img src="/images/request.jpg" class="card-img-top rounded-0" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">@Model.Submits.ElementAt(i).Title</h5>
+                            <h5 class="card-title">@Model.Requests.ElementAt(i).Title</h5>
                         </div>
                     </div>
                 </div>
@@ -117,7 +121,7 @@
         <div class="col request-tab mt-0">
             <h1 class="post-segment-header">REQUEST</h1>
             <p class="post-segment-text">or request for something from the community </p>
-            <a class="post-button" asp-page="/Submits">View more</a>
+            <a class="post-button" asp-page="/Requests">View more</a>
         </div>
     </div>
 </div>
