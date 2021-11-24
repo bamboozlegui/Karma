@@ -8,38 +8,32 @@
 @inject SignInManager<KarmaUser> SignInManager
 @inject UserManager<KarmaUser> UserManager
 
-@{
-    ViewData["Title"] = "Request items";
-}
-
-<h1>@ViewData["Title"]</h1>
-
-
-<form method="get">
+<div class="request-body">
+@*<form method="get">
     <div class="input-group">
         <input class="form-control" asp-for="SearchTerm">
         <div class="input-group-append">
             <button class="btn btn-primary" type="submit">Search</button>
         </div>
     </div>
-</form>
+</form>*@
 
 <!--Form for a new request-->
-<form method="post" class="mt-4 needs-validation" novalidate>
-    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+<form method="post" class="mt-4 needs-validation post-form" novalidate>
+    <a class="submit-an-item" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
         Request an item
-    </button>
+    </a>
     <div id="collapseExample" class="collapse">
         <div class="mb-3">
             <label class="form-label">Item name</label>
-            <input type="text" class="form-control" asp-for="Item.Title" required>
+            <input type="text" class="form-control rounded-0" asp-for="Item.Title" required>
             <div class="invalid-feedback">
                 Please enter the request title.
             </div>
         </div>
         <div class="mb-3">
             <label class="form-label">Description</label>
-            <textarea type="text" class="form-control" rows="3" asp-for="Item.Description" required></textarea>
+            <textarea type="text" class="form-control rounded-0" rows="3" asp-for="Item.Description" required></textarea>
             <div class="invalid-feedback">
                 Please provide the item's description.
             </div>
@@ -47,23 +41,23 @@
 
         <div class="mb-3">
             <label class="form-label">Category</label>
-            <select class="form-select" aria-label="category selection" asp-for="Item.Category" asp-items="@new SelectList(Karma.Models.Post.Categories)"></select>
+            <select class="form-select rounded-0" aria-label="category selection" asp-for="Item.Category" asp-items="@new SelectList(Karma.Models.Post.Categories)"></select>
         </div>
 
 
         @if (SignInManager.IsSignedIn(User))
         {
-            <button type="submit" class="btn btn-primary">Request</button>
+            <button type="submit" class="btn btn-primary mb-4">Request</button>
         }
         else
         {
-            <button type="submit" class="btn btn-primary disabled">Request</button>
+            <button type="submit" class="btn btn-primary disabled mb-4">Request</button>
         }
 
     </div>
 </form>
-
-<div class="list-group mt-4">
+<!--Request list-->
+<div class="list-group request-list">
     @{
         if (ModelState.IsValid)
         {
@@ -91,7 +85,7 @@
                 }
                 else
                 {
-                    <a class="list-group-item list-group-item-action">
+                    <a class="list-group-item list-group-item-action request-page-card rounded-0">
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1">@requestas.Title</h5>
                             <small>@requestas.KarmaUser.FirstName</small>
@@ -136,5 +130,7 @@
             }
         }
     }
+
+</div>
 
 </div>

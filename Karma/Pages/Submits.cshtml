@@ -57,21 +57,6 @@
             </div>
         </div>
 
-
-        @*<div class="mb-3">
-            <label class="form-label">Picture</label>
-            <input class="form-control" type="file" asp-for="Photo" required>
-            <div class="invalid-feedback">
-                Please upload a picture of the item.
-            </div>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Category</label>
-            <select class="form-select" aria-label="category selection" asp-for="Item.Category" asp-items="@new SelectList(Karma.Models.Post.Categories)"></select>
-        </div>*@
-
-
         @if(SignInManager.IsSignedIn(User))
         {
             <button type="submit" class="btn btn-primary mb-4">Submit</button>
