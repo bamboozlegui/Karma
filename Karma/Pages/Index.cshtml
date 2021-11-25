@@ -4,95 +4,161 @@
 @{ 
     ViewData["Title"] = "Home page";
 }
-<div class="text-center">
-    <h1 class="display-4">Welcome To Karma</h1>
-    <p>Where old and unused things find a new home</p>
+
+<!--Landing page segment-->
+<div class="container-fluid ">
+    <div class="row row-custom">
+        <div class="col-md-6 landing-page-right-column">
+            <h1 class="landing-page-header"><i>Kar</i>ma</h1>
+            <p class="landing-page-text">Where unused things find a new home</p>
+        </div>
+        <div class="col-md-6 landing-page-left-column">
+            <img class="img-fluid landing-page-image" src="~/images/landing-page.jpg" />
+        </div>
+    </div>
 </div>
-
-
-@{ 
-    void PrintSubmits(IEnumerable<ItemPost> submits, int submitCount)
-    {
-        <div class="container-fluid row row-cols-1 row-cols-md-3 mt-2 g-4">
-            @if(submitCount == 1)
+<!--Take a look segment-->
+<div class="container-fluid take-a-look p-0">
+    <h1 class="big-quote">TAKE A LOOK:</h1>
+</div>
+<!--Post segment-->
+<div class="container-fluid post-container">
+    <div class="row row-cols-1 row-cols-md-3 mt-0 g-4">
+        <div class="col post-tab mt-0">
+            <h1 class="post-segment-header">POSTS</h1>
+            <p class="post-segment-text">find amazing things people are giving away. </p>
+            <a class="post-button" asp-page="/Submits">View more</a>
+        </div>
+        @if(Model.Submits.Count() == 1)
+        {
+            <div class="col mt-3 mb-3">
+                <div class="card index-cards rounded-0">
+                    <img src="/images/@Model.Submits.ElementAt(Model.Submits.Count() - 1).Picture" class="card-img-top rounded-0" alt="...">
+                    <div class="card-body">
+                        <a class="post-name" target="_self" asp-page="/Item" asp-route-id=@Model.Submits.ElementAt(Model.Submits.Count() - 1).Id>
+                            <h5 class="card-title">@Model.Submits.ElementAt(Model.Submits.Count() - 1).Title</h5>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            for(int i = Model.Submits.Count() - 1; i >= Model.Submits.Count() - 2; i--)
             {
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <img src="/images/@submits.ElementAt(submitCount - 1).Picture" class="card-img-top" alt="...">
+                <div class="col mt-3 mb-3">
+                    <div class="card index-cards rounded-0">
+                        <img src="/images/@Model.Submits.ElementAt(i).Picture" class="card-img-top rounded-0" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">@submits.ElementAt(submitCount - 1).Title</h5>
+                            <a class="post-name" target="_self" asp-page="/Item" asp-route-id=@Model.Submits.ElementAt(i).Id>
+                                <h5 class="card-title">@Model.Submits.ElementAt(i).Title</h5>
+                            </a>
+                            <!--More button wont work in this function, need to research why. For now i deleted it-->
                         </div>
                     </div>
                 </div>
             }
-            else
-            {
-                for(int i = submits.Count() - 1; i >= submits.Count() - submitCount; i--)
-                {
-                    <div class="col">
-                        <div class="card shadow-sm">
-                            <img src="/images/@submits.ElementAt(i).Picture" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">@submits.ElementAt(i).Title</h5>
-                                <!--More button wont work in this function, need to research why. For now i deleted it-->
-                            </div>
-                        </div>
-                    </div>
-                }
-            }
-        </div>
-    }
-
-    void PrintRequests(IEnumerable<RequestPost> requestas, int counter)
-    {
-       <div class="list-group mt-5">
-           @if (counter == 1)
-            {
-                <a href="#" class="list-group-item list-group-item-action">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">@Model.Requests.ElementAt(counter - 1).Title</h5>
-                        <small>@Model.Requests.ElementAt(counter - 1).KarmaUser.FirstName</small>
-                    </div>
-                    <p class="mb-1">@Model.Requests.ElementAt(counter - 1).Description</p>
-                    <small>@Model.Requests.ElementAt(counter - 1).KarmaUser.City,</small>
-                    <small>@Model.Requests.ElementAt(counter - 1).KarmaUser.PhoneNumber</small>
-                </a>
-            }
-            else
-            {
-                for(int i = requestas.Count() - 1; i >= requestas.Count() - counter; i--)
-                {
-                    <a href="#" class="list-group-item list-group-item-action">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">@Model.Requests.ElementAt(i).Title</h5>
-                            <small>@Model.Requests.ElementAt(i).KarmaUser.FirstName</small>
-                        </div>
-                        <p class="mb-1">@Model.Requests.ElementAt(i).Description</p>
-                        <small>@Model.Requests.ElementAt(i).KarmaUser.City,</small>
-                        <small>@Model.Requests.ElementAt(i).KarmaUser.PhoneNumber</small>
-                    </a>
-                }
-            }
-       </div>
-    
-    }
-    
-
-    // Prints posts and requests. I wouldn't consider this very clean.
-    // Will need to rework this in the future.
-    // Using named arguments:
-    if(Model.Submits.Count() >= 3)  PrintSubmits(submitCount: 3, submits: Model.Submits); 
-    else if(Model.Submits.Count() > 0)  PrintSubmits(submits: Model.Submits, submitCount: Model.Submits.Count()); 
-    else PrintSubmits(submits: Model.Submits, submitCount: 0); 
-    <div class="d-grid gap-2 col-6 mx-auto mt-3">
-        <a class="btn btn-outline-secondary" asp-page="/Submits">View more items</a>
+        }
     </div>
+</div>
+<!--Another message segment-->
+@*<div class="container-fluid quote-segment d-flex align-items-center justify-content-center p-0">
+    <figure class="text-center align-items-center justify-content-center">
+        <blockquote class="blockquote text-center">
+            <p class="quote"><i>Reduce waste while helping out your community</i></p>
+        </blockquote>
+    </figure>
+</div>
+
+<div class="container-fluid quote-segment d-flex align-items-center justify-content-center p-0">
+    <figure class="text-center align-items-center justify-content-center">
+        <blockquote class="blockquote text-center">
+            <p class="quote">"Where unused things find a new home"</p>
+        </blockquote>
+
+        <figcaption class="blockquote-footer text-center">
+            <cite title="Source Title">Karma project team</cite>
+        </figcaption>
+    </figure>
+</div>*@
+
+<div class="container-fluid take-a-look p-0">
+    <h1 class="big-quote">HELP OTHERS:</h1>
+</div>
+
+<!--Request segment-->
+<div class="container-fluid request-container">
+    <div class="row row-cols-1 row-cols-md-3 mt-0 g-4">
+        @if(Model.Requests.Count() == 1)
+        {
+            <div class="col mt-3 mb-3">
+                <div class="card index-cards rounded-0">
+                    <img src="/images/request.jpg" class="card-img-top rounded-0" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.Requests.ElementAt(Model.Requests.Count() - 1).Title</h5>
+                    </div>
+                </div>
+            </div>
+        }
+        else if(Model.Requests.Count() == 0)
+        {
+
+        }
+        else
+        {
+            for(int i = Model.Requests.Count() - 1; i >= Model.Requests.Count() - 2; i--)
+            {
+                <div class="col mt-3 mb-3">
+                    <div class="card index-cards rounded-0">
+                        <img src="/images/request.jpg" class="card-img-top rounded-0" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">@Model.Requests.ElementAt(i).Title</h5>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        <div class="col request-tab mt-0">
+            <h1 class="post-segment-header">REQUEST</h1>
+            <p class="post-segment-text">or request for something from the community </p>
+            <a class="post-button" asp-page="/Requests">View more</a>
+        </div>
+    </div>
+</div>
 
 
-    if(Model.Requests.Count() >=3) PrintRequests(Model.Requests, 3);
-    else if(Model.Requests.Count() > 0) PrintRequests(Model.Requests, Model.Requests.Count());
-    else PrintRequests(Model.Requests, 0);
+
+
+@*<div class="list-group mt-5">
+    @if (Model.Requests.Count() == 1)
+    {
+        <a href="#" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">@Model.Requests.ElementAt(Model.Requests.Count() - 1).Title</h5>
+                <small>@Model.Requests.ElementAt(Model.Requests.Count() - 1).KarmaUser.FirstName</small>
+            </div>
+            <p class="mb-1">@Model.Requests.ElementAt(Model.Requests.Count() - 1).Description</p>
+            <small>@Model.Requests.ElementAt(Model.Requests.Count() - 1).KarmaUser.City,</small>
+            <small>@Model.Requests.ElementAt(Model.Requests.Count() - 1).KarmaUser.PhoneNumber</small>
+        </a>
+    }
+    else
+    {
+        for(int i = Model.Requests.Count() - 1; i >= Model.Requests.Count() - 2; i--)
+        {
+            <a href="#" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">@Model.Requests.ElementAt(i).Title</h5>
+                    <small>@Model.Requests.ElementAt(i).KarmaUser.FirstName</small>
+                </div>
+                <p class="mb-1">@Model.Requests.ElementAt(i).Description</p>
+                <small>@Model.Requests.ElementAt(i).KarmaUser.City,</small>
+                <small>@Model.Requests.ElementAt(i).KarmaUser.PhoneNumber</small>
+            </a>
+        }
+    }
+</div>
     <div class="d-grid gap-2 col-6 mx-auto mt-3">
         <a class="btn btn-outline-secondary" asp-page="/Requests">More requests</a>
     </div>
-}
+    *@

@@ -6,23 +6,27 @@
     <title>@ViewData["Title"] - Karma</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="request-body">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar fixed-top navbar-custom navbar-expand-sm navbar-toggleable-md box-shadow">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">Karma</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                <a class="navbar-brand" asp-area="" asp-page="/Index">KARMA</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                    @*<span class="navbar-toggler-icon"></span>*@
+                    <h1>Menu</h1>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Requests">Request</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Submits">posts</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Submits">Submit</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Requests">REQUESTS</a>
                         </li>
                     </ul>
                     <span>
@@ -32,15 +36,15 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div class="container-fluid w-100 p-0">
+        <main role="main" class="pb-0">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-dark">
         <div class="container">
-            &copy; 2021 - Karma - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            &copy; 2021 - Karma - <a style="text-decoration: none; color: black;" asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
     </footer>
 
