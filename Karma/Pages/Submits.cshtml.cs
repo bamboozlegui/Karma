@@ -29,9 +29,6 @@ namespace Karma.Pages
 
         [BindProperty(SupportsGet = true)]
         public string SearchTerm { get; set; }
-
-        [BindProperty]
-        public string SelectedCategory { get; set; }
         public NotificationService NotificationService { get; }
         public KarmaPointService KarmaPointService { get; }
         public IItemRepository ItemService { get; set; }
@@ -74,13 +71,6 @@ namespace Karma.Pages
 
             return RedirectToPage("/Submits");
         }
-        // TO-DO implement filter by Category, get info from checkbox
-        // public List<string> Categories = new List<string>(Post.SCategories);
-        public IActionResult OnPostFilter(string sCategory)
-        {
-            //Submits = Submits.Where(x => x.Category == SelectedCategory);
-            return RedirectToPage("/Submits");
-        }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -91,7 +81,7 @@ namespace Karma.Pages
             Item.Picture = PictureService.ProcessUploadedFile(WebHostEnvironment.WebRootPath, Photo); //Check definition
             var postedItem = await ItemService.AddPostAsync(Item, userId);
 
-            await NotificationService.OnPosted(postedItem);
+            await NotificationService.AddNotification(postedItem);
 
             return RedirectToPage("/Submits");
         }

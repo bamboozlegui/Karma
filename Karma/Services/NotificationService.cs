@@ -24,7 +24,7 @@ namespace Karma.Services
         public IMessageRepository MessageRepository { get; }
         public KarmaDbContext KarmaDbContext { get; }
 
-        public async Task<Message> OnPosted(Post post)
+        public async Task<Message> AddNotification(Post post)
         {
             var notification = new Message()
             {
