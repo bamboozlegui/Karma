@@ -53,7 +53,6 @@ namespace Karma.Pages
             ItemService = itemService;
             PictureService = pictureService;
             WebHostEnvironment = webHostEnvironment;
-            ItemService.ItemPosted += NotificationService.OnPosted;
 
         }
 
@@ -90,8 +89,9 @@ namespace Karma.Pages
             await KarmaPointService.ProcessKarmaBalanceAsync(userId, Add);
 
             Item.Picture = PictureService.ProcessUploadedFile(WebHostEnvironment.WebRootPath, Photo); //Check definition
-            await ItemService.AddPostAsync(Item, userId);
+            var postedItem = await ItemService.AddPostAsync(Item, userId);
 
+            await NotificationService.OnPosted(postedItem);
 
             return RedirectToPage("/Submits");
         }
