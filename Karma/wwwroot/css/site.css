@@ -1,7 +1,8 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 * {
-    font-family: Roboto;
+    font-family: 'Roboto', sans-serif;
 }
 
 
@@ -11,7 +12,7 @@ a.navbar-brand {
     text-align: center;
     word-break: break-all;
     color: #000000;
-    font-family: Roboto;
+    font-family: 'Roboto', sans-serif;
     font-size: 30px;
     margin: 0;
     padding: 0px 10px 0px 0px;
@@ -19,7 +20,7 @@ a.navbar-brand {
 
 a.nav-link {
     color: #000000;
-    font-family: Roboto;
+    font-family: 'Roboto', sans-serif;
     font-size: 20px;
 }
 
@@ -38,6 +39,11 @@ a.nav-link {
     width: auto;
     height: 600px;
     border-bottom: 1px solid black;
+}
+@media (min-width: 768px) and (max-width: 1000px) {
+    .collapse {
+        display: none !important;
+    }
 }
 
 /*Landing page stuff*/
@@ -187,6 +193,7 @@ a.nav-link {
     text-align: center;
     border: 1px solid black;
     background-color: #FDFBF5;
+    margin-top:40px;
 }
 
 .post-card {
@@ -215,6 +222,59 @@ a.nav-link {
     color: black;
     cursor: pointer;
 }
+@media (max-width: 1150px) {
+    .submit-an-item, .submit-an-item:hover {
+        font-size: 135px;
+    }
+}
+@media (max-width: 1040px) {
+    .submit-an-item, .submit-an-item:hover {
+        font-size: 130px;
+    }
+}
+@media (max-width: 990px) {
+    .submit-an-item, .submit-an-item:hover {
+        font-size: 110px;
+    }
+}
+@media (max-width: 865px) {
+    .submit-an-item, .submit-an-item:hover {
+        font-size: 90px;
+    }
+}
+@media (max-width: 700px) {
+    .submit-an-item, .submit-an-item:hover {
+        font-size: 75px;
+        letter-spacing: -5px;
+    }
+}
+@media (max-width: 665px) {
+    .submit-an-item, .submit-an-item:hover {
+        font-size: 60px;
+    }
+}
+@media (max-width: 560px) {
+    .submit-an-item, .submit-an-item:hover {
+        font-size: 50px;
+    }
+    .post-form {
+        padding: 0px 50px 0px 50px;
+    }
+}
+@media (max-width: 495px) {
+    .submit-an-item, .submit-an-item:hover {
+        font-size: 40px;
+        letter-spacing: -2px;
+    }
+}
+@media (max-width: 470px) {
+    .submit-an-item, .submit-an-item:hover {
+        font-size: 35px;
+    }
+}
+
+
+
 
 .form-control, .form-select {
     border: 1px solid black;
