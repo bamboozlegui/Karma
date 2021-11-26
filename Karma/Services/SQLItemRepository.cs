@@ -20,7 +20,7 @@ namespace Karma.Services
     {
         public KarmaDbContext Context { get; }
 
-        public SqlItemRepository(KarmaDbContext context, PictureService pictureService, UserManager<KarmaUser> userManager, IWebHostEnvironment webHostEnvironment)
+        public SqlItemRepository(KarmaDbContext context)
         {
             Context = context;
         }
