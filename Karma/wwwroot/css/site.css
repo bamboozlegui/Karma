@@ -272,9 +272,61 @@ a.nav-link {
         font-size: 35px;
     }
 }
-
-
-
+/*Item page stuff*/
+.item-picture-div {
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    justify-content: center;
+    height: 450px;
+    width: 700px;
+    margin: auto;
+    text-align: center;
+}
+@media (max-width: 725px) {
+    .item-picture-div {
+        height: 350px;
+        width: 550px;
+    }
+}
+@media (max-width: 575px) {
+    .item-picture-div {
+        height: 300px;
+        width: 450px;
+    }
+}
+.item-picture{
+    max-width: 100%;
+    max-height: 100%;
+    height: 100%;
+    justify-content: center;
+}
+.image-container{
+    border-bottom: 1px solid black;
+}
+.details-container {
+    background-color: #FDFBF5;
+    height: 500px;
+}
+.item-title{
+    font-size: 50px;
+    font-style: italic;
+}
+.item-text{
+    font-size:20px;
+}
+.item-description {
+    width: 700px;
+    height: auto;
+    margin: auto;  
+}
+.button-custom {
+    border: 1px black solid;
+    background-color: #FFF7DD;
+}
+.button-custom:hover {
+    background-color: #FDFBF5;
+}
 
 .form-control, .form-select {
     border: 1px solid black;

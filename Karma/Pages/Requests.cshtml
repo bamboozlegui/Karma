@@ -46,11 +46,11 @@
 
         @if (SignInManager.IsSignedIn(User))
         {
-            <button type="submit" class="btn btn-primary mb-4">Request</button>
+            <button type="submit" class="btn button-custom rounded-0 mb-4">Request</button>
         }
         else
         {
-            <button type="submit" class="btn btn-primary disabled mb-4">Request</button>
+            <button type="submit" class="btn button-custom rounded-0 disabled mb-4">Request</button>
         }
 
     </div>
@@ -107,7 +107,7 @@
                         {
                             <form method="post" asp-page-handler="message" asp-route-itemid="@requestas.Id" class="mt-4 needs-validation" novalidate>
 
-                                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#@requestas.CollapseId()" aria-expanded="false" aria-controls="@requestas.Id">
+                                <button class="btn button-custom rounded-0" type="button" data-bs-toggle="collapse" data-bs-target="#@requestas.CollapseId()" aria-expanded="false" aria-controls="@requestas.Id">
                                     Send owner a message
                                 </button>
                                 <div id="@requestas.CollapseId()" class="collapse">
@@ -115,14 +115,14 @@
                                         <label asp-for="Message.Content" class="col-sm-2 col-form-label">
                                         </label>
                                         <div class="col-sm-10">
-                                            <input asp-for="Message.Content" class="form-control" placeholder="Content" required>
+                                            <input asp-for="Message.Content" class="form-control rounded-0" placeholder="Content" required>
                                             <div class="invalid-feedback">
                                                 Please enter a valid message.
                                             </div>
                                         </div>
 
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Send</button>
+                                    <button type="submit" class="btn button-custom rounded-0">Send</button>
                                 </div>
 
                             </form>
