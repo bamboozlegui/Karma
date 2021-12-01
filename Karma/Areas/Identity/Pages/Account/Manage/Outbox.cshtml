@@ -8,9 +8,9 @@
 {
     foreach(var message in Model.Outbox)
     {
-        <div class="card mt-2">
-            <div class="card-header">
-                <p class="m-0">To @message.ToEmail</p>
+        <div class="card message-card mt-2 rounded-0">
+            <div class="card-header card-header-custom">
+                <p class="m-0 text-muted">To @message.ToEmail</p>
             </div>
             <div class="card-body">
                 @message.Content
