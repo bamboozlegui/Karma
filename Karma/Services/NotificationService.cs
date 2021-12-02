@@ -24,16 +24,17 @@ namespace Karma.Services
         public IMessageRepository MessageRepository { get; }
         public KarmaDbContext KarmaDbContext { get; }
 
-        public void OnPosted(object source, PostedEventArgs args)
+        public async Task<Message> AddNotification(Post post)
         {
             var notification = new Message()
             {
-                Content = $"Hey! You've posted succesfully! (POST_ID) = {args.Post.Id})",
+                Content = $"Hey! You've posted succesfully! (POST_ID) = {post.Id})",
                 FromEmail = notificationSystemEmail,
-                ToEmail = args.UserEmail,
+                ToEmail = post.KarmaUser.Email,
                 Date = DateTime.Now
             };
-            MessageRepository.AddMessage(notification);
+            var sentMessage = await MessageRepository.AddMessage(notification);
+            return sentMessage;
         }
     }
 }

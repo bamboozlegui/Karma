@@ -46,7 +46,9 @@ namespace Karma.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-            Item.Picture = await RequestPictureUpdateAsync();
+            var newPicturePath = await RequestPictureUpdateAsync();
+            if (newPicturePath != "")
+                Item.Picture = newPicturePath;
             await HttpClient.PutAsJsonAsync<ItemPost>($"{baseAddress}items/{Item.Id}", Item);
 
             return RedirectToPage("/Submits");
