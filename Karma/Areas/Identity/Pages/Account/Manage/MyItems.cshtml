@@ -9,6 +9,9 @@
 @inject SignInManager<KarmaUser> SignInManager
 @inject UserManager<KarmaUser> UserManager
 
+@using Karma.Extensions;
+@using Karma.Models; 
+
 
 @{ ViewData["Title"] = "My Items"; }
 @using Karma.Extensions;
@@ -19,9 +22,9 @@
 
 <form method="get">
     <div class="input-group">
-        <input class="form-control" asp-for="SearchTerm">
+        <input class="form-control rounded-0" asp-for="SearchTerm">
         <div class="input-group-append">
-            <button class="btn btn-primary" type="submit">Search</button>
+            <button class="btn button-custom rounded-0" type="submit">Search</button>
         </div>
     </div>
 </form>
@@ -56,41 +59,43 @@
         </div>
     </div>*@
 
-<div class="container-fluid row row-cols-1 row-cols-md-3 mt-3">
-    @{ if (ModelState.IsValid)
+<div class="container-fluid row row-cols-1 row-cols-md-3 mt-3 p-0">
+    @{
+        if (ModelState.IsValid)
         {
             @for (int i = Model.Submits.Count() - 1; i >= 0; i--)
             {
-                if (Model.Submits.ElementAt(i).State != Karma.Models.Post.StateEnum.Hidden)
-                {
+                
                     <div class="col mt-4">
-                        <div class="card h-100 shadow-sm">
-                            <img href="#" src="/images/@Model.Submits.ElementAt(i).Picture" class="card-img-top" alt="...">
+                        <div class="card h-100 shadow-sm post-card rounded-0">
+                            <a target="_self" asp-page="/Item" asp-route-id=@Model.Submits.ElementAt(i).Id>
+                                <img src="/images/@Model.Submits.ElementAt(i).Picture" class="card-img-top rounded-0" alt="..." >
+                            </a>
                             <div class="card-body">
                                 <h5 class="card-title">@Model.Submits.ElementAt(i).Title</h5>
-                                @if (Model.Submits.ElementAt(i).Description.Length <= 50)
-                                {
-                                    <p class="card-text">@Model.Submits.ElementAt(i).Description</p> }
-                                else
-                                {
-                                    <p class="card-text">@Model.Submits.ElementAt(i).Description.Substring(0, 50)...</p>}
-                                <p class="card-text">@Model.Submits.ElementAt(i).Date.ShowTimeSpan()</p>
-                                @if (Model.Submits.ElementAt(i).State == Karma.Models.Post.StateEnum.Taken)
-                                {
-                                    <a class="btn btn-secondary disabled" target="_self" asp-page="/Item" asp-route-id=@Model.Submits.ElementAt(i).Id>More info</a> }
-                                else
-                                {
-                                    <a class="btn btn-secondary" target="_self" asp-page="/Item" asp-route-id=@Model.Submits.ElementAt(i).Id>More info</a>}
+                                    @if(Model.Submits.ElementAt(i).Description.Length <= 50)
+                                    {
+                                        <p class="card-text">@Model.Submits.ElementAt(i).Description</p>
+                                    }
+                                    else
+                                    {
+                                        <p class="card-text">@Model.Submits.ElementAt(i).Description.Substring(0,50)...</p>
+                                    }
+                                <p class="card-text text-muted">@Model.Submits.ElementAt(i).Date.ShowTimeSpan()</p>
                             </div>
                             <div class="col-lg-1">
-                                @if (Model.Submits.ElementAt(i).KarmaUser.Email == HttpContext.User.Identity.Name
-                                                                    && SignInManager.IsSignedIn(User))
+                                @if (Model.Submits.ElementAt(i).KarmaUser.Email == HttpContext.User.Identity.Name 
+                                                                      && SignInManager.IsSignedIn(User))
                                 {
-                                    <form asp-page-handler="delete" asp-route-id="@Model.Submits.ElementAt(i).Id" method="post">
-                                        <button class="btn btn-default">Delete</button>
-                                    </form>}
+                                <form asp-page-handler="delete" asp-route-id="@Model.Submits.ElementAt(i).Id" method="post">
+                                    <button class="btn btn-default">Delete</button>
+                                </form>
+                                }
                             </div>
-                        </div>
-                    </div>}
-            } } }
+                        </div>                        
+                    </div>
+                
+            }
+        }
+    }
 </div>

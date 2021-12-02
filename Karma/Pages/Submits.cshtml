@@ -59,11 +59,11 @@
 
         @if(SignInManager.IsSignedIn(User))
         {
-            <button type="submit" class="btn btn-primary mb-4">Submit</button>
+            <button type="submit" class="btn button-custom rounded-0 mb-4">Submit</button>
         }
         else
         {
-            <button type="submit" class="btn btn-primary mb-4 disabled">Please login</button>
+            <button type="submit" class="btn button-custom rounded-0 mb-4 disabled">Please login</button>
         }       
     </div>
 </form>
@@ -136,7 +136,7 @@
                                                                       && SignInManager.IsSignedIn(User))
                                 {
                                 <form asp-page-handler="delete" asp-route-id="@Model.Submits.ElementAt(i).Id" method="post">
-                                    <button class="btn btn-default">Delete</button>
+                                    <button class="btn button-delete">Delete</button>
                                 </form>
                                 }
                             </div>
