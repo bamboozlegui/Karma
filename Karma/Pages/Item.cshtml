@@ -43,33 +43,6 @@
     }
     </div>
 </div>
-
-
-
-
-
-
-
-@*<div class="container-fluid mt-5">
-    <div class="row">
-        <div class="col-md p-0">
-            <img src="/images/@Model.Item.Picture" asp-append-version=true class="figure-img img-fluid mb-0 rounded">
-        </div>
-        <div class="col-md p-0">
-
-            <div class="card h-100">
-                <div class="card-body d-flex flex-column">
-                    <h2 class="card-title">@Model.Item.Title</h2>
-                    <h6 class="card-subtitle mb-2 text-muted">@Model.Item.KarmaUser.City</h6>
-                    <p class="card-text">@Model.Item.Description</p>
-                    <h6 class="card-text text-muted mt-auto">@Model.Item.KarmaUser.FirstName</h6>
-                    <h6 class="card-text text-muted">@Model.Item.KarmaUser.Email</h6>
-                    <h6 class="card-text text-muted">+@Model.Item.KarmaUser.PhoneNumber</h6>
-                </div>
-            </div>
-        </div>
-    </div>
-
     @if (Model.Item.KarmaUser.Email == HttpContext.User.Identity.Name)
     {
         <form method="post" enctype="multipart/form-data" class="mt-4 needs-validation" novalidate>
@@ -129,6 +102,32 @@
 
         </form>
     }
+
+
+
+
+
+
+
+@*<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-md p-0">
+            <img src="/images/@Model.Item.Picture" asp-append-version=true class="figure-img img-fluid mb-0 rounded">
+        </div>
+        <div class="col-md p-0">
+
+            <div class="card h-100">
+                <div class="card-body d-flex flex-column">
+                    <h2 class="card-title">@Model.Item.Title</h2>
+                    <h6 class="card-subtitle mb-2 text-muted">@Model.Item.KarmaUser.City</h6>
+                    <p class="card-text">@Model.Item.Description</p>
+                    <h6 class="card-text text-muted mt-auto">@Model.Item.KarmaUser.FirstName</h6>
+                    <h6 class="card-text text-muted">@Model.Item.KarmaUser.Email</h6>
+                    <h6 class="card-text text-muted">+@Model.Item.KarmaUser.PhoneNumber</h6>
+                </div>
+            </div>
+        </div>
+    </div>
     @if (HttpContext.User.Identity.IsAuthenticated && HttpContext.User.Identity.Name != Model.Item.KarmaUser.Email)
     {
         <form method="post" asp-page-handler="message" asp-route-itemid="@Model.Item.Id" class="mt-4 needs-validation" novalidate>
