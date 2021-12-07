@@ -16,6 +16,7 @@ using Karma.Areas.Identity.Data;
 using System.Text.Json.Serialization;
 using System.Net.Http;
 using Newtonsoft.Json;
+using Karma.Middleware;
 
 namespace Karma
 {
@@ -66,6 +67,7 @@ namespace Karma
 
             app.UseRouting();
             app.UseHttpContext();
+            app.UseMiddleware<RequestLogging>();
 
             app.UseAuthentication();
             app.UseAuthorization();
