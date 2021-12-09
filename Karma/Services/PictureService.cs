@@ -13,7 +13,7 @@ namespace Karma.Services
             {
                 string filePath = Path.Combine(rootPath, "images", photoName);
                 System.IO.File.Delete(filePath);
-                return true;
+                return !System.IO.File.Exists(filePath);
             }
             return false;
         }

@@ -9,10 +9,11 @@ namespace Karma.Services
     public interface IFulfillmentRepository
     {
         public Task<List<Fulfillment>> GetFulfillmentsAsync();
+        public List<Fulfillment> GetFulfillments();
 
         public Task<Fulfillment> GetFulfillmentAsync(int id);
-        public Task<Fulfillment> AddFulfillmentAsync(int requestId, int fulfillerId);
-        public Fulfillment AddFulfillment(int requestId, int fulfillerId);
+        public Task<Fulfillment> AddFulfillmentAsync(int requestId, string fulfillerId);
+        public Fulfillment AddFulfillment(int requestId, string fulfillerId);
 
         public Task<Fulfillment> DeleteFulfillmentAsync(int id);
 

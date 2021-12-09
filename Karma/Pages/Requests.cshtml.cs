@@ -21,17 +21,28 @@ namespace Karma.Pages
         public RequestPost Item { get; set; }
         private IRequestRepository RequestService { get; }
         public IMessageRepository MessageService { get; }
+        public IFulfillmentRepository FulfillmentService { get; }
         public List<RequestPost> Requests { get; private set; }
+
+        [BindProperty]
+        public int requestId { get; set; }
 
         [BindProperty]
         public Message Message { get; set; }
         [BindProperty(SupportsGet = true)]
         public string SearchTerm { get; set; }
 
-        public RequestsModel(IRequestRepository requestService, IMessageRepository messageService)
+        public RequestsModel(IRequestRepository requestService, IMessageRepository messageService, IFulfillmentRepository fulfillmentService)
         {
             RequestService = requestService;
             MessageService = messageService;
+            FulfillmentService = fulfillmentService;
+        }
+        public async Task<IActionResult> OnPostFulfill()
+        {
+            var userId = User.GetUserId();
+            var fulfillment = await FulfillmentService.AddFulfillmentAsync(requestId, userId);
+            return RedirectToPage("/Requests");
         }
 
         public async Task<IActionResult> OnGetAsync()

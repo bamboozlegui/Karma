@@ -24,13 +24,18 @@ namespace Karma.Services
             return await Context.Fulfillments.ToListAsync();
         }
 
+        public List<Fulfillment> GetFulfillments()
+        {
+            return Context.Fulfillments.ToList();
+        }
+
         public async Task<Fulfillment> GetFulfillmentAsync(int id)
         {
             var fulfillment = await Context.Fulfillments.FirstOrDefaultAsync(i => i.Id == id);
             return fulfillment;
         }
 
-        public async Task<Fulfillment> AddFulfillmentAsync(int requestId, int fulfillerId)
+        public async Task<Fulfillment> AddFulfillmentAsync(int requestId, string fulfillerId)
         {
 
             var request = await Context.Requests.FindAsync(requestId);
@@ -50,7 +55,7 @@ namespace Karma.Services
             return fulfillment;
         }
 
-        public Fulfillment AddFulfillment(int requestId, int fulfillerId)
+        public Fulfillment AddFulfillment(int requestId, string fulfillerId)
         {
             throw new NotImplementedException();
         }

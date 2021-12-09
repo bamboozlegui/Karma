@@ -4,9 +4,11 @@
 
 @using Microsoft.AspNetCore.Identity
 @using Karma.Areas.Identity.Data
+@using Karma.Services
 
 @inject SignInManager<KarmaUser> SignInManager
 @inject UserManager<KarmaUser> UserManager
+@inject IFulfillmentRepository FulfillmentRepository
 
 @*<form method="get">
     <div class="input-group">
@@ -87,7 +89,7 @@
                     </a>
                 }
 
-                else
+                else if(FulfillmentRepository.GetFulfillments().Where(request => request.Id == requestas.Id).Count() == 0)
                 {
                     <a class="list-group-item list-group-item-action request-page-card rounded-0">
                         <div class="d-flex w-100 justify-content-between">
@@ -106,10 +108,15 @@
                         }
                         @if (HttpContext.User.Identity.IsAuthenticated && HttpContext.User.Identity.Name != requestas.KarmaUser.Email)
                         {
+                            <form method="post" asp-page-handler="fulfill" asp-route-requestId="@requestas.Id" class="mt-4 needs-validation" novalidate>
+                                <button type="submit"  class="btn button-custom rounded-0"  >
+                                    Fulfill
+                                </button>
+                               </form>
                             <form method="post" asp-page-handler="message" asp-route-itemid="@requestas.Id" class="mt-4 needs-validation" novalidate>
 
                                 <button class="btn button-custom rounded-0" type="button" data-bs-toggle="collapse" data-bs-target="#@requestas.CollapseId()" aria-expanded="false" aria-controls="@requestas.Id">
-                                    Send owner a message
+                                    Send requester a message
                                 </button>
                                 <div id="@requestas.CollapseId()" class="collapse">
                                     <div class="form-group row mb-3 mt-3 ">
