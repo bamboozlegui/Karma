@@ -42,20 +42,21 @@
                 </div>
             </div>
         }
-        else if(Model.Requests.Count() == 0)
+        else if(Model.Submits.Count() == 0)
         {
 
         }
         else
         {
-            for(int i = Model.Submits.Count() - 1; i >= Model.Submits.Count() - 2; i--)
+            //foreach(int i = Model.Submits.Count() - 1; i >= Model.Submits.Count() - 2; i--)
+            foreach(var submit in Model.Submits.Take(3))
             {
                 <div class="col mt-3 mb-3">
                     <div class="card index-cards rounded-0">
-                        <img src="/images/@Model.Submits.ElementAt(i).Picture" class="card-img-top rounded-0" alt="...">
+                        <img src="/images/@submit.Picture" class="card-img-top rounded-0" alt="...">
                         <div class="card-body">
-                            <a class="post-name" target="_self" asp-page="/Item" asp-route-id=@Model.Submits.ElementAt(i).Id>
-                                <h5 class="card-title">@Model.Submits.ElementAt(i).Title</h5>
+                            <a class="post-name" target="_self" asp-page="/Item" asp-route-id=@submit.Id>
+                                <h5 class="card-title">@submit.Title</h5>
                             </a>
                             <!--More button wont work in this function, need to research why. For now i deleted it-->
                         </div>
