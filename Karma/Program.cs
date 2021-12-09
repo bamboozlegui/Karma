@@ -2,15 +2,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Karma
 {
     public class Program
     {
+
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
@@ -20,7 +18,12 @@ namespace Karma
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder
+                        .ConfigureLogging((hostingContext, builder) =>
+                        {
+                            builder.AddFile("Logs/Karma-{Date}.txt", LogLevel.Information, null, false, 1073741824, 31, "[{Level:u3}] {Message} {NewLine}");
+                        })
+                        .UseStartup<Startup>();
                 });
     }
 }

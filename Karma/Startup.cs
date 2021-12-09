@@ -67,10 +67,19 @@ namespace Karma
 
             app.UseRouting();
             app.UseHttpContext();
-            app.UseMiddleware<RequestLogging>();
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            // Log user posts/requests
+            app.UseWhen(context => context.Request.Method.Equals("POST"), appBuilder =>
+            {
+                appBuilder.UseMiddleware<RequestLoggingMiddleware>();
+
+            });
+
+            // Check if any errors occur
+            app.UseMiddleware<ErrorLoggingMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
