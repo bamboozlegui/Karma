@@ -111,13 +111,13 @@
         }
         else
         {
-            for(int i = Model.Requests.Count() - 1; i >= Model.Requests.Count() - 2; i--)
+            foreach(var request in Model.Requests.Take(3))
             {
                 <div class="col mt-3 mb-3">
                     <div class="card index-cards rounded-0">
                         <img src="/images/request.jpg" class="card-img-top rounded-0" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">@Model.Requests.ElementAt(i).Title</h5>
+                            <h5 class="card-title">@request.Title</h5>
                         </div>
                     </div>
                 </div>
