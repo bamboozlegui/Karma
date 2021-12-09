@@ -19,10 +19,10 @@ namespace Karma
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder
-                        .ConfigureLogging((hostingContext, builder) =>
+                        /*.ConfigureLogging((hostingContext, builder) =>
                         {
                             builder.AddFile("Logs/Karma-{Date}.txt", LogLevel.Information, null, false, 1073741824, 31, "[{Level:u3}] {Message} {NewLine}");
-                        })
+                        })*/
                         .UseStartup<Startup>();
                 });
     }

@@ -18,11 +18,11 @@ namespace Karma.Middleware
             _logger = loggerFactory.CreateLogger<RequestLoggingMiddleware>();
         }
 
-        public async Task Invoke(HttpContext context)
+        public async Task InvokeAsync(HttpContext context)
         {
             try
             {
-                await _next.Invoke(context);
+                await _next(context);
             }
             catch (Exception e)
             {
