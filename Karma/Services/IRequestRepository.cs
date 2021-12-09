@@ -18,6 +18,7 @@ namespace Karma.Services
         public Task<RequestPost> AddPost(RequestPost post, string userId);
 
         public Task<RequestPost> DeletePost(int id);
+        public RequestPost MarkAsTaken(int id);
 
         public Task<RequestPost> UpdatePost(RequestPost newPost);
     }

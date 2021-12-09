@@ -41,6 +41,7 @@ namespace Karma
             services.AddScoped<IRequestRepository, SqlRequestRepository>();
             services.AddScoped<IMessageRepository, SQLMessageRepository>();
             services.AddScoped<IFulfillmentRepository, SQLFulfillmentRepository>();
+            services.AddScoped<HttpClient>();
             services.AddScoped<UserManager<KarmaUser>>();
             services.AddTransient<PictureService>();
             services.AddScoped<NotificationService>();

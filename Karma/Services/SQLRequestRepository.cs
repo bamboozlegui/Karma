@@ -66,5 +66,13 @@ namespace Karma.Services
         {
             throw new NotImplementedException();
         }
+
+        public RequestPost MarkAsTaken(int id)
+        {
+            RequestPost post = Context.Requests.FirstOrDefault(post => post.Id == id);
+            post.State = Post.StateEnum.Taken;
+            Context.SaveChanges();
+            return post;
+        }
     }
 }

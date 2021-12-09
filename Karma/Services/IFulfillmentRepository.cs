@@ -13,6 +13,7 @@ namespace Karma.Services
 
         public Task<Fulfillment> GetFulfillmentAsync(int id);
         public Task<Fulfillment> AddFulfillmentAsync(int requestId, string fulfillerId);
+        public Fulfillment GetFulfillmentByRequestId(int id);
         public Fulfillment AddFulfillment(int requestId, string fulfillerId);
 
         public Task<Fulfillment> DeleteFulfillmentAsync(int id);

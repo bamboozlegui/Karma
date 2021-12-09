@@ -26,12 +26,18 @@ namespace Karma.Services
 
         public List<Fulfillment> GetFulfillments()
         {
-            return Context.Fulfillments.ToList();
+            return Context.Fulfillments.Include(f => f.Request).Include(f => f.Fulfiller).ToList();
         }
 
         public async Task<Fulfillment> GetFulfillmentAsync(int id)
         {
-            var fulfillment = await Context.Fulfillments.FirstOrDefaultAsync(i => i.Id == id);
+            var fulfillment = await Context.Fulfillments.Include(f => f.Request).Include(f => f.Fulfiller).FirstOrDefaultAsync(i => i.Id == id);
+            return fulfillment;
+        }
+
+        public Fulfillment GetFulfillmentByRequestId(int id)
+        {
+            var fulfillment = Context.Fulfillments.Include(f => f.Request).Include(f => f.Fulfiller).FirstOrDefault(i => i.Request.Id == id);
             return fulfillment;
         }
 
@@ -72,9 +78,18 @@ namespace Karma.Services
         }
 
 
-        public Task<Fulfillment> UpdateFulfillmentAsync(Fulfillment newFulfillment)
+        public async Task<Fulfillment> UpdateFulfillmentAsync(Fulfillment newFulfillment)
         {
-            throw new NotImplementedException();
+            var fulfillment = await Context.Fulfillments.FirstOrDefaultAsync(post => post.Id == newFulfillment.Id);
+            if(fulfillment == null)
+            {
+                return null;
+            }
+            fulfillment.Request = newFulfillment.Request;
+            fulfillment.Fulfiller = newFulfillment.Fulfiller;
+            fulfillment.State = newFulfillment.State;
+            await Context.SaveChangesAsync();
+            return fulfillment;
         }
 
     }
