@@ -1,0 +1,22 @@
+﻿@page
+@model Karma.Pages.StatsModel
+@using Karma.Services
+@using Karma.Models
+@inject IItemRepository ItemRepository
+@{
+
+         async Task<int> getCount(string category) { 
+        return (await ItemRepository.GetPosts()).Aggregate(0, (accum, item) => item.Category == category ? accum + 1 : accum);
+    }
+}
+
+<br />
+<br />
+<br />
+<div>
+@foreach(var category in Post.Categories)
+            {
+                <h1>@category : @await getCount(category)</h1>
+            }
+</div>
+
