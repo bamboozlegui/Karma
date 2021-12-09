@@ -65,6 +65,7 @@ namespace Karma
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseHttpContext();
 
             app.UseAuthentication();
             app.UseAuthorization();

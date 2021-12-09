@@ -21,7 +21,7 @@ namespace Karma.Pages
 {
     public class ItemModel : PageModel
     {
-        private const string baseAddress = "https://localhost:5001/api/";
+        private string baseAddress = KarmaHttpContext.AppBaseUrl + "/api/";
 
         public HttpClient HttpClient { get; } = new HttpClient();
         [BindProperty]
