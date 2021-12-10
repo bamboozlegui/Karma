@@ -24,9 +24,7 @@ namespace Karma.Services
         {
             _logger.LogInformation("Item posted!");
         }
-
-        public delegate void KarmaBalance(KarmaUser kp, int amount);
-
+        
         public async Task ProcessKarmaBalanceAsync(string id, Func<int, int> processKP)
         {
             var user = await KarmaDbContext.Users.FindAsync(id);
@@ -42,18 +40,5 @@ namespace Karma.Services
             user.KarmaPoints = processKP(user.KarmaPoints);
             KarmaDbContext.SaveChanges();
         }
-
-        /*
-        public void IncreaseKarmaPoints(KarmaUser kp, int amount)
-        {
-            _logger.LogInformation("IncreaseKarmaPoints called!");
-            kp.KarmaPoints += amount;
-        }
-
-        public void DecreaseKarmaPoints(KarmaUser kp, int amount)
-        {
-            kp.KarmaPoints += amount;
-        }
-        */
     }
 }

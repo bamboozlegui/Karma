@@ -62,10 +62,12 @@ namespace Karma.Pages
         public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
             var userId = User.GetUserId();
+
             Func<int, int> Subtract = (x => x - 6);
             await KarmaPointService.ProcessKarmaBalanceAsync(userId, Subtract);
 
             var item = await ItemService.GetPost(id);
+
             PictureService.DeletePicture(WebHostEnvironment.WebRootPath, item.Picture);
             await ItemService.DeletePost(id);
 
@@ -75,6 +77,7 @@ namespace Karma.Pages
         public async Task<IActionResult> OnPostAsync()
         {
             var userId = User.GetUserId();
+
             Func<int, int> Add = (x => x + 6);
             await KarmaPointService.ProcessKarmaBalanceAsync(userId, Add);
 

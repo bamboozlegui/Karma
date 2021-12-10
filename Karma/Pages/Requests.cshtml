@@ -4,9 +4,11 @@
 
 @using Microsoft.AspNetCore.Identity
 @using Karma.Areas.Identity.Data
+@using Karma.Services
 
 @inject SignInManager<KarmaUser> SignInManager
 @inject UserManager<KarmaUser> UserManager
+@inject IFulfillmentRepository FulfillmentRepository
 
 @*<form method="get">
     <div class="input-group">
@@ -66,27 +68,8 @@
         {
             foreach (var requestas in Model.Requests)
             {
-                if (requestas.State == Models.Post.StateEnum.Taken)
-                {
-                    <a class="list-group-item list-group-item-action disabled">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1 request-title">@requestas.Title</h5>
-                            <small>@requestas.KarmaUser.FirstName @requestas.KarmaUser.KarmaPoints</small>
-                        </div>
-                        <p class="mb-1">@requestas.Description</p>
-                        <small>@requestas.KarmaUser.City,</small>
-                        <small>@requestas.KarmaUser.PhoneNumber,</small>
-                        <small>@requestas.State</small>
-                        @if (requestas.KarmaUser.Email == HttpContext.User.Identity.Name && SignInManager.IsSignedIn(User))
-                        {
-                            <form asp-page-handler="delete" asp-route-ID="@requestas.Id" method="post">
-                                <button class="btn btn-default p-0">Delete</button>
-                            </form>
-                        }
 
-                    </a>
-                }
-                else
+                if(FulfillmentRepository.GetFulfillments().Where(f => f.Request.Id == requestas.Id).Count() == 0 )
                 {
                     <a class="list-group-item list-group-item-action request-page-card rounded-0">
                         <div class="d-flex w-100 justify-content-between">
@@ -105,10 +88,15 @@
                         }
                         @if (HttpContext.User.Identity.IsAuthenticated && HttpContext.User.Identity.Name != requestas.KarmaUser.Email)
                         {
+                            <form method="post" asp-page-handler="fulfill" asp-route-requestId="@requestas.Id" class="mt-4 needs-validation" novalidate>
+                                <button type="submit"  class="btn button-custom rounded-0"  >
+                                    Fulfill
+                                </button>
+                               </form>
                             <form method="post" asp-page-handler="message" asp-route-itemid="@requestas.Id" class="mt-4 needs-validation" novalidate>
 
                                 <button class="btn button-custom rounded-0" type="button" data-bs-toggle="collapse" data-bs-target="#@requestas.CollapseId()" aria-expanded="false" aria-controls="@requestas.Id">
-                                    Send owner a message
+                                    Send requester a message
                                 </button>
                                 <div id="@requestas.CollapseId()" class="collapse">
                                     <div class="form-group row mb-3 mt-3 ">
